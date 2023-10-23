@@ -1,1 +1,3 @@
-export const Dashboard = () => <></>
+const Dashboard = () => <>Dashboard</>
+
+export default Dashboard
