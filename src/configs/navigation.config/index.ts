@@ -16,8 +16,18 @@ const navigationConfig: NavigationTree[] = [
         authority: [],
         subMenu: [],
     },
-    /** Example purpose only, please remove */
     {
+        key: 'customers',
+        path: '/customers',
+        title: 'Clienti',
+        translateKey: 'nav.customers',
+        icon: 'customer',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [],
+        subMenu: [],
+    },
+    /** Example purpose only, please remove */
+    /*{
         key: 'singleMenuItem',
         path: '/single-menu-view',
         title: 'Single menu item',
@@ -109,7 +119,7 @@ const navigationConfig: NavigationTree[] = [
                 ],
             },
         ],
-    },
+    },*/
 ]
 
 export default navigationConfig
