@@ -17,4 +17,12 @@ export const protectedRoutes = [
         component: lazy(() => import('@/features/customers/Customers')),
         authority: [],
     },
+    {
+        key: 'customer',
+        path: '/customer',
+        component: lazy(
+            () => import('@/features/customer-detail/CustomerDetail')
+        ),
+        authority: [],
+    },
 ]

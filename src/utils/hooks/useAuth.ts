@@ -5,14 +5,25 @@ import {
     signOutSuccess,
     useAppSelector,
     useAppDispatch,
+    UserState,
 } from '@/store'
 import appConfig from '@/configs/app.config'
 import { REDIRECT_URL_KEY } from '@/constants/app.constant'
 import { useNavigate } from 'react-router-dom'
 import useQuery from './useQuery'
-import type { SignInCredential, SignUpCredential } from '@/@types/auth'
+import type {
+    SignInCredential,
+    SignUpCredential,
+} from '@/@types/olympiatekAuth'
 
 type Status = 'success' | 'failed'
+
+const defaultUser = {
+    avatar: '',
+    userName: 'Anonymous',
+    authority: ['USER'],
+    email: '',
+}
 
 function useAuth() {
     const dispatch = useAppDispatch()
@@ -35,19 +46,16 @@ function useAuth() {
         try {
             const resp = await apiSignIn(values)
             if (resp.data) {
-                const { token } = resp.data
+                const { token, user: serverUser } = resp.data
+                const user: UserState = {
+                    avatar: '',
+                    userName: serverUser.username,
+                    authority: ['USER'],
+                    email: serverUser.email,
+                }
                 dispatch(signInSuccess(token))
                 if (resp.data.user) {
-                    dispatch(
-                        setUser(
-                            resp.data.user || {
-                                avatar: '',
-                                userName: 'Anonymous',
-                                authority: ['USER'],
-                                email: '',
-                            }
-                        )
-                    )
+                    dispatch(setUser(user || defaultUser))
                 }
                 const redirectUrl = query.get(REDIRECT_URL_KEY)
                 navigate(

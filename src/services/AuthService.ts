@@ -6,13 +6,16 @@ import type {
     ResetPassword,
     SignInResponse,
     SignUpResponse,
-} from '@/@types/auth'
+} from '@/@types/olympiatekAuth'
 
 export async function apiSignIn(data: SignInCredential) {
     return ApiService.fetchData<SignInResponse>({
-        url: '/sign-in',
+        url: '/sign-in/',
         method: 'post',
-        data,
+        data: {
+            email: data.userName,
+            password: data.password,
+        },
     })
 }
 
@@ -26,7 +29,7 @@ export async function apiSignUp(data: SignUpCredential) {
 
 export async function apiSignOut() {
     return ApiService.fetchData({
-        url: '/sign-out',
+        url: '/sign-out/',
         method: 'post',
     })
 }

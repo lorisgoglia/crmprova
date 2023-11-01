@@ -113,6 +113,18 @@ const Customers = () => {
                 },
             },
             {
+                header: 'Subscription Plan',
+                accessorKey: 'plan',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            {row.subscription[0].plan}
+                        </div>
+                    )
+                },
+            },
+            /*{
                 header: 'Last online',
                 accessorKey: 'lastOnline',
                 cell: (props) => {
@@ -123,7 +135,7 @@ const Customers = () => {
                         </div>
                     )
                 },
-            },
+            },*/
             {
                 header: '',
                 id: 'action',
