@@ -18,7 +18,7 @@ const Side = ({ children, content, ...rest }: SideProps) => {
                 }}
             >
                 <Logo mode="dark" />
-                <div>
+                {/* <div>
                     <div className="mb-6 flex items-center gap-4">
                         <Avatar
                             className="border-2 border-white"
@@ -37,7 +37,7 @@ const Side = ({ children, content, ...rest }: SideProps) => {
                         crafted with Tailwind CSS, it fulfilled most of the use
                         case to create modern and beautiful UI and application
                     </p>
-                </div>
+                </div>*/}
                 <span className="text-white">
                     Copyright &copy; {`${new Date().getFullYear()}`}{' '}
                     <span className="font-semibold">{`${APP_NAME}`}</span>{' '}

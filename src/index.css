@@ -1,1 +1,13 @@
 @import "./assets/styles/app.css";
+
+.side-nav-header {
+    @apply flex justify-center
+}
+
+.side-nav-content {
+    @apply overflow-y-hidden
+}
+
+.side-nav-logo {
+   @apply h-[64px]
+}

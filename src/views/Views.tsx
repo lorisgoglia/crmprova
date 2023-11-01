@@ -39,11 +39,10 @@ const AllRoutes = (props: AllRoutesProps) => {
                                 userAuthority={userAuthority}
                                 authority={route.authority}
                             >
-                                <PageContainer {...props} {...route.meta}>
+                                <PageContainer {...props}>
                                     <AppRoute
                                         routeKey={route.key}
                                         component={route.component}
-                                        {...route.meta}
                                     />
                                 </PageContainer>
                             </AuthorityGuard>

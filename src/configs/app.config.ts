@@ -8,6 +8,15 @@ export type AppConfig = {
 }
 
 const appConfig: AppConfig = {
+    apiPrefix: 'http://127.0.0.1:8000/api',
+    authenticatedEntryPath: '/home',
+    unAuthenticatedEntryPath: '/sign-in',
+    tourPath: '/',
+    locale: 'en',
+    enableMock: true,
+}
+
+const appConfigDemo: AppConfig = {
     apiPrefix: '/api',
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
@@ -16,4 +25,4 @@ const appConfig: AppConfig = {
     enableMock: true,
 }
 
-export default appConfig
+export default appConfigDemo

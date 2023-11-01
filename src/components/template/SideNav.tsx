@@ -89,6 +89,7 @@ const SideNav = () => {
                     <div className="side-nav-header">
                         <Logo
                             mode={logoMode()}
+                            imgClass={'side-nav-logo'}
                             type={sideNavCollapse ? 'streamline' : 'full'}
                             className={
                                 sideNavCollapse

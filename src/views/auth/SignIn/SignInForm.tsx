@@ -83,7 +83,7 @@ const SignInForm = (props: SignInFormProps) => {
                     <Form>
                         <FormContainer>
                             <FormItem
-                                label="User Name"
+                                label="Email"
                                 invalid={
                                     (errors.userName &&
                                         touched.userName) as boolean
@@ -94,7 +94,7 @@ const SignInForm = (props: SignInFormProps) => {
                                     type="text"
                                     autoComplete="off"
                                     name="userName"
-                                    placeholder="User Name"
+                                    placeholder="Email"
                                     component={Input}
                                 />
                             </FormItem>
@@ -119,10 +119,10 @@ const SignInForm = (props: SignInFormProps) => {
                                     name="rememberMe"
                                     component={Checkbox}
                                 >
-                                    Remember Me
+                                    Ricordami
                                 </Field>
                                 <ActionLink to={forgotPasswordUrl}>
-                                    Forgot Password?
+                                    Password dimenticata?
                                 </ActionLink>
                             </div>
                             <Button
@@ -133,10 +133,10 @@ const SignInForm = (props: SignInFormProps) => {
                             >
                                 {isSubmitting ? 'Signing in...' : 'Sign In'}
                             </Button>
-                            <div className="mt-4 text-center">
+                            {/*<div className="mt-4 text-center">
                                 <span>{`Don't have an account yet?`} </span>
                                 <ActionLink to={signUpUrl}>Sign up</ActionLink>
-                            </div>
+                            </div>*/}
                         </FormContainer>
                     </Form>
                 )}
