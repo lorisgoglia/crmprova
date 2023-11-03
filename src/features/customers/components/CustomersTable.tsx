@@ -10,6 +10,7 @@ import {
     useAppDispatch,
     useAppSelector,
     Customer,
+    setDrawerClose,
 } from '../store'
 import useThemeClass from '@/utils/hooks/useThemeClass'
 import CustomerEditDialog from './CustomerEditDialog'
@@ -60,8 +61,19 @@ const NameColumn = ({ row }: { row: Customer }) => {
 
 const Customers = () => {
     const dispatch = useAppDispatch()
-    const data = useAppSelector((state) => state.crmCustomers.data.customerList)
-    const loading = useAppSelector((state) => state.crmCustomers.data.loading)
+    const data: [] =
+        [] /* useAppSelector((state) => state.crmCustomers.data.customerList)*/
+    const loading =
+        false /*useAppSelector((state) => state.crmCustomers.data.loading)*/
+    const drawerOpen = useAppSelector(
+        (state) => state.crmCustomers.data.drawerOpen
+    )
+
+    const onDrawerClose = () => {
+        dispatch(setDrawerClose())
+        dispatch(setSelectedCustomer({}))
+    }
+
     const filterData = useAppSelector(
         (state) => state.crmCustomers.data.filterData
     )
@@ -181,7 +193,6 @@ const Customers = () => {
                 onSelectChange={onSelectChange}
                 onSort={onSort}
             />
-            <CustomerEditDialog />
         </>
     )
 }

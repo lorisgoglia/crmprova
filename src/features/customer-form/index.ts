@@ -1,4 +1,3 @@
-import CustomerForm from './CustomerForm'
+import KycForm from './KycForm'
 
-export * from './CustomerForm'
-export default CustomerForm
+export default KycForm

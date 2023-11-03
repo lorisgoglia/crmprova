@@ -1,16 +1,16 @@
 import AdaptableCard from '@/components/shared/AdaptableCard'
 import CustomersTable from './components/CustomersTable'
 import CustomersTableTools from './components/CustomersTableTools'
-import CustomerStatistic from './components/CustomerStatistic'
 import { injectReducer } from '@/store'
 import reducer from './store'
+import CustomerStatisticWithAction from '@/features/customers/components/CustomerStatisticWithAction'
 
 injectReducer('crmCustomers', reducer)
 
 const Customers = () => {
     return (
         <>
-            <CustomerStatistic />
+            <CustomerStatisticWithAction />
             <AdaptableCard className="h-full" bodyClass="h-full">
                 <CustomersTableTools />
                 <CustomersTable />
