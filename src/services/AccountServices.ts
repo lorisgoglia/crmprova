@@ -43,9 +43,13 @@ export async function apiGetAccountLogData<
     })
 }
 
-export async function apiGetAccountFormData<T>() {
+export async function apiGetAccountFormData<
+    T,
+    U extends Record<string, unknown>
+>(params: U) {
     return ApiService.fetchData<T>({
-        url: '/account/form',
+        url: `/account/`,
         method: 'get',
+        params,
     })
 }

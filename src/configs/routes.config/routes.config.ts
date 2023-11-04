@@ -13,7 +13,7 @@ export const protectedRoutes = [
     },
     {
         key: 'customer',
-        path: '/customer/new',
+        path: '/customer/',
         component: lazy(() => import('@/features/customer-form/KycForm')),
         authority: [],
     },

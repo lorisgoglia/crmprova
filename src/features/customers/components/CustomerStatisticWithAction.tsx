@@ -108,7 +108,7 @@ const CustomerStatistic = () => {
                 growthRate={statisticData?.activeCustomers?.growShrink || 0}
                 loading={loading}
             />
-            <Link to="/customer/new" className="cursor-pointer">
+            <Link to="/customer/" className="cursor-pointer">
                 <Button
                     variant={'solid'}
                     className={'h-full w-full'}

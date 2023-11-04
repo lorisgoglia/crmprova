@@ -35,8 +35,8 @@ const CustomersTableTools = () => {
     }
 
     const fetchData = (data: TableQueries) => {
-        dispatch(setTableData(data))
-        dispatch(getCustomers(data))
+        /* dispatch(setTableData(data))
+        dispatch(getCustomers(data))*/
     }
 
     const onClearAll = () => {

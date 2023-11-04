@@ -5,6 +5,8 @@ import {
     apiGetCrmCustomersStatistic,
 } from '@/services/CrmService'
 import type { TableQueries } from '@/@types/common'
+import { userDetailData } from '@/mock/data/usersData'
+import paginate from '@/utils/paginate'
 
 type PersonalInfo = {
     location: string
@@ -134,10 +136,18 @@ export const initialFilterData = {
     status: '',
 }
 
+const sanitizeUsers = userDetailData.filter((elm) => typeof elm !== 'function')
+const data = paginate(sanitizeUsers, 10, 1)
+
+const responseData = {
+    data: data,
+    total: 10,
+}
+
 const initialState: CustomersState = {
     loading: false,
     statisticLoading: false,
-    customerList: [],
+    customerList: responseData.data,
     statisticData: {},
     tableData: initialTableData,
     filterData: initialFilterData,

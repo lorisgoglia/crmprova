@@ -53,12 +53,12 @@ export type FinancialInformation = {
 
 type FormData = {
     personalInformation: PersonalInformation
-    identification: Identification
     addressInformation: Address
-    financialInformation: FinancialInformation
 }
 
 export type StepStatus = Record<number, { status: string }>
+
+type GetAccountFormDataRequest = { id: string }
 
 type GetAccountFormDataResponse = {
     formData: FormData
@@ -73,10 +73,16 @@ export type KycFormState = {
 
 export const SLICE_NAME = 'accountDetailForm'
 
-export const getForm = createAsyncThunk(SLICE_NAME + '/getForm', async () => {
-    const response = await apiGetAccountFormData<GetAccountFormDataResponse>()
-    return response.data
-})
+export const getForm = createAsyncThunk(
+    SLICE_NAME + '/getForm',
+    async (data: GetAccountFormDataRequest) => {
+        const response = await apiGetAccountFormData<
+            GetAccountFormDataResponse,
+            GetAccountFormDataRequest
+        >(data)
+        return response.data
+    }
+)
 
 export const initialState: KycFormState = {
     formData: {
@@ -90,47 +96,17 @@ export const initialState: KycFormState = {
             dob: '',
             gender: '',
         },
-        identification: {
-            documentType: 'passport',
-            passportCover: '',
-            passportDataPage: '',
-            nationalIdFront: '',
-            nationalIdBack: '',
-            driversLicenseFront: '',
-            driversLicenseBack: '',
-        },
         addressInformation: {
             country: '',
             address: '',
             city: '',
             zipCode: '',
         },
-        financialInformation: {
-            taxResident: '',
-            tin: '',
-            noTin: false,
-            noTinReason: '',
-            occupation: '',
-            annualIncome: '',
-            sourceOfWealth: '',
-            companyInformation: {
-                companyName: '',
-                contactNumber: '',
-                country: '',
-                addressLine1: '',
-                addressLine2: '',
-                city: '',
-                state: '',
-                zipCode: '',
-            },
-        },
     },
     stepStatus: {
         0: { status: 'pending' },
         1: { status: 'pending' },
         2: { status: 'pending' },
-        3: { status: 'pending' },
-        4: { status: 'pending' },
     },
     currentStep: 0,
 }
@@ -148,6 +124,11 @@ const kycFormSlice = createSlice({
         setCurrentStep: (state, action) => {
             state.currentStep = action.payload
         },
+        setClearForm: (state) => {
+            state.formData = { ...initialState.formData }
+            state.stepStatus = { ...initialState.stepStatus }
+            state.currentStep = initialState.currentStep
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getForm.fulfilled, (state, action) => {
@@ -157,7 +138,7 @@ const kycFormSlice = createSlice({
     },
 })
 
-export const { setFormData, setStepStatus, setCurrentStep } =
+export const { setFormData, setStepStatus, setCurrentStep, setClearForm } =
     kycFormSlice.actions
 
 export default kycFormSlice.reducer

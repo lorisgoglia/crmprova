@@ -7,7 +7,6 @@ import { FormItem, FormContainer } from '@/components/ui/Form'
 import { Field, Form, Formik } from 'formik'
 import { NumericFormat, NumericFormatProps } from 'react-number-format'
 import { countryList } from '@/constants/countries.constant'
-import { statusOptions } from '../constants'
 import { components } from 'react-select'
 import dayjs from 'dayjs'
 import * as Yup from 'yup'
@@ -99,14 +98,16 @@ const PhoneControl = (props: SingleValueProps<CountryOption>) => {
 }
 
 const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required('Nome obbligatorio'),
-    lastName: Yup.string().required('Cognome obbligatorio'),
-    email: Yup.string().email('Invalid email').required('Email obbligatoria'),
-    nationality: Yup.string().required('Please select your nationality'),
-    phoneNumber: Yup.string().required('Please enter your phone number'),
-    dob: Yup.string().required('Please enter your date of birth'),
-    gender: Yup.string().required('Please enter your gender'),
-    dialCode: Yup.string().required('Please select dial code'),
+    firstName: Yup.string().required('Nome obbligatorio.'),
+    lastName: Yup.string().required('Cognome obbligatorio.'),
+    email: Yup.string()
+        .email('Email invalida. ( Es: nome@email.com )')
+        .required('Email obbligatoria.'),
+    nationality: Yup.string().required('Nazionalità obbligatoria.'),
+    phoneNumber: Yup.string().required('Numero di telefono obbligatorio.'),
+    dob: Yup.string().required('Data di nascità obbligatoria.'),
+    gender: Yup.string().required('Sesso obbligatorio.'),
+    dialCode: Yup.string().required('Codice telefonico obbligatorio.'),
 })
 
 const PersonalInformation = ({
@@ -332,12 +333,22 @@ const PersonalInformation = ({
                                         invalid={errors.dob && touched.dob}
                                         errorMessage={errors.dob}
                                     >
-                                        <Field name="dob" placeholder="Date">
+                                        <Field
+                                            name="dob"
+                                            placeholder="Data di nascità"
+                                        >
                                             {({ field, form }: FieldProps) => (
                                                 <DatePicker
                                                     field={field}
                                                     form={form}
-                                                    value={field.value}
+                                                    value={
+                                                        field.value != ''
+                                                            ? dayjs(
+                                                                  field.value
+                                                              ).toDate()
+                                                            : null
+                                                    }
+                                                    inputFormat="DD-MM-YYYY"
                                                     onChange={(date) => {
                                                         form.setFieldValue(
                                                             field.name,
@@ -358,8 +369,8 @@ const PersonalInformation = ({
                                         type="submit"
                                     >
                                         {currentStepStatus === 'complete'
-                                            ? 'Save'
-                                            : 'Next'}
+                                            ? 'Salva'
+                                            : 'Prossimo'}
                                     </Button>
                                 </div>
                             </FormContainer>

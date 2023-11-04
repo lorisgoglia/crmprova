@@ -195,7 +195,7 @@ const AddressInfomation = ({
                                 />
                                 <div className="flex justify-end gap-2">
                                     <Button type="button" onClick={onBack}>
-                                        Back
+                                        Indietro
                                     </Button>
                                     <Button
                                         loading={isSubmitting}
@@ -203,8 +203,8 @@ const AddressInfomation = ({
                                         type="submit"
                                     >
                                         {currentStepStatus === 'complete'
-                                            ? 'Save'
-                                            : 'Next'}
+                                            ? 'Salva'
+                                            : 'Prossimo'}
                                     </Button>
                                 </div>
                             </FormContainer>

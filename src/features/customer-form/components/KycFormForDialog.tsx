@@ -1,7 +1,6 @@
 import { useEffect, useMemo, lazy, Suspense } from 'react'
 import Container from '@/components/shared/Container'
 import AdaptableCard from '@/components/shared/AdaptableCard'
-import FormStep from './components/FormStep'
 import reducer, {
     getForm,
     setStepStatus,
@@ -12,18 +11,14 @@ import reducer, {
     setClearForm,
     PersonalInformation as PersonalInformationType,
     Address,
-} from './store'
+} from '../store'
 import { injectReducer } from '@/store'
 import useQuery from '@/utils/hooks/useQuery'
 
 injectReducer('accountDetailForm', reducer)
 
-const PersonalInformation = lazy(
-    () => import('./components/PersonalInformation')
-)
-const AddressInfomation = lazy(() => import('./components/AddressInfomation'))
-
-const AccountReview = lazy(() => import('./components/AccountReview'))
+const PersonalInformation = lazy(() => import('./PersonalInformation'))
+const AddressInfomation = lazy(() => import('./AddressInfomation'))
 
 const DetailForm = () => {
     const dispatch = useAppDispatch()
@@ -80,40 +75,18 @@ const DetailForm = () => {
         <Container className="h-full">
             <AdaptableCard className="h-full" bodyClass="h-full">
                 <div className="grid lg:grid-cols-5 xl:grid-cols-3 2xl:grid-cols-5 gap-4 h-full">
-                    {currentStep !== 4 && (
-                        <div className="2xl:col-span-1 xl:col-span-1 lg:col-span-2">
-                            <FormStep
-                                currentStep={currentStep}
-                                currentStepStatus={currentStepStatus}
-                                stepStatus={stepStatus}
-                            />
-                        </div>
-                    )}
-                    <div
-                        className={
-                            currentStep !== 4
-                                ? '2xl:col-span-4 lg:col-span-3 xl:col-span-2'
-                                : 'lg:col-span-5'
-                        }
-                    >
-                        <Suspense fallback={<></>}>
-                            {currentStep === 0 && (
-                                <PersonalInformation
-                                    data={formData.personalInformation}
-                                    currentStepStatus={currentStepStatus}
-                                    onNextChange={handleNextChange}
-                                />
-                            )}
-                            {currentStep === 1 && (
-                                <AddressInfomation
-                                    data={formData.addressInformation}
-                                    currentStepStatus={currentStepStatus}
-                                    onNextChange={handleNextChange}
-                                    onBackChange={handleBackChange}
-                                />
-                            )}
-                            {currentStep === 2 && <AccountReview />}
-                        </Suspense>
+                    <div className="2xl:col-span-4 lg:col-span-3 xl:col-span-2">
+                        <PersonalInformation
+                            data={formData.personalInformation}
+                            currentStepStatus={currentStepStatus}
+                            onNextChange={handleNextChange}
+                        />
+                        <AddressInfomation
+                            data={formData.addressInformation}
+                            currentStepStatus={currentStepStatus}
+                            onNextChange={handleNextChange}
+                            onBackChange={handleBackChange}
+                        />
                     </div>
                 </div>
             </AdaptableCard>
