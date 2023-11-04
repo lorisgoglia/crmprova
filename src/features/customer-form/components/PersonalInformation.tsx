@@ -342,7 +342,7 @@ const PersonalInformation = ({
                                                         form.setFieldValue(
                                                             field.name,
                                                             dayjs(date).format(
-                                                                'YYYY-MM-DD'
+                                                                'DD-MM-YYYY'
                                                             )
                                                         )
                                                     }}

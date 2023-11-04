@@ -54,7 +54,7 @@ const AccountReview = () => {
                     o timbro.
                 </small>
                 <Button variant="solid" onClick={() => window.open('/print')}>
-                    Print
+                    Stampa
                 </Button>
             </div>
         </div>
