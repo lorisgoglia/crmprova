@@ -32,6 +32,7 @@ const ActionColumn = ({ row }: { row: Customer }) => {
     const dispatch = useAppDispatch()
 
     const onEdit = () => {
+        dispatch(setSelectedCustomer(row))
         dispatch(setDrawerOpen())
     }
 
@@ -74,6 +75,7 @@ const Customers = () => {
 
     const onDrawerClose = () => {
         dispatch(setDrawerClose())
+        dispatch(setSelectedCustomer({}))
     }
 
     const filterData = useAppSelector(
