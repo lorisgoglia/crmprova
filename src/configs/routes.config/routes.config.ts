@@ -17,4 +17,15 @@ export const protectedRoutes = [
         component: lazy(() => import('@/features/customer-form/KycForm')),
         authority: [],
     },
+    {
+        key: 'print',
+        path: '/print',
+        component: lazy(
+            () => import('@/features/customer-form/components/AccountReview')
+        ),
+        authority: [],
+        meta: {
+            layout: 'blank',
+        },
+    },
 ]

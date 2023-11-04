@@ -24,20 +24,9 @@ export type Identification = {
 
 export type Address = {
     country: string
-    addressLine1: string
-    addressLine2: string
+    address: string
     city: string
-    state: string
     zipCode: string
-    sameCorrespondenceAddress: boolean
-    correspondenceAddress?: {
-        country: string
-        addressLine1: string
-        addressLine2: string
-        city: string
-        state: string
-        zipCode: string
-    }
 }
 
 type CompanyInformation = {
@@ -112,20 +101,9 @@ export const initialState: KycFormState = {
         },
         addressInformation: {
             country: '',
-            addressLine1: '',
-            addressLine2: '',
+            address: '',
             city: '',
-            state: '',
             zipCode: '',
-            sameCorrespondenceAddress: true,
-            correspondenceAddress: {
-                country: '',
-                addressLine1: '',
-                addressLine2: '',
-                city: '',
-                state: '',
-                zipCode: '',
-            },
         },
         financialInformation: {
             taxResident: '',

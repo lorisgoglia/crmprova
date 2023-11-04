@@ -229,7 +229,7 @@ const PersonalInformation = ({
                                     </FormItem>
                                 </div>
                                 <FormItem
-                                    label="Nationality"
+                                    label="Nazionalità"
                                     invalid={
                                         errors.nationality &&
                                         touched.nationality
