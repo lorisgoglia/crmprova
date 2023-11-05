@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetAccountFormData } from '@/services/AccountServices'
+import {
+    apiGetAccountFormData,
+    apiSaveCustomer,
+} from '@/services/AccountServices'
 
 export type PersonalInformation = {
     firstName: string
@@ -80,6 +83,37 @@ export const getForm = createAsyncThunk(
             GetAccountFormDataResponse,
             GetAccountFormDataRequest
         >(data)
+        return response.data
+    }
+)
+
+export const saveForm = createAsyncThunk(
+    SLICE_NAME + '/customer-sign-up',
+    async ({
+        personalInformation,
+        addressInformation,
+    }: KycFormState['formData']) => {
+        const { firstName, lastName, email, gender, dob } = personalInformation
+        const { address, country, city, zipCode } = addressInformation
+
+        const dto = {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            sex: gender,
+            dob: dob,
+            address: address,
+            country: country,
+            city: city,
+            zip_code: zipCode,
+            card_balance: '10.0',
+            payment_method: 'Cash',
+            movement_description: 'Test',
+            password1: '12345Aa!',
+            password2: '12345Aa!',
+        }
+
+        const response = await apiSaveCustomer<string, any>(dto)
         return response.data
     }
 )

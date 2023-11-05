@@ -53,3 +53,13 @@ export async function apiGetAccountFormData<
         params,
     })
 }
+
+export async function apiSaveCustomer<T, U extends Record<string, unknown>>(
+    data: U
+) {
+    return ApiService.fetchData<T>({
+        url: '/customer-sign-up/',
+        method: 'post',
+        data,
+    })
+}

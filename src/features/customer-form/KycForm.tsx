@@ -12,6 +12,7 @@ import reducer, {
     setClearForm,
     PersonalInformation as PersonalInformationType,
     Address,
+    saveForm,
 } from './store'
 import { injectReducer } from '@/store'
 import useQuery from '@/utils/hooks/useQuery'
@@ -76,6 +77,15 @@ const DetailForm = () => {
         [stepStatus, currentStep]
     )
 
+    const handleNextChangeAndSubmit = (
+        values: PersonalInformationType | Address,
+        name: string
+    ) => {
+        handleNextChange(values, name)
+
+        dispatch(saveForm(formData))
+    }
+
     return (
         <Container className="h-full">
             <AdaptableCard className="h-full" bodyClass="h-full">
@@ -108,7 +118,7 @@ const DetailForm = () => {
                                 <AddressInfomation
                                     data={formData.addressInformation}
                                     currentStepStatus={currentStepStatus}
-                                    onNextChange={handleNextChange}
+                                    onNextChange={handleNextChangeAndSubmit}
                                     onBackChange={handleBackChange}
                                 />
                             )}
