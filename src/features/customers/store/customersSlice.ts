@@ -136,18 +136,10 @@ export const initialFilterData = {
     status: '',
 }
 
-const sanitizeUsers = userDetailData.filter((elm) => typeof elm !== 'function')
-const data = paginate(sanitizeUsers, 10, 1)
-
-const responseData = {
-    data: data,
-    total: 10,
-}
-
 const initialState: CustomersState = {
     loading: false,
     statisticLoading: false,
-    customerList: responseData.data,
+    customerList: [],
     statisticData: {},
     tableData: initialTableData,
     filterData: initialFilterData,

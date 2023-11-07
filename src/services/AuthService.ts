@@ -1,4 +1,4 @@
-import ApiService from './ApiService'
+/*import ApiService from './ApiService'
 import type {
     SignInCredential,
     SignUpCredential,
@@ -7,15 +7,23 @@ import type {
     SignInResponse,
     SignUpResponse,
 } from '@/@types/olympiatekAuth'
+*/
+
+import ApiService from './ApiService'
+import type {
+    SignInCredential,
+    SignUpCredential,
+    ForgotPassword,
+    ResetPassword,
+    SignInResponse,
+    SignUpResponse,
+} from '@/@types/auth'
 
 export async function apiSignIn(data: SignInCredential) {
     return ApiService.fetchData<SignInResponse>({
-        url: '/sign-in/',
+        url: '/sign-in',
         method: 'post',
-        data: {
-            email: data.userName,
-            password: data.password,
-        },
+        data,
     })
 }
 
@@ -29,7 +37,7 @@ export async function apiSignUp(data: SignUpCredential) {
 
 export async function apiSignOut() {
     return ApiService.fetchData({
-        url: '/sign-out/',
+        url: '/sign-out',
         method: 'post',
     })
 }

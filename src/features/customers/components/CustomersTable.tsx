@@ -1,6 +1,5 @@
 import { useEffect, useCallback, useMemo } from 'react'
 import Avatar from '@/components/ui/Avatar'
-import Badge from '@/components/ui/Badge'
 import DataTable from '@/components/shared/DataTable'
 import {
     getCustomers,
@@ -10,17 +9,12 @@ import {
     useAppDispatch,
     useAppSelector,
     Customer,
-    setDrawerClose,
 } from '../store'
 import useThemeClass from '@/utils/hooks/useThemeClass'
 import CustomerEditDialog from './CustomerEditDialog'
 import { Link } from 'react-router-dom'
-import dayjs from 'dayjs'
 import cloneDeep from 'lodash/cloneDeep'
 import type { OnSortParam, ColumnDef } from '@/components/shared/DataTable'
-import { Dialog } from '@/components/ui'
-import KycForm from '@/features/customer-form/KycForm'
-import KycFormForDialog from '@/features/customer-form/components/KycFormForDialog'
 
 const statusColor: Record<string, string> = {
     active: 'bg-emerald-500',
@@ -32,8 +26,8 @@ const ActionColumn = ({ row }: { row: Customer }) => {
     const dispatch = useAppDispatch()
 
     const onEdit = () => {
-        dispatch(setSelectedCustomer(row))
         dispatch(setDrawerOpen())
+        dispatch(setSelectedCustomer(row))
     }
 
     return (
@@ -67,16 +61,7 @@ const Customers = () => {
     const data: Customer[] = useAppSelector(
         (state) => state.crmCustomers.data.customerList
     )
-    const loading =
-        false /*useAppSelector((state) => state.crmCustomers.data.loading)*/
-    const drawerOpen = useAppSelector(
-        (state) => state.crmCustomers.data.drawerOpen
-    )
-
-    const onDrawerClose = () => {
-        dispatch(setDrawerClose())
-        dispatch(setSelectedCustomer({}))
-    }
+    const loading = useAppSelector((state) => state.crmCustomers.data.loading)
 
     const filterData = useAppSelector(
         (state) => state.crmCustomers.data.filterData
@@ -86,7 +71,6 @@ const Customers = () => {
         (state) => state.crmCustomers.data.tableData
     )
 
-    /*
     const fetchData = useCallback(() => {
         dispatch(getCustomers({ pageIndex, pageSize, sort, query, filterData }))
     }, [pageIndex, pageSize, sort, query, filterData, dispatch])
@@ -94,7 +78,6 @@ const Customers = () => {
     useEffect(() => {
         fetchData()
     }, [fetchData, pageIndex, pageSize, sort, filterData])
-*/
 
     const tableData = useMemo(
         () => ({ pageIndex, pageSize, sort, query, total }),
@@ -185,13 +168,7 @@ const Customers = () => {
                 onSelectChange={onSelectChange}
                 onSort={onSort}
             />
-            <Dialog isOpen={drawerOpen} width={1200} onClose={onDrawerClose}>
-                <div className="flex flex-col h-full justify-between">
-                    <div className="max-h-[700px] overflow-y-auto">
-                        <KycFormForDialog />
-                    </div>
-                </div>
-            </Dialog>
+            <CustomerEditDialog />
         </>
     )
 }

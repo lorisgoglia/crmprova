@@ -38,7 +38,7 @@ const DetailForm = () => {
         const id = query.get('id')
         if (id) {
             console.log('ID', id)
-            dispatch(getForm({ id }))
+            /*dispatch(getForm({ id }))*/
         }
         return () => {
             dispatch(setClearForm())
