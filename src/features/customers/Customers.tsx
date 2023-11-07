@@ -10,7 +10,7 @@ import reducer, {
 import CustomerStatisticWithAction from '@/features/customers/components/CustomerStatisticWithAction'
 import { apiGetCustomerDetails } from '@/services/CustomerService'
 import KycFormForDialog from '@/features/customer-form/components/KycFormForDialog'
-import { Dialog } from '@/components/ui'
+import Dialog from '@/components/ui/Dialog'
 
 injectReducer('crmCustomers', reducer)
 
@@ -23,7 +23,6 @@ const Customers = () => {
 
     const onDrawerClose = () => {
         dispatch(setDrawerClose())
-        dispatch(setSelectedCustomer({}))
     }
 
     return (

@@ -75,7 +75,7 @@ const PersonalInfoForm = (props: PersonalInfoFormProps) => {
                 </Field>
             </FormItem>
             <FormItem
-                label="Name"
+                label="Nome"
                 invalid={errors.name && touched.name}
                 errorMessage={errors.name}
             >
@@ -103,7 +103,7 @@ const PersonalInfoForm = (props: PersonalInfoFormProps) => {
                 />
             </FormItem>
             <FormItem
-                label="Location"
+                label="Indirizzo"
                 invalid={errors.location && touched.location}
                 errorMessage={errors.location}
             >
@@ -117,7 +117,7 @@ const PersonalInfoForm = (props: PersonalInfoFormProps) => {
                 />
             </FormItem>
             <FormItem
-                label="Phone Number"
+                label="Numero di telefono"
                 invalid={errors.phoneNumber && touched.phoneNumber}
                 errorMessage={errors.phoneNumber}
             >
@@ -131,21 +131,7 @@ const PersonalInfoForm = (props: PersonalInfoFormProps) => {
                 />
             </FormItem>
             <FormItem
-                label="Title"
-                invalid={errors.title && touched.title}
-                errorMessage={errors.title}
-            >
-                <Field
-                    type="text"
-                    autoComplete="off"
-                    name="title"
-                    placeholder="Title"
-                    component={Input}
-                    prefix={<HiPhone className="text-xl" />}
-                />
-            </FormItem>
-            <FormItem
-                label="Birthday"
+                label="Data di nascità"
                 invalid={(errors.birthday && touched.birthday) as boolean}
                 errorMessage={errors.birthday as string}
             >

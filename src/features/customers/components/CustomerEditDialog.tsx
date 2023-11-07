@@ -19,10 +19,10 @@ const DrawerFooter = ({ onSaveClick, onCancel }: DrawerFooterProps) => {
     return (
         <div className="text-right w-full">
             <Button size="sm" className="mr-2" onClick={onCancel}>
-                Cancel
+                Chiudi
             </Button>
             <Button size="sm" variant="solid" onClick={onSaveClick}>
-                Save
+                Salva
             </Button>
         </div>
     )
@@ -47,6 +47,7 @@ const CustomerEditDialog = () => {
 
     return (
         <Drawer
+            width={1200}
             isOpen={drawerOpen}
             closable={false}
             bodyClass="p-0"

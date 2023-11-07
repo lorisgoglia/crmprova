@@ -98,9 +98,8 @@ const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
                         <Tabs defaultValue="personalInfo">
                             <TabList>
                                 <TabNav value="personalInfo">
-                                    Personal Info
+                                    Informazioni Personali
                                 </TabNav>
-                                <TabNav value="social">Social</TabNav>
                             </TabList>
                             <div className="p-6">
                                 <TabContent value="personalInfo">

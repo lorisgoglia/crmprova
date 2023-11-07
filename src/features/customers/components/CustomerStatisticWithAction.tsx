@@ -95,7 +95,7 @@ const CustomerStatistic = () => {
             <StatisticCard
                 icon={<HiOutlineUserGroup />}
                 avatarClass="!bg-indigo-600"
-                label="Total Customers"
+                label="Utenti totali"
                 value={statisticData?.totalCustomers?.value || 0}
                 growthRate={statisticData?.totalCustomers?.growShrink || 0}
                 loading={loading}
@@ -103,7 +103,7 @@ const CustomerStatistic = () => {
             <StatisticCard
                 icon={<HiOutlineUsers />}
                 avatarClass="!bg-blue-500"
-                label="Active Customers"
+                label="Utenti attivi"
                 value={statisticData?.activeCustomers?.value || 0}
                 growthRate={statisticData?.activeCustomers?.growShrink || 0}
                 loading={loading}

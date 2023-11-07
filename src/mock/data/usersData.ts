@@ -160,7 +160,7 @@ export const userDetailData = [
         ],
         subscription: [
             {
-                plan: 'Business board pro',
+                plan: 'VIP',
                 status: 'active',
                 billing: 'monthly',
                 nextPaymentDate: 1639132800,
@@ -236,7 +236,7 @@ export const userDetailData = [
         ],
         subscription: [
             {
-                plan: 'Business board pro',
+                plan: 'Entrata Giornaliera',
                 status: 'active',
                 billing: 'monthly',
                 nextPaymentDate: 1639132800,
@@ -312,7 +312,7 @@ export const userDetailData = [
         ],
         subscription: [
             {
-                plan: 'Business board pro',
+                plan: 'Entrata Giornaliera',
                 status: 'active',
                 billing: 'monthly',
                 nextPaymentDate: 1639132800,
@@ -388,7 +388,7 @@ export const userDetailData = [
         ],
         subscription: [
             {
-                plan: 'Business board pro',
+                plan: 'VIP',
                 status: 'active',
                 billing: 'monthly',
                 nextPaymentDate: 1639132800,
@@ -464,7 +464,7 @@ export const userDetailData = [
         ],
         subscription: [
             {
-                plan: 'Business board pro',
+                plan: 'VIP',
                 status: 'active',
                 billing: 'monthly',
                 nextPaymentDate: 1639132800,
@@ -540,7 +540,7 @@ export const userDetailData = [
         ],
         subscription: [
             {
-                plan: 'Business board pro',
+                plan: 'VIP',
                 status: 'active',
                 billing: 'monthly',
                 nextPaymentDate: 1639132800,
@@ -616,7 +616,7 @@ export const userDetailData = [
         ],
         subscription: [
             {
-                plan: 'Business board pro',
+                plan: 'Entrata Giornaliera',
                 status: 'active',
                 billing: 'monthly',
                 nextPaymentDate: 1639132800,
@@ -692,7 +692,7 @@ export const userDetailData = [
         ],
         subscription: [
             {
-                plan: 'Business board pro',
+                plan: 'Entrata Giornaliera',
                 status: 'active',
                 billing: 'monthly',
                 nextPaymentDate: 1639132800,
@@ -768,7 +768,7 @@ export const userDetailData = [
         ],
         subscription: [
             {
-                plan: 'Business board pro',
+                plan: 'Entrata Giornaliera',
                 status: 'active',
                 billing: 'monthly',
                 nextPaymentDate: 1639132800,
@@ -844,7 +844,7 @@ export const userDetailData = [
         ],
         subscription: [
             {
-                plan: 'Business board pro',
+                plan: 'Entrata Giornaliera',
                 status: 'active',
                 billing: 'monthly',
                 nextPaymentDate: 1639132800,
