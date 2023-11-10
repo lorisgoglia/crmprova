@@ -7,6 +7,62 @@ import {
 import type { TableQueries } from '@/@types/common'
 import { userDetailData } from '@/mock/data/usersData'
 import paginate from '@/utils/paginate'
+import { apiGetCustomers } from '@/services/CustomerService'
+
+interface Movement {
+    id: number
+    quantity: string
+    description: string
+    date: string
+    movement_type: string
+    payment_method: string
+    card: number
+    subject_profile: number
+}
+
+interface User {
+    id: number
+    password: string
+    last_login: string
+    is_superuser: boolean
+    username: string
+    first_name: string
+    last_name: string
+    email: string
+    is_staff: boolean
+    is_active: boolean
+    date_joined: string
+    groups: any[] // You might want to replace this with the actual type if groups have a specific structure
+    user_permissions: any[] // Similarly, replace this with the actual type if user_permissions have a specific structure
+}
+
+interface Card {
+    id: number
+    img: string | null
+    balance: string
+    deleted_user_tax_code: string | null
+}
+
+export interface Profile {
+    id: number
+    tax_code: string
+    sex: string
+    dob: string
+    address: string
+    country: string
+    city: string
+    zip_code: string
+    img: string | null
+    user: User
+    card: Card
+}
+
+export interface UserData {
+    id: number
+    movements: Movement[]
+    is_vip: boolean
+    profile: Profile
+}
 
 type PersonalInfo = {
     location: string
@@ -73,17 +129,12 @@ type Filter = {
     status: string
 }
 
-type GetCrmCustomersResponse = {
-    data: Customer[]
-    total: number
-}
-
 type GetCrmCustomersStatisticResponse = CustomerStatistic
 
 export type CustomersState = {
     loading: boolean
     statisticLoading: boolean
-    customerList: Customer[]
+    customerList: UserData[]
     statisticData: Partial<CustomerStatistic>
     tableData: TableQueries
     filterData: Filter
@@ -91,24 +142,11 @@ export type CustomersState = {
     selectedCustomer: Partial<Customer>
 }
 
-export const SLICE_NAME = 'crmCustomers'
-
-export const getCustomerStatistic = createAsyncThunk(
-    'crmCustomers/data/getCustomerStatistic',
-    async () => {
-        const response =
-            await apiGetCrmCustomersStatistic<GetCrmCustomersStatisticResponse>()
-        return response.data
-    }
-)
-
+export const SLICE_NAME = 'customers'
 export const getCustomers = createAsyncThunk(
-    'crmCustomers/data/getCustomers',
+    'get-customers/',
     async (data: TableQueries & { filterData?: Filter }) => {
-        const response = await apiGetCrmCustomers<
-            GetCrmCustomersResponse,
-            TableQueries
-        >(data)
+        const response = await apiGetCustomers<UserData[]>()
         return response.data
     }
 )
@@ -117,6 +155,15 @@ export const putCustomer = createAsyncThunk(
     'crmCustomers/data/putCustomer',
     async (data: Customer) => {
         const response = await apPutCrmCustomer(data)
+        return response.data
+    }
+)
+
+export const getCustomerStatistic = createAsyncThunk(
+    'crmCustomers/data/getCustomerStatistic',
+    async () => {
+        const response =
+            await apiGetCrmCustomersStatistic<GetCrmCustomersStatisticResponse>()
         return response.data
     }
 )
@@ -173,19 +220,17 @@ const customersSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getCustomers.fulfilled, (state, action) => {
-                state.customerList = action.payload.data
-                state.tableData.total = action.payload.total
+                const paginatedData = paginate(
+                    action.payload,
+                    action.payload.length,
+                    1
+                )
+                state.customerList = paginatedData
+                state.tableData.total = action.payload.length
                 state.loading = false
             })
             .addCase(getCustomers.pending, (state) => {
                 state.loading = true
-            })
-            .addCase(getCustomerStatistic.fulfilled, (state, action) => {
-                state.statisticData = action.payload
-                state.statisticLoading = false
-            })
-            .addCase(getCustomerStatistic.pending, (state) => {
-                state.statisticLoading = true
             })
     },
 })

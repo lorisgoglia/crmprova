@@ -31,7 +31,7 @@ const DrawerFooter = ({ onSaveClick, onCancel }: DrawerFooterProps) => {
 const CustomerEditDialog = () => {
     const dispatch = useAppDispatch()
     const drawerOpen = useAppSelector(
-        (state) => state.crmCustomers.data.drawerOpen
+        (state) => state.customers.data.drawerOpen
     )
 
     const onDrawerClose = () => {
