@@ -5,6 +5,8 @@ import {
     apiGetCrmCustomersStatistic,
 } from '@/services/CrmService'
 import type { TableQueries } from '@/@types/common'
+import { userDetailData } from '@/mock/data/usersData'
+import paginate from '@/utils/paginate'
 
 type PersonalInfo = {
     location: string

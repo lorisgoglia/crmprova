@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Suspense } from 'react'
 import Loading from '@/components/shared/Loading'
 import { protectedRoutes, publicRoutes } from '@/configs/routes.config'
@@ -40,9 +41,11 @@ const AllRoutes = (props: AllRoutesProps) => {
                                 authority={route.authority}
                             >
                                 <PageContainer {...props}>
+                                    {/* @ts-ignore */}
                                     <AppRoute
                                         routeKey={route.key}
                                         component={route.component}
+                                        {...route.meta}
                                     />
                                 </PageContainer>
                             </AuthorityGuard>

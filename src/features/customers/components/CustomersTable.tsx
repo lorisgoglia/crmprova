@@ -1,6 +1,5 @@
 import { useEffect, useCallback, useMemo } from 'react'
 import Avatar from '@/components/ui/Avatar'
-import Badge from '@/components/ui/Badge'
 import DataTable from '@/components/shared/DataTable'
 import {
     getCustomers,
@@ -14,7 +13,6 @@ import {
 import useThemeClass from '@/utils/hooks/useThemeClass'
 import CustomerEditDialog from './CustomerEditDialog'
 import { Link } from 'react-router-dom'
-import dayjs from 'dayjs'
 import cloneDeep from 'lodash/cloneDeep'
 import type { OnSortParam, ColumnDef } from '@/components/shared/DataTable'
 
@@ -60,8 +58,11 @@ const NameColumn = ({ row }: { row: Customer }) => {
 
 const Customers = () => {
     const dispatch = useAppDispatch()
-    const data = useAppSelector((state) => state.crmCustomers.data.customerList)
+    const data: Customer[] = useAppSelector(
+        (state) => state.crmCustomers.data.customerList
+    )
     const loading = useAppSelector((state) => state.crmCustomers.data.loading)
+
     const filterData = useAppSelector(
         (state) => state.crmCustomers.data.filterData
     )
@@ -86,7 +87,7 @@ const Customers = () => {
     const columns: ColumnDef<Customer>[] = useMemo(
         () => [
             {
-                header: 'Name',
+                header: 'Nome',
                 accessorKey: 'name',
                 cell: (props) => {
                     const row = props.row.original
@@ -97,23 +98,9 @@ const Customers = () => {
                 header: 'Email',
                 accessorKey: 'email',
             },
+            ,
             {
-                header: 'Status',
-                accessorKey: 'status',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            <Badge className={statusColor[row.status]} />
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.status}
-                            </span>
-                        </div>
-                    )
-                },
-            },
-            {
-                header: 'Subscription Plan',
+                header: 'Servizio',
                 accessorKey: 'plan',
                 cell: (props) => {
                     const row = props.row.original

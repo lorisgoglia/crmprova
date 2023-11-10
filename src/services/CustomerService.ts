@@ -24,7 +24,7 @@ export async function apiGetCustomerDetails<
     U extends Record<string, unknown>
 >(params: U) {
     return ApiService.fetchData<T>({
-        url: '/customer',
+        url: '/user',
         method: 'get',
         params,
     })

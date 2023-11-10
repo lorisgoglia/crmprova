@@ -9,10 +9,7 @@ import {
 } from '../store'
 import cloneDeep from 'lodash/cloneDeep'
 import isEmpty from 'lodash/isEmpty'
-import CustomerForm, {
-    FormikRef,
-    FormModel,
-} from '@/features/customer-form/CustomerForm'
+import CustomerForm, { FormikRef, FormModel } from '@/features/CustomerForm'
 import dayjs from 'dayjs'
 
 const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
