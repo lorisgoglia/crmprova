@@ -3,6 +3,8 @@ import {
     apiGetAccountFormData,
     apiSaveCustomer,
 } from '@/services/AccountServices'
+import dayjs from 'dayjs'
+import { RootState } from '@/store'
 
 export type PersonalInformation = {
     firstName: string
@@ -89,19 +91,19 @@ export const getForm = createAsyncThunk(
 
 export const saveForm = createAsyncThunk(
     SLICE_NAME + '/customer-sign-up',
-    async ({
-        personalInformation,
-        addressInformation,
-    }: KycFormState['formData']) => {
-        const { firstName, lastName, email, gender, dob } = personalInformation
-        const { address, country, city, zipCode } = addressInformation
+    async (_, { getState }) => {
+        const state = getState() as any
+        const { firstName, lastName, email, gender, dob } =
+            state.accountDetailForm.data.formData.personalInformation
+        const { address, country, city, zipCode } =
+            state.accountDetailForm.data.formData.addressInformation
 
         const dto = {
             first_name: firstName,
             last_name: lastName,
             email: email,
             sex: gender,
-            dob: dob,
+            dob: dayjs(dob).format('YYYY-MM-DD'),
             address: address,
             country: country,
             city: city,
@@ -111,6 +113,7 @@ export const saveForm = createAsyncThunk(
             movement_description: 'Test',
             password1: '12345Aa!',
             password2: '12345Aa!',
+            tax_code: '1234567890123456',
         }
 
         const response = await apiSaveCustomer<string, any>(dto)
@@ -169,6 +172,7 @@ const kycFormSlice = createSlice({
             state.formData = action.payload.formData
             state.stepStatus = action.payload.formStatus
         })
+        builder.addCase(saveForm.fulfilled, (state, action) => {})
     },
 })
 

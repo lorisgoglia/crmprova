@@ -81,9 +81,8 @@ const DetailForm = () => {
         values: PersonalInformationType | Address,
         name: string
     ) => {
-        handleNextChange(values, name)
-
-        dispatch(saveForm(formData))
+        dispatch(setFormData({ [name]: values }))
+        dispatch(saveForm())
     }
 
     return (
