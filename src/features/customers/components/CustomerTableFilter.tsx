@@ -66,7 +66,7 @@ const CustomerTableFilter = () => {
     const dispatch = useAppDispatch()
 
     const { status } = useAppSelector(
-        (state) => state.crmCustomers.data.filterData
+        (state) => state.customers.data.filterData
     )
 
     const onStatusFilterChange = (selected: SingleValue<Option>) => {

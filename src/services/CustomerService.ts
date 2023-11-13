@@ -1,12 +1,9 @@
 import ApiService from './ApiService'
 
-export async function apiGetCustomers<T, U extends Record<string, unknown>>(
-    data: U
-) {
+export async function apiGetCustomers<T>() {
     return ApiService.fetchData<T>({
-        url: '/customers',
-        method: 'post',
-        data,
+        url: '/get-customers',
+        method: 'get',
     })
 }
 export async function apPutCustomer<T, U extends Record<string, unknown>>(

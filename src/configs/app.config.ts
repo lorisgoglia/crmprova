@@ -25,4 +25,4 @@ const appConfigDemo: AppConfig = {
     enableMock: true,
 }
 
-export default appConfigDemo
+export default appConfig

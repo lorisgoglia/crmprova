@@ -8,7 +8,8 @@ import {
     setDrawerOpen,
     useAppDispatch,
     useAppSelector,
-    Customer,
+    UserData,
+    Profile,
 } from '../store'
 import useThemeClass from '@/utils/hooks/useThemeClass'
 import CustomerEditDialog from './CustomerEditDialog'
@@ -21,7 +22,7 @@ const statusColor: Record<string, string> = {
     blocked: 'bg-red-500',
 }
 
-const ActionColumn = ({ row }: { row: Customer }) => {
+const ActionColumn = ({ row }: { row: UserData }) => {
     const { textTheme } = useThemeClass()
     const dispatch = useAppDispatch()
 
@@ -40,17 +41,18 @@ const ActionColumn = ({ row }: { row: Customer }) => {
     )
 }
 
-const NameColumn = ({ row }: { row: Customer }) => {
+const NameColumn = ({ row }: { row: Profile }) => {
     const { textTheme } = useThemeClass()
+    const { user } = row
 
     return (
         <div className="flex items-center">
-            <Avatar size={28} shape="circle" src={row.img} />
+            <Avatar size={28} shape="circle" src={row.img ?? undefined} />
             <Link
                 className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
                 to={`/app/crm/customer-details?id=${row.id}`}
             >
-                {row.name}
+                {user.first_name} {user.last_name}
             </Link>
         </div>
     )
@@ -58,17 +60,17 @@ const NameColumn = ({ row }: { row: Customer }) => {
 
 const Customers = () => {
     const dispatch = useAppDispatch()
-    const data: Customer[] = useAppSelector(
-        (state) => state.crmCustomers.data.customerList
+    const data: UserData[] = useAppSelector(
+        (state) => state.customers.data.customerList
     )
-    const loading = useAppSelector((state) => state.crmCustomers.data.loading)
+    const loading = useAppSelector((state) => state.customers.data.loading)
 
     const filterData = useAppSelector(
-        (state) => state.crmCustomers.data.filterData
+        (state) => state.customers.data.filterData
     )
 
     const { pageIndex, pageSize, sort, query, total } = useAppSelector(
-        (state) => state.crmCustomers.data.tableData
+        (state) => state.customers.data.tableData
     )
 
     const fetchData = useCallback(() => {
@@ -84,45 +86,47 @@ const Customers = () => {
         [pageIndex, pageSize, sort, query, total]
     )
 
-    const columns: ColumnDef<Customer>[] = useMemo(
+    const columns: ColumnDef<UserData>[] = useMemo(
         () => [
             {
                 header: 'Nome',
                 accessorKey: 'name',
                 cell: (props) => {
                     const row = props.row.original
-                    return <NameColumn row={row} />
+                    return <NameColumn row={row.profile} />
                 },
             },
             {
                 header: 'Email',
-                accessorKey: 'email',
+                accessorKey: 'profile.user.email',
             },
-            ,
             {
-                header: 'Servizio',
+                header: 'Data di nascità',
+                accessorKey: 'profile.dob',
+            },
+            {
+                header: 'Credito',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            {row.profile.card.balance + ' EUR'}
+                        </div>
+                    )
+                },
+            },
+            {
+                header: 'VIP',
                 accessorKey: 'plan',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
-                            {row.subscription[0].plan}
+                            {row.is_vip ? '✅' : '❌'}
                         </div>
                     )
                 },
             },
-            /*{
-                header: 'Last online',
-                accessorKey: 'lastOnline',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            {dayjs.unix(row.lastOnline).format('MM/DD/YYYY')}
-                        </div>
-                    )
-                },
-            },*/
             {
                 header: '',
                 id: 'action',

@@ -17,9 +17,7 @@ const CustomersTableTools = () => {
 
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const tableData = useAppSelector(
-        (state) => state.crmCustomers.data.tableData
-    )
+    const tableData = useAppSelector((state) => state.customers.data.tableData)
 
     const handleInputChange = (val: string) => {
         const newTableData = cloneDeep(tableData)
