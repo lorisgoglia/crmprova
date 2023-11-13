@@ -172,7 +172,13 @@ const kycFormSlice = createSlice({
             state.formData = action.payload.formData
             state.stepStatus = action.payload.formStatus
         })
-        builder.addCase(saveForm.fulfilled, (state, action) => {})
+        builder.addCase(saveForm.fulfilled, (state, action) => {
+            const nextStep = state.currentStep + 1
+            setStepStatus({
+                [state.currentStep]: { status: 'complete' },
+                [nextStep]: { status: 'current' },
+            })
+        })
     },
 })
 
