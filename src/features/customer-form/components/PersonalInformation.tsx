@@ -338,26 +338,31 @@ const PersonalInformation = ({
                                             placeholder="Data di nascità"
                                         >
                                             {({ field, form }: FieldProps) => (
-                                                <DatePicker
-                                                    field={field}
-                                                    form={form}
-                                                    value={
-                                                        field.value != ''
-                                                            ? dayjs(
-                                                                  field.value
-                                                              ).toDate()
-                                                            : null
-                                                    }
-                                                    inputFormat="DD-MM-YYYY"
-                                                    onChange={(date) => {
-                                                        form.setFieldValue(
-                                                            field.name,
-                                                            dayjs(date).format(
-                                                                'DD-MM-YYYY'
+                                                <>
+                                                    <DatePicker
+                                                        field={field}
+                                                        form={form}
+                                                        value={
+                                                            field.value != ''
+                                                                ? dayjs(
+                                                                      field.value
+                                                                  ).toDate()
+                                                                : null
+                                                        }
+                                                        inputFormat="DD-MM-YYYY"
+                                                        onChange={(date) => {
+                                                            form.setFieldValue(
+                                                                field.name,
+                                                                dayjs(
+                                                                    date
+                                                                ).format(
+                                                                    'DD-MM-YYYY'
+                                                                )
                                                             )
-                                                        )
-                                                    }}
-                                                />
+                                                        }}
+                                                    />
+                                                    {field.value}
+                                                </>
                                             )}
                                         </Field>
                                     </FormItem>

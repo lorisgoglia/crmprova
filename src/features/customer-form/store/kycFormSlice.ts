@@ -144,6 +144,7 @@ export const initialState: KycFormState = {
         0: { status: 'pending' },
         1: { status: 'pending' },
         2: { status: 'pending' },
+        3: { status: 'pending' },
     },
     currentStep: 0,
 }

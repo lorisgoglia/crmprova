@@ -21,7 +21,7 @@ const appConfigDemo: AppConfig = {
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',
-    locale: 'en',
+    locale: 'it',
     enableMock: true,
 }
 

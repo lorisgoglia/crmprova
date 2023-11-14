@@ -23,7 +23,7 @@ const PersonalInformation = lazy(
     () => import('./components/PersonalInformation')
 )
 const AddressInfomation = lazy(() => import('./components/AddressInfomation'))
-
+const RegistrationPrint = lazy(() => import('./components/RegistrationPrint'))
 const AccountReview = lazy(() => import('./components/AccountReview'))
 
 const DetailForm = () => {
@@ -121,7 +121,10 @@ const DetailForm = () => {
                                     onBackChange={handleBackChange}
                                 />
                             )}
-                            {currentStep === 2 && <AccountReview />}
+                            {currentStep === 2 && (
+                                <AccountReview data={formData} />
+                            )}
+                            {currentStep === 3 && <RegistrationPrint />}
                         </Suspense>
                     </div>
                 </div>

@@ -21,7 +21,8 @@ export const protectedRoutes = [
         key: 'print',
         path: '/print',
         component: lazy(
-            () => import('@/features/customer-form/components/AccountReview')
+            () =>
+                import('@/features/customer-form/components/RegistrationPrint')
         ),
         authority: [],
         meta: {

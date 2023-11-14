@@ -14,6 +14,7 @@ const steps = [
     { label: 'Informazioni personali', value: 0 },
     { label: 'Indirizzo', value: 1 },
     { label: 'Riassunto', value: 2 },
+    { label: 'Stampa', value: 3 },
 ]
 
 const FormStep = ({
@@ -26,8 +27,9 @@ const FormStep = ({
 
     const onStepChange = (step: number) => {
         const selectedStepStatus = stepStatus[step].status
+        dispatch(setCurrentStep(step))
 
-        if (
+        /*if (
             selectedStepStatus === 'complete' ||
             selectedStepStatus === 'current'
         ) {
@@ -40,7 +42,7 @@ const FormStep = ({
                 dispatch(setStepStatus('complete'))
             }
             dispatch(setCurrentStep(step))
-        }
+        }*/
     }
 
     return (
