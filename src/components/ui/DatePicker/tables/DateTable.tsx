@@ -146,7 +146,7 @@ const DateTable = (props: DateTableProps) => {
                         </div>
                     </Header>
                     <Month
-                        month={month}
+                        month={monthDate}
                         daysRefs={
                             (daysRefs.current as HTMLButtonElement[][][])[index]
                         }
