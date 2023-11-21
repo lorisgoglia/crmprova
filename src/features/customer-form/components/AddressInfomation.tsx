@@ -93,21 +93,6 @@ const AddressForm = (props: AddressFormProps) => {
                     </Field>
                 </FormItem>
                 <FormItem
-                    label="Indirizzo"
-                    invalid={getError(addressName) && getTouched(addressName)}
-                    errorMessage={getError(addressName)}
-                >
-                    <Field
-                        type="text"
-                        autoComplete="off"
-                        name={addressName}
-                        placeholder="Indirizzo"
-                        component={Input}
-                    />
-                </FormItem>
-            </div>
-            <div className="md:grid grid-cols-2 gap-4">
-                <FormItem
                     label="Città"
                     invalid={getError(cityName) && getTouched(cityName)}
                     errorMessage={getError(cityName)}
@@ -122,6 +107,19 @@ const AddressForm = (props: AddressFormProps) => {
                 </FormItem>
             </div>
             <div className="md:grid grid-cols-2 gap-4">
+                <FormItem
+                    label="Indirizzo"
+                    invalid={getError(addressName) && getTouched(addressName)}
+                    errorMessage={getError(addressName)}
+                >
+                    <Field
+                        type="text"
+                        autoComplete="off"
+                        name={addressName}
+                        placeholder="Indirizzo"
+                        component={Input}
+                    />
+                </FormItem>
                 <FormItem
                     label="CAP"
                     invalid={getError(zipCodeName) && getTouched(zipCodeName)}
