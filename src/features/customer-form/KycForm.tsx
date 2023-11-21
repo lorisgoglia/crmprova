@@ -16,6 +16,7 @@ import reducer, {
 } from './store'
 import { injectReducer } from '@/store'
 import useQuery from '@/utils/hooks/useQuery'
+import CardBalanceRecharge from '@/features/customer-form/components/CardBalanceRecharge'
 
 injectReducer('accountDetailForm', reducer)
 
@@ -99,11 +100,7 @@ const DetailForm = () => {
                         </div>
                     )}
                     <div
-                        className={
-                            currentStep !== 4
-                                ? '2xl:col-span-4 lg:col-span-3 xl:col-span-2'
-                                : 'lg:col-span-5'
-                        }
+                        className={'2xl:col-span-4 lg:col-span-3 xl:col-span-2'}
                     >
                         <Suspense fallback={<></>}>
                             {currentStep === 0 && (
@@ -122,9 +119,16 @@ const DetailForm = () => {
                                 />
                             )}
                             {currentStep === 2 && (
+                                <CardBalanceRecharge
+                                    data={formData.cardBalance}
+                                    currentStepStatus={currentStepStatus}
+                                    onBackChange={handleBackChange}
+                                />
+                            )}
+                            {currentStep === 3 && (
                                 <AccountReview data={formData} />
                             )}
-                            {currentStep === 3 && <RegistrationPrint />}
+                            {currentStep === 4 && <RegistrationPrint />}
                         </Suspense>
                     </div>
                 </div>

@@ -15,6 +15,7 @@ import type { FieldInputProps, FieldProps } from 'formik'
 import type { PersonalInformation as PersonalInformationType } from '../store'
 import type { ComponentType } from 'react'
 import type { InputProps } from '@/components/ui/Input'
+import 'dayjs/locale/it'
 
 type CountryOption = {
     label: string
@@ -37,9 +38,9 @@ type PersonalInformationProps = {
 const { SingleValue } = components
 
 const genderOptions = [
-    { label: 'Male', value: 'M' },
-    { label: 'Female', value: 'F' },
-    { label: 'Others', value: 'O' },
+    { label: 'Maschio', value: 'M' },
+    { label: 'Femmina', value: 'F' },
+    { label: 'Altro', value: 'O' },
 ]
 
 const NumberInput = (props: InputProps) => {
@@ -106,6 +107,7 @@ const validationSchema = Yup.object().shape({
     nationality: Yup.string().required('Nazionalità obbligatoria.'),
     phoneNumber: Yup.string().required('Numero di telefono obbligatorio.'),
     dob: Yup.string().required('Data di nascità obbligatoria.'),
+    taxCode: Yup.string().required('Codice Fiscale obbligatorio.'),
     gender: Yup.string().required('Sesso obbligatorio.'),
     dialCode: Yup.string().required('Codice telefonico obbligatorio.'),
 })
@@ -118,6 +120,7 @@ const PersonalInformation = ({
         nationality: '',
         dialCode: '',
         phoneNumber: '',
+        taxCode: '',
         dob: '',
         gender: '',
     },
@@ -227,6 +230,21 @@ const PersonalInformation = ({
                                                 />
                                             )}
                                         </Field>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Codice Fiscale"
+                                        invalid={
+                                            errors.taxCode && touched.taxCode
+                                        }
+                                        errorMessage={errors.taxCode}
+                                    >
+                                        <Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="taxCode"
+                                            placeholder="Codice Fiscale"
+                                            component={Input}
+                                        />
                                     </FormItem>
                                 </div>
                                 <FormItem
@@ -342,26 +360,15 @@ const PersonalInformation = ({
                                                     <DatePicker
                                                         field={field}
                                                         form={form}
-                                                        value={
-                                                            field.value != ''
-                                                                ? dayjs(
-                                                                      field.value
-                                                                  ).toDate()
-                                                                : null
-                                                        }
-                                                        inputFormat="DD-MM-YYYY"
+                                                        value={field.value}
+                                                        inputFormat={'L'}
                                                         onChange={(date) => {
                                                             form.setFieldValue(
                                                                 field.name,
-                                                                dayjs(
-                                                                    date
-                                                                ).format(
-                                                                    'DD-MM-YYYY'
-                                                                )
+                                                                date
                                                             )
                                                         }}
                                                     />
-                                                    {field.value}
                                                 </>
                                             )}
                                         </Field>

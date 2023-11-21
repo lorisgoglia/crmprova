@@ -4,7 +4,6 @@ import {
     apiSaveCustomer,
 } from '@/services/AccountServices'
 import dayjs from 'dayjs'
-import { RootState } from '@/store'
 
 export type PersonalInformation = {
     firstName: string
@@ -13,6 +12,7 @@ export type PersonalInformation = {
     nationality: string
     dialCode: string
     phoneNumber: string
+    taxCode: string
     dob: string
     gender: string
 }
@@ -32,6 +32,10 @@ export type Address = {
     address: string
     city: string
     zipCode: string
+}
+
+export type CardBalance = {
+    amount: number
 }
 
 type CompanyInformation = {
@@ -59,6 +63,9 @@ export type FinancialInformation = {
 type FormData = {
     personalInformation: PersonalInformation
     addressInformation: Address
+    cardBalance: {
+        amount: number
+    }
 }
 
 export type StepStatus = Record<number, { status: string }>
@@ -130,6 +137,7 @@ export const initialState: KycFormState = {
             nationality: '',
             dialCode: '',
             phoneNumber: '',
+            taxCode: '',
             dob: '',
             gender: '',
         },
@@ -139,12 +147,16 @@ export const initialState: KycFormState = {
             city: '',
             zipCode: '',
         },
+        cardBalance: {
+            amount: 0,
+        },
     },
     stepStatus: {
         0: { status: 'pending' },
         1: { status: 'pending' },
         2: { status: 'pending' },
         3: { status: 'pending' },
+        4: { status: 'pending' },
     },
     currentStep: 0,
 }
