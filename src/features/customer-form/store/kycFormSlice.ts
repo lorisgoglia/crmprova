@@ -123,7 +123,7 @@ export const saveForm = createAsyncThunk(
             tax_code: taxCode,
         }
 
-        const response = await apiSaveCustomer<string, any>(dto)
+        const response = await apiSaveCustomer<any, any>(dto)
         return response.data
     }
 )
