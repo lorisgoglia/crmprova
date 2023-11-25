@@ -10,7 +10,6 @@ export type PersonalInformation = {
     lastName: string
     email: string
     nationality: string
-    dialCode: string
     phoneNumber: string
     taxCode: string
     dob: string
@@ -97,13 +96,14 @@ export const getForm = createAsyncThunk(
 )
 
 export const saveForm = createAsyncThunk(
-    SLICE_NAME + '/customer-sign-up',
+    SLICE_NAME + '/saveForm',
     async (_, { getState }) => {
         const state = getState() as any
-        const { firstName, lastName, email, gender, dob } =
+        const { firstName, lastName, email, gender, dob, taxCode } =
             state.accountDetailForm.data.formData.personalInformation
         const { address, country, city, zipCode } =
             state.accountDetailForm.data.formData.addressInformation
+        const { amount } = state.accountDetailForm.data.formData.cardBalance
 
         const dto = {
             first_name: firstName,
@@ -115,12 +115,12 @@ export const saveForm = createAsyncThunk(
             country: country,
             city: city,
             zip_code: zipCode,
-            card_balance: '10.0',
+            card_balance: amount,
             payment_method: 'Cash',
-            movement_description: 'Test',
+            movement_description: 'Prima ricarica on-desk.',
             password1: '12345Aa!',
             password2: '12345Aa!',
-            tax_code: '1234567890123456',
+            tax_code: taxCode,
         }
 
         const response = await apiSaveCustomer<string, any>(dto)
@@ -135,7 +135,6 @@ export const initialState: KycFormState = {
             lastName: '',
             email: '',
             nationality: '',
-            dialCode: '',
             phoneNumber: '',
             taxCode: '',
             dob: '',
@@ -181,17 +180,20 @@ const kycFormSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(getForm.fulfilled, (state, action) => {
-            state.formData = action.payload.formData
-            state.stepStatus = action.payload.formStatus
-        })
-        builder.addCase(saveForm.fulfilled, (state, action) => {
-            const nextStep = state.currentStep + 1
-            setStepStatus({
-                [state.currentStep]: { status: 'complete' },
-                [nextStep]: { status: 'current' },
+        builder
+            .addCase(getForm.fulfilled, (state, action) => {
+                state.formData = action.payload.formData
+                state.stepStatus = action.payload.formStatus
             })
-        })
+            .addCase(saveForm.fulfilled, (state, action) => {
+                const nextStep = state.currentStep + 1
+                state.stepStatus = {
+                    ...state.stepStatus,
+                    [state.currentStep]: { status: 'complete' },
+                    [nextStep]: { status: 'current' },
+                }
+                state.currentStep = nextStep
+            })
     },
 })
 

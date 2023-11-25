@@ -4,9 +4,10 @@ import AccountReviewTable from '@/features/customer-form/components/AccountRevie
 
 type AccountReviewProps = {
     data: KycFormState['formData']
+    handleSubmit: () => void
 }
 
-const AccountReview = ({ data }: AccountReviewProps) => {
+const AccountReview = ({ data, handleSubmit }: AccountReviewProps) => {
     const { personalInformation, addressInformation } = data
     return (
         <>
@@ -31,7 +32,7 @@ const AccountReview = ({ data }: AccountReviewProps) => {
 
             <h5>Anamnesi</h5>
             <div className="flex justify-end gap-2">
-                <Button variant="solid" type="submit">
+                <Button variant="solid" type="submit" onClick={handleSubmit}>
                     Salva
                 </Button>
             </div>

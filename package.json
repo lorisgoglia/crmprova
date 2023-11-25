@@ -10,7 +10,8 @@
     "lint:fix": "npm run lint -- --fix",
     "prettier": "npx prettier src --check",
     "prettier:fix": "npm run prettier -- --write",
-    "format": "npm run prettier:fix && npm run lint:fix"
+    "format": "npm run prettier:fix && npm run lint:fix",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@fullcalendar/daygrid": "^6.1.8",
@@ -61,10 +62,12 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
     "@tailwindcss/typography": "^0.5.9",
     "@types/d3-fetch": "^3.0.2",
     "@types/d3-scale": "^4.0.3",
     "@types/lodash": "^4.14.191",
+    "@types/mocha": "^10.0.6",
     "@types/node": "^18.15.5",
     "@types/react": "^18.0.28",
     "@types/react-beautiful-dnd": "^13.1.4",
@@ -80,6 +83,7 @@
     "@vitejs/plugin-react": "^4.0.0",
     "autoprefixer": "^10.4.14",
     "cross-env": "^7.0.3",
+    "cypress": "^13.6.0",
     "dotenv": "^16.0.3",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",

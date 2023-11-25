@@ -4,7 +4,6 @@ import { FormItem, FormContainer } from '@/components/ui/Form'
 import { Field, FieldInputProps, FieldProps, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { CardBalance } from '../store'
-import { HiOutlineCurrencyEuro } from 'react-icons/hi'
 import { NumericFormat, NumericFormatProps } from 'react-number-format'
 import { ComponentType } from 'react'
 

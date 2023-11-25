@@ -66,38 +66,6 @@ const NumericFormatInput = ({
     )
 }
 
-const PhoneSelectOption = ({
-    innerProps,
-    data,
-    isSelected,
-}: OptionProps<CountryOption>) => {
-    return (
-        <div
-            className={`cursor-pointer flex items-center justify-between p-2 ${
-                isSelected
-                    ? 'bg-gray-100 dark:bg-gray-500'
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-600'
-            }`}
-            {...innerProps}
-        >
-            <div className="flex items-center gap-2">
-                <span>
-                    ({data.value}) {data.dialCode}
-                </span>
-            </div>
-        </div>
-    )
-}
-
-const PhoneControl = (props: SingleValueProps<CountryOption>) => {
-    const selected = props.getValue()[0]
-    return (
-        <SingleValue {...props}>
-            {selected && <span>{selected.dialCode}</span>}
-        </SingleValue>
-    )
-}
-
 const validationSchema = Yup.object().shape({
     firstName: Yup.string().required('Nome obbligatorio.'),
     lastName: Yup.string().required('Cognome obbligatorio.'),
@@ -109,7 +77,6 @@ const validationSchema = Yup.object().shape({
     dob: Yup.string().required('Data di nascità obbligatoria.'),
     taxCode: Yup.string().required('Codice Fiscale obbligatorio.'),
     gender: Yup.string().required('Sesso obbligatorio.'),
-    dialCode: Yup.string().required('Codice telefonico obbligatorio.'),
 })
 
 const PersonalInformation = ({
@@ -118,7 +85,6 @@ const PersonalInformation = ({
         lastName: '',
         email: '',
         nationality: '',
-        dialCode: '',
         phoneNumber: '',
         taxCode: '',
         dob: '',
@@ -212,6 +178,7 @@ const PersonalInformation = ({
                                         <Field name="gender">
                                             {({ field, form }: FieldProps) => (
                                                 <Select
+                                                    id="sex_select"
                                                     placeholder="Sesso"
                                                     field={field}
                                                     form={form}
@@ -281,70 +248,31 @@ const PersonalInformation = ({
                                     <FormItem
                                         label="Numero di telefono"
                                         invalid={
-                                            (errors.dialCode &&
-                                                touched.dialCode) ||
-                                            (errors.phoneNumber &&
-                                                touched.phoneNumber)
+                                            errors.phoneNumber &&
+                                            touched.phoneNumber
                                         }
                                         errorMessage="Numero di telefono obbligatorio"
                                     >
-                                        <InputGroup>
-                                            <Field name="dialCode">
-                                                {({
-                                                    field,
-                                                    form,
-                                                }: FieldProps) => (
-                                                    <Select<CountryOption>
-                                                        className="min-w-[130px]"
-                                                        placeholder="Codice"
-                                                        components={{
-                                                            Option: PhoneSelectOption,
-                                                            SingleValue:
-                                                                PhoneControl,
-                                                        }}
-                                                        field={field}
+                                        <Field name="phoneNumber">
+                                            {({ field, form }: FieldProps) => {
+                                                return (
+                                                    <NumericFormatInput
                                                         form={form}
-                                                        options={countryList}
-                                                        value={countryList.filter(
-                                                            (country) =>
-                                                                country.value ===
-                                                                values.dialCode
-                                                        )}
-                                                        onChange={(country) =>
+                                                        field={field}
+                                                        customInput={
+                                                            NumberInput as ComponentType
+                                                        }
+                                                        placeholder="Numero di telefono"
+                                                        onValueChange={(e) => {
                                                             form.setFieldValue(
                                                                 field.name,
-                                                                country?.value
+                                                                e.value
                                                             )
-                                                        }
+                                                        }}
                                                     />
-                                                )}
-                                            </Field>
-                                            <Field name="phoneNumber">
-                                                {({
-                                                    field,
-                                                    form,
-                                                }: FieldProps) => {
-                                                    return (
-                                                        <NumericFormatInput
-                                                            form={form}
-                                                            field={field}
-                                                            customInput={
-                                                                NumberInput as ComponentType
-                                                            }
-                                                            placeholder="Numero di telefono"
-                                                            onValueChange={(
-                                                                e
-                                                            ) => {
-                                                                form.setFieldValue(
-                                                                    field.name,
-                                                                    e.value
-                                                                )
-                                                            }}
-                                                        />
-                                                    )
-                                                }}
-                                            </Field>
-                                        </InputGroup>
+                                                )
+                                            }}
+                                        </Field>
                                     </FormItem>
                                     <FormItem
                                         label="Data di nascità"
