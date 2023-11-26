@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import { CardBalance } from '../store'
 import { NumericFormat, NumericFormatProps } from 'react-number-format'
 import { ComponentType } from 'react'
+import { cardBalanceValidator } from '@/features/customer-form/models/validators/customer-validator'
 
 type FormModel = CardBalance
 
@@ -19,10 +20,6 @@ type CardBalanceProps = {
     onBackChange?: () => void
     currentStepStatus?: string
 }
-
-const validationSchema = Yup.object().shape({
-    cardBalance: Yup.number(),
-})
 
 const AmountInput = (props: InputProps) => {
     return (
@@ -82,7 +79,7 @@ const CardBalanceRecharge = ({
             <Formik
                 enableReinitialize
                 initialValues={data}
-                validationSchema={validationSchema}
+                validationSchema={cardBalanceValidator}
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(true)
                     setTimeout(() => {

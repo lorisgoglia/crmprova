@@ -36,24 +36,32 @@ const ActionColumn = ({ row }: { row: UserData }) => {
             className={`${textTheme} cursor-pointer select-none font-semibold`}
             onClick={onEdit}
         >
-            Edit
+            Modifica
         </div>
     )
 }
 
-const NameColumn = ({ row }: { row: Profile }) => {
+const NameColumn = ({ row }: { row: UserData }) => {
     const { textTheme } = useThemeClass()
-    const { user } = row
+    const {
+        profile: { user },
+    } = row
+    const dispatch = useAppDispatch()
+
+    const onEdit = () => {
+        dispatch(setDrawerOpen())
+        dispatch(setSelectedCustomer(row))
+    }
 
     return (
         <div className="flex items-center">
             <Avatar size={28} shape="circle" src={row.img ?? undefined} />
-            <Link
-                className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold`}
-                to={`/app/crm/customer-details?id=${row.id}`}
+            <div
+                className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold cursor-pointer`}
+                onClick={onEdit}
             >
                 {user.first_name} {user.last_name}
-            </Link>
+            </div>
         </div>
     )
 }
@@ -93,7 +101,7 @@ const Customers = () => {
                 accessorKey: 'name',
                 cell: (props) => {
                     const row = props.row.original
-                    return <NameColumn row={row.profile} />
+                    return <NameColumn row={row} />
                 },
             },
             {

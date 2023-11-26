@@ -1,11 +1,8 @@
 import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit'
-import {
-    apPutCrmCustomer,
-    apiGetCrmCustomersStatistic,
-} from '@/services/CrmService'
+import { apiGetCrmCustomersStatistic } from '@/services/CrmService'
 import type { TableQueries } from '@/@types/common'
 import paginate from '@/utils/paginate'
-import { apiGetCustomers } from '@/services/CustomerService'
+import { apiGetCustomers, apiPutCustomer } from '@/services/CustomerService'
 
 interface Movement {
     id: number
@@ -137,7 +134,7 @@ export type CustomersState = {
     tableData: TableQueries
     filterData: Filter
     drawerOpen: boolean
-    selectedCustomer: Partial<Customer>
+    selectedCustomer: UserData | object
 }
 
 export const SLICE_NAME = 'customers'
@@ -160,8 +157,9 @@ export const getCustomers = createAsyncThunk(
 
 export const putCustomer = createAsyncThunk(
     'crmCustomers/data/putCustomer',
-    async (data: Customer) => {
-        const response = await apPutCrmCustomer(data)
+    async (data: Partial<UserData & { user_id: number }>) => {
+        const update = await apiPutCustomer(data)
+        const response = await apiGetCustomers<UserData[]>()
         return response.data
     }
 )
@@ -239,6 +237,17 @@ const customersSlice = createSlice({
             })
             .addCase(getCustomers.pending, (state) => {
                 state.loading = true
+            })
+            .addCase(putCustomer.fulfilled, (state, action) => {
+                const paginatedData = paginate(
+                    action.payload,
+                    action.payload.length,
+                    1
+                )
+                state.customerList = paginatedData
+                state.tableData.total = action.payload.length
+                state.tableData.pageSize = action.payload.length
+                state.loading = false
             })
     },
 })

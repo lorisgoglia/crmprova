@@ -6,8 +6,8 @@ import {
     useAppDispatch,
     useAppSelector,
     Customer,
+    UserData,
 } from '../store'
-import cloneDeep from 'lodash/cloneDeep'
 import isEmpty from 'lodash/isEmpty'
 import CustomerForm, { FormikRef, FormModel } from '@/features/CustomerForm'
 import dayjs from 'dayjs'
@@ -18,50 +18,30 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     const customer = useAppSelector(
         (state) => state.customers.data.selectedCustomer
     )
+
     const data = useAppSelector((state) => state.customers.data.customerList)
     const { id } = customer
 
     const onFormSubmit = (values: FormModel) => {
-        const {
-            name,
-            birthday,
-            email,
-            img,
-            location,
-            title,
-            phoneNumber,
-            facebook,
-            twitter,
-            pinterest,
-            linkedIn,
-        } = values
+        const { firstName, lastName, dob, address, email } = values
 
-        const basicInfo = { name, email, img }
-        const personalInfo = {
-            location,
-            title,
-            birthday: dayjs(birthday).format('DD/MM/YYYY'),
-            phoneNumber,
-            facebook,
-            twitter,
-            pinterest,
-            linkedIn,
+        const editedCustomer = {
+            user_id: id,
+            first_name: firstName,
+            lastName: lastName,
+            address,
+            dob: dayjs(dob).format('YYYY-MM-DD'),
         }
-        let newData = cloneDeep(data)
-        let editedCustomer: Partial<Customer> = {}
-        newData = newData.map((elm) => {
-            if (elm.id === id) {
-                elm = { ...elm, ...basicInfo }
-                elm.personalInfo = { ...elm.personalInfo, ...personalInfo }
-                editedCustomer = elm
-            }
-            return elm
-        })
+
         if (!isEmpty(editedCustomer)) {
-            dispatch(putCustomer(editedCustomer as Customer))
+            dispatch(
+                putCustomer(
+                    editedCustomer as Partial<UserData & { user_id: number }>
+                )
+            )
         }
         dispatch(setDrawerClose())
-        dispatch(setCustomerList(newData))
+        /* dispatch(setCustomerList(newData))*/
     }
 
     return (

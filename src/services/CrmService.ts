@@ -31,7 +31,7 @@ export async function apiGetCrmCustomersStatistic<T>() {
     })
 }
 
-export async function apPutCrmCustomer<T, U extends Record<string, unknown>>(
+export async function apiPutCrmCustomer<T, U extends Record<string, unknown>>(
     data: U
 ) {
     return ApiService.fetchData<T>({

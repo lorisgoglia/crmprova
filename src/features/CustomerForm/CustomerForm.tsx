@@ -7,35 +7,16 @@ import customParseFormat from 'dayjs/plugin/customParseFormat'
 import * as Yup from 'yup'
 import PersonalInfoForm from './PersonalInfoForm'
 import SocialLinkForm from './SocialLinkForm'
+import { UserData } from '@/features/customers/store'
+import { Address, PersonalInformation } from '@/features/customer-form/store'
 
-type BaseCustomerInfo = {
-    name: string
-    email: string
-    img: string
-}
+export type Customer = UserData
 
-type CustomerPersonalInfo = {
-    location: string
-    title: string
-    phoneNumber: string
-    birthday: string
-    facebook: string
-    twitter: string
-    pinterest: string
-    linkedIn: string
-}
-
-export type Customer = BaseCustomerInfo & CustomerPersonalInfo
-
-export interface FormModel extends Omit<Customer, 'birthday'> {
-    birthday: Date
-}
+export type FormModel = Partial<PersonalInformation & Address>
 
 export type FormikRef = FormikProps<FormModel>
 
-export type CustomerProps = Partial<
-    BaseCustomerInfo & { personalInfo: CustomerPersonalInfo }
->
+export type CustomerProps = UserData
 
 type CustomerFormProps = {
     customer: CustomerProps
@@ -45,47 +26,35 @@ type CustomerFormProps = {
 dayjs.extend(customParseFormat)
 
 const validationSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Email Required'),
-    name: Yup.string().required('User Name Required'),
-    location: Yup.string(),
-    title: Yup.string(),
-    phoneNumber: Yup.string().matches(
-        /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/,
-        'Phone number is not valid'
-    ),
-    birthday: Yup.string(),
-    facebook: Yup.string(),
-    twitter: Yup.string(),
-    pinterest: Yup.string(),
-    linkedIn: Yup.string(),
-    img: Yup.string(),
+    firstName: Yup.string().required(),
 })
 
 const { TabNav, TabList, TabContent } = Tabs
+const getInitialValue = (customer: UserData) => {
+    if (customer) {
+        const { profile } = customer
+        return {
+            firstName: profile?.user.first_name,
+            lastName: profile?.user.last_name,
+            dob: profile?.dob,
+            address: profile?.address,
+            city: profile?.city,
+            email: profile?.user.email,
+            phoneNumber: '',
+        }
+    }
+
+    return {}
+}
 
 const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
     const { customer, onFormSubmit } = props
+    const initialValue = getInitialValue(customer)
 
     return (
         <Formik<FormModel>
             innerRef={ref}
-            initialValues={{
-                name: customer.name || '',
-                email: customer.email || '',
-                img: customer.img || '',
-                location: customer?.personalInfo?.location || '',
-                title: customer?.personalInfo?.title || '',
-                phoneNumber: customer?.personalInfo?.phoneNumber || '',
-                birthday: (customer?.personalInfo?.birthday &&
-                    dayjs(
-                        customer.personalInfo.birthday,
-                        'DD/MM/YYYY'
-                    ).toDate()) as Date,
-                facebook: customer?.personalInfo?.facebook || '',
-                twitter: customer?.personalInfo?.twitter || '',
-                pinterest: customer?.personalInfo?.pinterest || '',
-                linkedIn: customer?.personalInfo?.linkedIn || '',
-            }}
+            initialValues={initialValue}
             validationSchema={validationSchema}
             onSubmit={(values, { setSubmitting }) => {
                 onFormSubmit?.(values)
@@ -108,12 +77,12 @@ const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
                                         errors={errors}
                                     />
                                 </TabContent>
-                                <TabContent value="social">
+                                {/*<TabContent value="social">
                                     <SocialLinkForm
                                         touched={touched}
                                         errors={errors}
                                     />
-                                </TabContent>
+                                </TabContent>*/}
                             </div>
                         </Tabs>
                     </FormContainer>
