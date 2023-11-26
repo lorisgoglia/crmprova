@@ -18,7 +18,7 @@ import useQuery from '@/utils/hooks/useQuery'
 injectReducer('accountDetailForm', reducer)
 
 const PersonalInformation = lazy(() => import('./PersonalInformation'))
-const AddressInfomation = lazy(() => import('./AddressInfomation'))
+const AddressInfomation = lazy(() => import('./AddressInformation'))
 
 const DetailForm = () => {
     const dispatch = useAppDispatch()

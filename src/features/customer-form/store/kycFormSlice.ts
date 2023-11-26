@@ -3,14 +3,16 @@ import {
     apiGetAccountFormData,
     apiSaveCustomer,
 } from '@/services/AccountServices'
+import dayjs from 'dayjs'
+import { get18yearsOldAgeDate } from '@/features/customer-form/utils/dateUtils'
 
 export type PersonalInformation = {
     firstName: string
     lastName: string
     email: string
     nationality: string
-    dialCode: string
     phoneNumber: string
+    taxCode: string
     dob: string
     gender: string
 }
@@ -30,6 +32,10 @@ export type Address = {
     address: string
     city: string
     zipCode: string
+}
+
+export type CardBalance = {
+    amount: number
 }
 
 type CompanyInformation = {
@@ -57,6 +63,9 @@ export type FinancialInformation = {
 type FormData = {
     personalInformation: PersonalInformation
     addressInformation: Address
+    cardBalance: {
+        amount: number
+    }
 }
 
 export type StepStatus = Record<number, { status: string }>
@@ -88,36 +97,37 @@ export const getForm = createAsyncThunk(
 )
 
 export const saveForm = createAsyncThunk(
-    SLICE_NAME + '/customer-sign-up',
-    async ({
-        personalInformation,
-        addressInformation,
-    }: KycFormState['formData']) => {
-        const { firstName, lastName, email, gender, dob } = personalInformation
-        const { address, country, city, zipCode } = addressInformation
+    SLICE_NAME + '/saveForm',
+    async (_, { getState }) => {
+        const state = getState() as any
+        const { firstName, lastName, email, gender, dob, taxCode } =
+            state.accountDetailForm.data.formData.personalInformation
+        const { address, country, city, zipCode } =
+            state.accountDetailForm.data.formData.addressInformation
+        const { amount } = state.accountDetailForm.data.formData.cardBalance
 
         const dto = {
             first_name: firstName,
             last_name: lastName,
             email: email,
             sex: gender,
-            dob: dob,
+            dob: dayjs(dob).format('YYYY-MM-DD'),
             address: address,
             country: country,
             city: city,
             zip_code: zipCode,
-            card_balance: '10.0',
+            card_balance: amount,
             payment_method: 'Cash',
-            movement_description: 'Test',
+            movement_description: 'Prima ricarica on-desk.',
             password1: '12345Aa!',
             password2: '12345Aa!',
+            tax_code: taxCode,
         }
 
-        const response = await apiSaveCustomer<string, any>(dto)
+        const response = await apiSaveCustomer<any, any>(dto)
         return response.data
     }
 )
-
 export const initialState: KycFormState = {
     formData: {
         personalInformation: {
@@ -125,9 +135,9 @@ export const initialState: KycFormState = {
             lastName: '',
             email: '',
             nationality: '',
-            dialCode: '',
             phoneNumber: '',
-            dob: '',
+            taxCode: '',
+            dob: get18yearsOldAgeDate(),
             gender: '',
         },
         addressInformation: {
@@ -136,11 +146,16 @@ export const initialState: KycFormState = {
             city: '',
             zipCode: '',
         },
+        cardBalance: {
+            amount: 0,
+        },
     },
     stepStatus: {
         0: { status: 'pending' },
         1: { status: 'pending' },
         2: { status: 'pending' },
+        3: { status: 'pending' },
+        4: { status: 'pending' },
     },
     currentStep: 0,
 }
@@ -165,10 +180,20 @@ const kycFormSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(getForm.fulfilled, (state, action) => {
-            state.formData = action.payload.formData
-            state.stepStatus = action.payload.formStatus
-        })
+        builder
+            .addCase(getForm.fulfilled, (state, action) => {
+                state.formData = action.payload.formData
+                state.stepStatus = action.payload.formStatus
+            })
+            .addCase(saveForm.fulfilled, (state, action) => {
+                const nextStep = state.currentStep + 1
+                state.stepStatus = {
+                    ...state.stepStatus,
+                    [state.currentStep]: { status: 'complete' },
+                    [nextStep]: { status: 'current' },
+                }
+                state.currentStep = nextStep
+            })
     },
 })
 

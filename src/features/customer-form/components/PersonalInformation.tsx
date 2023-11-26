@@ -1,26 +1,19 @@
 import Input from '@/components/ui/Input'
-import InputGroup from '@/components/ui/InputGroup'
 import Button from '@/components/ui/Button'
 import DatePicker from '@/components/ui/DatePicker'
 import Select from '@/components/ui/Select'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import { Field, Form, Formik } from 'formik'
 import { NumericFormat, NumericFormatProps } from 'react-number-format'
-import { countryList } from '@/constants/countries.constant'
-import { components } from 'react-select'
-import dayjs from 'dayjs'
+import { countryList } from '@/constants/countries-it.constant'
 import * as Yup from 'yup'
-import type { OptionProps, SingleValueProps } from 'react-select'
 import type { FieldInputProps, FieldProps } from 'formik'
 import type { PersonalInformation as PersonalInformationType } from '../store'
 import type { ComponentType } from 'react'
 import type { InputProps } from '@/components/ui/Input'
-
-type CountryOption = {
-    label: string
-    dialCode: string
-    value: string
-}
+import 'dayjs/locale/it'
+import dayjs from 'dayjs'
+import appConfig from '@/configs/app.config'
 
 type FormModel = PersonalInformationType
 
@@ -34,12 +27,10 @@ type PersonalInformationProps = {
     currentStepStatus?: string
 }
 
-const { SingleValue } = components
-
 const genderOptions = [
-    { label: 'Male', value: 'M' },
-    { label: 'Female', value: 'F' },
-    { label: 'Others', value: 'O' },
+    { label: 'Maschio', value: 'M' },
+    { label: 'Femmina', value: 'F' },
+    { label: 'Altro', value: 'O' },
 ]
 
 const NumberInput = (props: InputProps) => {
@@ -65,38 +56,6 @@ const NumericFormatInput = ({
     )
 }
 
-const PhoneSelectOption = ({
-    innerProps,
-    data,
-    isSelected,
-}: OptionProps<CountryOption>) => {
-    return (
-        <div
-            className={`cursor-pointer flex items-center justify-between p-2 ${
-                isSelected
-                    ? 'bg-gray-100 dark:bg-gray-500'
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-600'
-            }`}
-            {...innerProps}
-        >
-            <div className="flex items-center gap-2">
-                <span>
-                    ({data.value}) {data.dialCode}
-                </span>
-            </div>
-        </div>
-    )
-}
-
-const PhoneControl = (props: SingleValueProps<CountryOption>) => {
-    const selected = props.getValue()[0]
-    return (
-        <SingleValue {...props}>
-            {selected && <span>{selected.dialCode}</span>}
-        </SingleValue>
-    )
-}
-
 const validationSchema = Yup.object().shape({
     firstName: Yup.string().required('Nome obbligatorio.'),
     lastName: Yup.string().required('Cognome obbligatorio.'),
@@ -104,10 +63,15 @@ const validationSchema = Yup.object().shape({
         .email('Email invalida. ( Es: nome@email.com )')
         .required('Email obbligatoria.'),
     nationality: Yup.string().required('Nazionalità obbligatoria.'),
-    phoneNumber: Yup.string().required('Numero di telefono obbligatorio.'),
+    phoneNumber: Yup.string()
+        .min(8)
+        .max(10)
+        .required('Numero di telefono obbligatorio.'),
     dob: Yup.string().required('Data di nascità obbligatoria.'),
-    gender: Yup.string().required('Sesso obbligatorio.'),
-    dialCode: Yup.string().required('Codice telefonico obbligatorio.'),
+    taxCode: Yup.string()
+        .length(16, 'Il codice fiscale deve contenere 16 caratteri.')
+        .required('Codice Fiscale obbligatorio.'),
+    gender: Yup.string().required('Genere obbligatorio.'),
 })
 
 const PersonalInformation = ({
@@ -116,8 +80,8 @@ const PersonalInformation = ({
         lastName: '',
         email: '',
         nationality: '',
-        dialCode: '',
         phoneNumber: '',
+        taxCode: '',
         dob: '',
         gender: '',
     },
@@ -185,19 +149,6 @@ const PersonalInformation = ({
                                         />
                                     </FormItem>
                                 </div>
-                                <FormItem
-                                    label="Email"
-                                    invalid={errors.email && touched.email}
-                                    errorMessage={errors.email}
-                                >
-                                    <Field
-                                        type="email"
-                                        autoComplete="off"
-                                        name="email"
-                                        placeholder="Email"
-                                        component={Input}
-                                    />
-                                </FormItem>
                                 <div className="md:grid grid-cols-2 gap-4">
                                     <FormItem
                                         label="Sesso"
@@ -209,6 +160,7 @@ const PersonalInformation = ({
                                         <Field name="gender">
                                             {({ field, form }: FieldProps) => (
                                                 <Select
+                                                    id="sex_select"
                                                     placeholder="Sesso"
                                                     field={field}
                                                     form={form}
@@ -228,106 +180,6 @@ const PersonalInformation = ({
                                             )}
                                         </Field>
                                     </FormItem>
-                                </div>
-                                <FormItem
-                                    label="Nazionalità"
-                                    invalid={
-                                        errors.nationality &&
-                                        touched.nationality
-                                    }
-                                    errorMessage={errors.nationality}
-                                >
-                                    <Field name="nationality">
-                                        {({ field, form }: FieldProps) => (
-                                            <Select
-                                                placeholder="Nazionalità"
-                                                field={field}
-                                                form={form}
-                                                options={countryList}
-                                                value={countryList.filter(
-                                                    (country) =>
-                                                        country.value ===
-                                                        values.nationality
-                                                )}
-                                                onChange={(country) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        country?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItem>
-                                <div className="md:grid grid-cols-2 gap-4">
-                                    <FormItem
-                                        label="Numero di telefono"
-                                        invalid={
-                                            (errors.dialCode &&
-                                                touched.dialCode) ||
-                                            (errors.phoneNumber &&
-                                                touched.phoneNumber)
-                                        }
-                                        errorMessage="Numero di telefono obbligatorio"
-                                    >
-                                        <InputGroup>
-                                            <Field name="dialCode">
-                                                {({
-                                                    field,
-                                                    form,
-                                                }: FieldProps) => (
-                                                    <Select<CountryOption>
-                                                        className="min-w-[130px]"
-                                                        placeholder="Codice"
-                                                        components={{
-                                                            Option: PhoneSelectOption,
-                                                            SingleValue:
-                                                                PhoneControl,
-                                                        }}
-                                                        field={field}
-                                                        form={form}
-                                                        options={countryList}
-                                                        value={countryList.filter(
-                                                            (country) =>
-                                                                country.value ===
-                                                                values.dialCode
-                                                        )}
-                                                        onChange={(country) =>
-                                                            form.setFieldValue(
-                                                                field.name,
-                                                                country?.value
-                                                            )
-                                                        }
-                                                    />
-                                                )}
-                                            </Field>
-                                            <Field name="phoneNumber">
-                                                {({
-                                                    field,
-                                                    form,
-                                                }: FieldProps) => {
-                                                    return (
-                                                        <NumericFormatInput
-                                                            form={form}
-                                                            field={field}
-                                                            customInput={
-                                                                NumberInput as ComponentType
-                                                            }
-                                                            placeholder="Numero di telefono"
-                                                            onValueChange={(
-                                                                e
-                                                            ) => {
-                                                                form.setFieldValue(
-                                                                    field.name,
-                                                                    e.value
-                                                                )
-                                                            }}
-                                                        />
-                                                    )
-                                                }}
-                                            </Field>
-                                        </InputGroup>
-                                    </FormItem>
                                     <FormItem
                                         label="Data di nascità"
                                         invalid={errors.dob && touched.dob}
@@ -338,27 +190,120 @@ const PersonalInformation = ({
                                             placeholder="Data di nascità"
                                         >
                                             {({ field, form }: FieldProps) => (
-                                                <DatePicker
+                                                <>
+                                                    <DatePicker
+                                                        field={field}
+                                                        form={form}
+                                                        value={
+                                                            field.value &&
+                                                            field.value != ''
+                                                                ? new Date(
+                                                                      field.value
+                                                                  )
+                                                                : null
+                                                        }
+                                                        inputFormat={'L'}
+                                                        onChange={(date) => {
+                                                            form.setFieldValue(
+                                                                field.name,
+                                                                date
+                                                            )
+                                                        }}
+                                                    />
+                                                </>
+                                            )}
+                                        </Field>
+                                    </FormItem>
+                                </div>
+                                <div className="md:grid grid-cols-2 gap-4">
+                                    <FormItem
+                                        label="Nazionalità"
+                                        invalid={
+                                            errors.nationality &&
+                                            touched.nationality
+                                        }
+                                        errorMessage={errors.nationality}
+                                    >
+                                        <Field name="nationality">
+                                            {({ field, form }: FieldProps) => (
+                                                <Select
+                                                    placeholder="Nazionalità"
                                                     field={field}
                                                     form={form}
-                                                    value={
-                                                        field.value != ''
-                                                            ? dayjs(
-                                                                  field.value
-                                                              ).toDate()
-                                                            : null
-                                                    }
-                                                    inputFormat="DD-MM-YYYY"
-                                                    onChange={(date) => {
+                                                    options={countryList}
+                                                    value={countryList.filter(
+                                                        (country) =>
+                                                            country.value ===
+                                                            values.nationality
+                                                    )}
+                                                    onChange={(country) =>
                                                         form.setFieldValue(
                                                             field.name,
-                                                            dayjs(date).format(
-                                                                'DD-MM-YYYY'
-                                                            )
+                                                            country?.value
                                                         )
-                                                    }}
+                                                    }
                                                 />
                                             )}
+                                        </Field>
+                                    </FormItem>
+                                    <FormItem
+                                        label="Codice Fiscale"
+                                        invalid={
+                                            errors.taxCode && touched.taxCode
+                                        }
+                                        errorMessage={errors.taxCode}
+                                    >
+                                        <Field
+                                            type="text"
+                                            autoComplete="off"
+                                            name="taxCode"
+                                            placeholder="Codice Fiscale"
+                                            component={Input}
+                                        />
+                                    </FormItem>
+                                </div>
+
+                                <div className="md:grid grid-cols-2 gap-4">
+                                    <FormItem
+                                        label="Email"
+                                        invalid={errors.email && touched.email}
+                                        errorMessage={errors.email}
+                                    >
+                                        <Field
+                                            type="email"
+                                            autoComplete="off"
+                                            name="email"
+                                            placeholder="Email"
+                                            component={Input}
+                                        />
+                                    </FormItem>
+                                    <FormItem
+                                        label="Numero di telefono"
+                                        invalid={
+                                            errors.phoneNumber &&
+                                            touched.phoneNumber
+                                        }
+                                        errorMessage="Numero di telefono obbligatorio"
+                                    >
+                                        <Field name="phoneNumber">
+                                            {({ field, form }: FieldProps) => {
+                                                return (
+                                                    <NumericFormatInput
+                                                        form={form}
+                                                        field={field}
+                                                        customInput={
+                                                            NumberInput as ComponentType
+                                                        }
+                                                        placeholder="Numero di telefono"
+                                                        onValueChange={(e) => {
+                                                            form.setFieldValue(
+                                                                field.name,
+                                                                e.value
+                                                            )
+                                                        }}
+                                                    />
+                                                )
+                                            }}
                                         </Field>
                                     </FormItem>
                                 </div>

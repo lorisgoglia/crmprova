@@ -1,11 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit'
 import {
-    apiGetCrmCustomers,
     apPutCrmCustomer,
     apiGetCrmCustomersStatistic,
 } from '@/services/CrmService'
 import type { TableQueries } from '@/@types/common'
-import { userDetailData } from '@/mock/data/usersData'
 import paginate from '@/utils/paginate'
 import { apiGetCustomers } from '@/services/CustomerService'
 
@@ -147,6 +145,15 @@ export const getCustomers = createAsyncThunk(
     'get-customers/',
     async (data: TableQueries & { filterData?: Filter }) => {
         const response = await apiGetCustomers<UserData[]>()
+        if (data.query)
+            return response.data.filter((c) =>
+                (
+                    c.profile.user.first_name +
+                    ' ' +
+                    c.profile.user.last_name
+                ).includes(data.query!)
+            )
+
         return response.data
     }
 )
@@ -227,6 +234,7 @@ const customersSlice = createSlice({
                 )
                 state.customerList = paginatedData
                 state.tableData.total = action.payload.length
+                state.tableData.pageSize = action.payload.length
                 state.loading = false
             })
             .addCase(getCustomers.pending, (state) => {

@@ -1,28 +1,46 @@
-export const AccountReviewTable = ({}) => {
+import { Address, CardBalance, PersonalInformation } from '../store'
+import { useTranslation } from 'react-i18next'
+import { Table } from '@/components/ui'
+import TBody from '@/components/ui/Table/TBody'
+import Tr from '@/components/ui/Table/Tr'
+import Td from '@/components/ui/Table/Td'
+import dayjs from 'dayjs'
+import appConfig from '@/configs/app.config'
+
+type AccountReviewProps = {
+    data: PersonalInformation | Address | CardBalance
+    excluded?: string[]
+}
+
+const AccountReviewTable = ({ data, excluded = [] }: AccountReviewProps) => {
+    const { t } = useTranslation()
+    const handleValue = (key: string, v: any) => {
+        if (v instanceof Date || key === 'dob') {
+            return dayjs(v).format(appConfig.dateFormat)
+        }
+
+        return v
+    }
     return (
-        <div className="flex flex-col mt-4 gap-4">
-            <address className="not-italic">
-                <div>
-                    <h5>Fabrizzio Maya Lopez</h5>
-                    <span>Via Armando Diaz, 53A</span>
-                    <br />
-                    <span>Italia, Giussano 20833</span>
-                    <br />
-                    <abbr title="Phone">Telefono:</abbr>
-                    <span>(+39) 3315045625</span>
-                </div>
-            </address>
-            <div>
-                <h5>Accessi applicazione mobile</h5>
-                <div>
-                    <b>Email:</b>
-                    <p>mayalopezfabrizzio@gmail.com</p>
-                </div>
-                <div className="mt-2">
-                    <b>Password:</b>
-                    <p>XXXXXXXXXX12345678</p>
-                </div>
-            </div>
+        <div className="flex flex-col">
+            <Table>
+                <TBody>
+                    {Object.entries(data)
+                        .filter(([key]) => !excluded.includes(key))
+                        .map(([key, value]) => {
+                            return (
+                                <Tr key={key}>
+                                    <Td width={200}>
+                                        <b>{t(key)}:</b>
+                                    </Td>
+                                    <Td>{handleValue(key, value)}</Td>
+                                </Tr>
+                            )
+                        })}
+                </TBody>
+            </Table>
         </div>
     )
 }
+
+export default AccountReviewTable

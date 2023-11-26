@@ -111,7 +111,6 @@ const Pagination = (props: PaginationProps) => {
     }
 
     const paginationClass = classNames('pagination', className)
-
     return (
         <div className={paginationClass}>
             {displayTotal && <Total total={total} />}

@@ -6,10 +6,11 @@ import Select from '@/components/ui/Select'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import { Field, Form, Formik } from 'formik'
 import get from 'lodash/get'
-import { countryList } from '@/constants/countries.constant'
+import { countryList } from '@/constants/countries-it.constant'
 import * as Yup from 'yup'
 import type { Address } from '../store'
 import type { FieldProps, FormikTouched, FormikErrors } from 'formik'
+import FormPatternInput from '../../../components/shared/FormPatternInput'
 
 type FormModel = Address
 
@@ -39,7 +40,9 @@ const validationSchema = Yup.object().shape({
     country: Yup.string().required('Stato obbligatorio.'),
     address: Yup.string().required('Indirizzo obbligatorio.'),
     city: Yup.string().required('Città obbligatoria.'),
-    zipCode: Yup.string().required('CAP obbligatorio.'),
+    zipCode: Yup.string()
+        .length(5, 'Il CAP deve contenere 5 caratteri.')
+        .required('CAP obbligatorio.'),
 })
 
 const AddressForm = (props: AddressFormProps) => {
@@ -93,21 +96,6 @@ const AddressForm = (props: AddressFormProps) => {
                     </Field>
                 </FormItem>
                 <FormItem
-                    label="Indirizzo"
-                    invalid={getError(addressName) && getTouched(addressName)}
-                    errorMessage={getError(addressName)}
-                >
-                    <Field
-                        type="text"
-                        autoComplete="off"
-                        name={addressName}
-                        placeholder="Indirizzo"
-                        component={Input}
-                    />
-                </FormItem>
-            </div>
-            <div className="md:grid grid-cols-2 gap-4">
-                <FormItem
                     label="Città"
                     invalid={getError(cityName) && getTouched(cityName)}
                     errorMessage={getError(cityName)}
@@ -123,24 +111,46 @@ const AddressForm = (props: AddressFormProps) => {
             </div>
             <div className="md:grid grid-cols-2 gap-4">
                 <FormItem
-                    label="CAP"
-                    invalid={getError(zipCodeName) && getTouched(zipCodeName)}
-                    errorMessage={getError(zipCodeName)}
+                    label="Indirizzo"
+                    invalid={getError(addressName) && getTouched(addressName)}
+                    errorMessage={getError(addressName)}
                 >
                     <Field
                         type="text"
                         autoComplete="off"
-                        name={zipCodeName}
-                        placeholder="CAP"
+                        name={addressName}
+                        placeholder="Indirizzo"
                         component={Input}
                     />
+                </FormItem>
+                <FormItem
+                    label="CAP"
+                    invalid={getError(zipCodeName) && getTouched(zipCodeName)}
+                    errorMessage={getError(zipCodeName)}
+                >
+                    <Field name={zipCodeName}>
+                        {({ field, form }: FieldProps) => {
+                            return (
+                                <FormPatternInput
+                                    form={form}
+                                    field={field}
+                                    value={field.value}
+                                    placeholder="CAP"
+                                    format="#####"
+                                    onValueChange={(e) => {
+                                        form.setFieldValue(field.name, e.value)
+                                    }}
+                                />
+                            )
+                        }}
+                    </Field>
                 </FormItem>
             </div>
         </>
     )
 }
 
-const AddressInfomation = ({
+const AddressInformation = ({
     data = {
         country: '',
         address: '',
@@ -216,4 +226,4 @@ const AddressInfomation = ({
     )
 }
 
-export default AddressInfomation
+export default AddressInformation

@@ -79,7 +79,7 @@ const Customers = () => {
 
     useEffect(() => {
         fetchData()
-    }, [fetchData, pageIndex, pageSize, sort, filterData])
+    }, [])
 
     const tableData = useMemo(
         () => ({ pageIndex, pageSize, sort, query, total }),

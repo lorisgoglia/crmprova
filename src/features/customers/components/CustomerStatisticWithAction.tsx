@@ -75,7 +75,7 @@ const CustomerStatistic = () => {
     const dispatch = useAppDispatch()
 
     const statisticData = useAppSelector(
-        (state) => state.customers.data.statisticData
+        (state) => state.customers.data.customerList
     )
     const loading = /* useAppSelector(
         (state) => state.crmCustomers.data.statisticLoading
@@ -96,8 +96,7 @@ const CustomerStatistic = () => {
                 icon={<HiOutlineUserGroup />}
                 avatarClass="!bg-indigo-600"
                 label="Utenti totali"
-                value={statisticData?.totalCustomers?.value || 0}
-                growthRate={statisticData?.totalCustomers?.growShrink || 0}
+                value={statisticData.length}
                 loading={loading}
             />
             <StatisticCard

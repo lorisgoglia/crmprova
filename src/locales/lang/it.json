@@ -18,5 +18,16 @@
         }
     },
     "firstName": "Nome",
-    "lastName": "Cognome"
+    "lastName": "Cognome",
+    "email": "Email",
+    "nationality": "Nazionalità",
+    "phoneNumber": "Numero di telefono",
+    "dob": "Data di nascità",
+    "gender":"Sesso",
+    "country":"Stato",
+    "address": "Indirizzo",
+    "city": "Città",
+    "zipCode": "CAP",
+    "taxCode": "Codice Fiscale",
+    "amount": "Importo"
 }
