@@ -33,8 +33,8 @@ const CustomersTableTools = () => {
     }
 
     const fetchData = (data: TableQueries) => {
-        /* dispatch(setTableData(data))
-        dispatch(getCustomers(data))*/
+        dispatch(setTableData(data))
+        dispatch(getCustomers(data))
     }
 
     const onClearAll = () => {
@@ -54,11 +54,11 @@ const CustomersTableTools = () => {
                     ref={inputRef}
                     onInputChange={handleInputChange}
                 />
-                <CustomerTableFilter />
+                {/* <CustomerTableFilter />*/}
             </div>
             <div className="mb-4">
                 <Button size="sm" onClick={onClearAll}>
-                    Clear All
+                    Cancella filtri
                 </Button>
             </div>
         </div>

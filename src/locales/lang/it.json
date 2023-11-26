@@ -27,5 +27,7 @@
     "country":"Stato",
     "address": "Indirizzo",
     "city": "Città",
-    "zipCode": "CAP"
+    "zipCode": "CAP",
+    "taxCode": "Codice Fiscale",
+    "amount": "Importo"
 }

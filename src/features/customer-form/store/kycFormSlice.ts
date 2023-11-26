@@ -4,6 +4,7 @@ import {
     apiSaveCustomer,
 } from '@/services/AccountServices'
 import dayjs from 'dayjs'
+import { get18yearsOldAgeDate } from '@/features/customer-form/utils/dateUtils'
 
 export type PersonalInformation = {
     firstName: string
@@ -127,7 +128,6 @@ export const saveForm = createAsyncThunk(
         return response.data
     }
 )
-
 export const initialState: KycFormState = {
     formData: {
         personalInformation: {
@@ -137,7 +137,7 @@ export const initialState: KycFormState = {
             nationality: '',
             phoneNumber: '',
             taxCode: '',
-            dob: '',
+            dob: get18yearsOldAgeDate(),
             gender: '',
         },
         addressInformation: {

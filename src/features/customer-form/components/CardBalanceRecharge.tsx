@@ -25,7 +25,14 @@ const validationSchema = Yup.object().shape({
 })
 
 const AmountInput = (props: InputProps) => {
-    return <Input {...props} value={props.field.value} prefix="€" />
+    return (
+        <Input
+            {...props}
+            type={'number'}
+            value={props.field.value}
+            prefix="€"
+        />
+    )
 }
 
 const NumericFormatInput = ({
@@ -83,7 +90,7 @@ const CardBalanceRecharge = ({
                     }, 1000)
                 }}
             >
-                {({ values, touched, errors, isSubmitting }) => {
+                {({ touched, errors, isSubmitting }) => {
                     return (
                         <Form>
                             <FormContainer>

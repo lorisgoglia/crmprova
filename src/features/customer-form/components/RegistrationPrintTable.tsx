@@ -1,22 +1,37 @@
-export const RegistrationPrintTable = ({}) => {
+import { KycFormState } from '@/features/customer-form/store'
+
+type RegistrationPrintTableProps = {
+    data: KycFormState['formData']
+}
+
+export const RegistrationPrintTable = ({
+    data,
+}: RegistrationPrintTableProps) => {
+    const { personalInformation, addressInformation, cardBalance } = data
+    const { firstName, lastName, phoneNumber, email } = personalInformation
+    const { address, country, city, zipCode } = addressInformation
     return (
         <div className="flex flex-col mt-4 gap-4">
             <address className="not-italic">
                 <div>
-                    <h5>Fabrizzio Maya Lopez</h5>
-                    <span>Via Armando Diaz, 53A</span>
+                    <h5>
+                        {firstName} {lastName}
+                    </h5>
+                    <span>{address}</span>
                     <br />
-                    <span>Italia, Giussano 20833</span>
+                    <span>
+                        {country}, {city} {zipCode}
+                    </span>
                     <br />
                     <abbr title="Phone">Telefono:</abbr>
-                    <span>(+39) 3315045625</span>
+                    <span>(+39) {phoneNumber}</span>
                 </div>
             </address>
             <div>
                 <h5>Accessi applicazione mobile</h5>
                 <div>
                     <b>Email:</b>
-                    <p>mayalopezfabrizzio@gmail.com</p>
+                    <p>{email}</p>
                 </div>
                 <div className="mt-2">
                     <b>Password:</b>

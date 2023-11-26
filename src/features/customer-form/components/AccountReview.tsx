@@ -8,7 +8,7 @@ type AccountReviewProps = {
 }
 
 const AccountReview = ({ data, handleSubmit }: AccountReviewProps) => {
-    const { personalInformation, addressInformation } = data
+    const { personalInformation, addressInformation, cardBalance } = data
     return (
         <>
             <div className="mb-8">
@@ -29,8 +29,10 @@ const AccountReview = ({ data, handleSubmit }: AccountReviewProps) => {
                 <h5>Indirizzo</h5>
                 <AccountReviewTable data={addressInformation} />
             </div>
-
-            <h5>Anamnesi</h5>
+            <div className="flex flex-col">
+                <h5>Carta</h5>
+                <AccountReviewTable data={cardBalance} />
+            </div>
             <div className="flex justify-end gap-2">
                 <Button variant="solid" type="submit" onClick={handleSubmit}>
                     Salva

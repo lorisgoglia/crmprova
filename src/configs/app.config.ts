@@ -4,6 +4,7 @@ export type AppConfig = {
     unAuthenticatedEntryPath: string
     tourPath: string
     locale: string
+    dateFormat: string
     enableMock: boolean
 }
 
@@ -13,6 +14,7 @@ const appConfig: AppConfig = {
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',
     locale: 'it',
+    dateFormat: 'L',
     enableMock: false,
 }
 
@@ -22,6 +24,7 @@ const appConfigDemo: AppConfig = {
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',
     locale: 'it',
+    dateFormat: 'L',
     enableMock: true,
 }
 

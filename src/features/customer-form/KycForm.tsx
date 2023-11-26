@@ -24,7 +24,7 @@ injectReducer('accountDetailForm', reducer)
 const PersonalInformation = lazy(
     () => import('./components/PersonalInformation')
 )
-const AddressInfomation = lazy(() => import('./components/AddressInfomation'))
+const AddressInfomation = lazy(() => import('./components/AddressInformation'))
 const RegistrationPrint = lazy(() => import('./components/RegistrationPrint'))
 const AccountReview = lazy(() => import('./components/AccountReview'))
 

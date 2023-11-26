@@ -2,6 +2,8 @@ import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
 import { RegistrationPrintTable } from '@/features/customer-form/components/RegistrationPrintTable'
 import { Button } from '@/components/ui'
 import { useEffect } from 'react'
+import { injectReducer } from '@/store'
+import reducer, { useAppSelector } from '@/features/customer-form/store'
 
 const css = `@page
                 {
@@ -9,7 +11,13 @@ const css = `@page
                     margin: 0mm;  /* this affects the margin in the printer settings */
                 }`
 
+injectReducer('accountDetailForm', reducer)
+
 const RegistrationPrint = () => {
+    const formData = useAppSelector(
+        (state) => state.accountDetailForm.data.formData
+    )
+
     let timeoutID: any
     useEffect(() => {
         if (window.location.pathname === '/print') {
@@ -23,7 +31,6 @@ const RegistrationPrint = () => {
             window.onafterprint = window.close
         }
     }, [])
-
     return (
         <div className="h-full flex flex-col">
             <style type="text/css" media="print">
@@ -47,7 +54,7 @@ const RegistrationPrint = () => {
                     </p>
                 </div>
             </div>
-            <RegistrationPrintTable />
+            <RegistrationPrintTable data={formData} />
             <div className="print:hidden mt-6 flex items-center justify-between">
                 <small className="italic">
                     La stampa è stata creata al computer ed è valida senza firma
