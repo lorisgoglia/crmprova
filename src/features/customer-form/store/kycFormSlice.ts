@@ -15,6 +15,7 @@ export type PersonalInformation = {
     taxCode: string
     dob: string
     gender: string
+    vip: boolean
 }
 
 export type Identification = {
@@ -100,8 +101,15 @@ export const saveForm = createAsyncThunk(
     SLICE_NAME + '/saveForm',
     async (_, { getState }) => {
         const state = getState() as any
-        const { firstName, lastName, email, gender, dob, taxCode } =
-            state.accountDetailForm.data.formData.personalInformation
+        const {
+            firstName,
+            lastName,
+            email,
+            gender,
+            dob,
+            taxCode,
+            phoneNumber,
+        } = state.accountDetailForm.data.formData.personalInformation
         const { address, country, city, zipCode } =
             state.accountDetailForm.data.formData.addressInformation
         const { amount } = state.accountDetailForm.data.formData.cardBalance
@@ -111,7 +119,7 @@ export const saveForm = createAsyncThunk(
             last_name: lastName,
             email: email,
             sex: gender,
-            dob: dayjs(dob).format('YYYY-MM-DD'),
+            dob: dayjs(dob).format('DD-MM-YYYY'),
             address: address,
             country: country,
             city: city,
@@ -122,6 +130,7 @@ export const saveForm = createAsyncThunk(
             password1: '12345Aa!',
             password2: '12345Aa!',
             tax_code: taxCode,
+            phone_number: phoneNumber,
         }
 
         const response = await apiSaveCustomer<any, any>(dto)
@@ -139,6 +148,7 @@ export const initialState: KycFormState = {
             taxCode: '',
             dob: get18yearsOldAgeDate(),
             gender: '',
+            vip: false,
         },
         addressInformation: {
             country: '',

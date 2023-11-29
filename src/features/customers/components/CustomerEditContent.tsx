@@ -20,25 +20,23 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     )
 
     const data = useAppSelector((state) => state.customers.data.customerList)
-    const { id } = customer
+    const { user } = customer
 
     const onFormSubmit = (values: FormModel) => {
-        const { firstName, lastName, dob, address, email } = values
+        const { firstName, lastName, dob, address, phoneNumber, vip } = values
 
         const editedCustomer = {
-            user_id: id,
+            id: user.id,
             first_name: firstName,
-            lastName: lastName,
+            last_name: lastName,
+            phone_number: phoneNumber,
             address,
-            dob: dayjs(dob).format('YYYY-MM-DD'),
+            dob: dayjs(dob).format('DD-MM-YYYY'),
+            is_vip: vip,
         }
 
         if (!isEmpty(editedCustomer)) {
-            dispatch(
-                putCustomer(
-                    editedCustomer as Partial<UserData & { user_id: number }>
-                )
-            )
+            dispatch(putCustomer(editedCustomer as Partial<UserData>))
         }
         dispatch(setDrawerClose())
         /* dispatch(setCustomerList(newData))*/

@@ -16,6 +16,7 @@ import CustomerEditDialog from './CustomerEditDialog'
 import { Link } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import type { OnSortParam, ColumnDef } from '@/components/shared/DataTable'
+import dayjs from 'dayjs'
 
 const statusColor: Record<string, string> = {
     active: 'bg-emerald-500',
@@ -43,9 +44,7 @@ const ActionColumn = ({ row }: { row: UserData }) => {
 
 const NameColumn = ({ row }: { row: UserData }) => {
     const { textTheme } = useThemeClass()
-    const {
-        profile: { user },
-    } = row
+    const { profile, user } = row
     const dispatch = useAppDispatch()
 
     const onEdit = () => {
@@ -55,7 +54,7 @@ const NameColumn = ({ row }: { row: UserData }) => {
 
     return (
         <div className="flex items-center">
-            <Avatar size={28} shape="circle" src={row.img ?? undefined} />
+            <Avatar size={28} shape="circle" src={profile.img ?? undefined} />
             <div
                 className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold cursor-pointer`}
                 onClick={onEdit}
@@ -106,11 +105,19 @@ const Customers = () => {
             },
             {
                 header: 'Email',
-                accessorKey: 'profile.user.email',
+                accessorKey: 'user.email',
             },
             {
                 header: 'Data di nascità',
                 accessorKey: 'profile.dob',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            {dayjs(row.profile.dob).format('DD-MM-YYYY')}
+                        </div>
+                    )
+                },
             },
             {
                 header: 'Credito',
@@ -118,7 +125,7 @@ const Customers = () => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
-                            {row.profile.card.balance + ' EUR'}
+                            {row.card.balance + ' EUR'}
                         </div>
                     )
                 },
@@ -130,7 +137,7 @@ const Customers = () => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
-                            {row.is_vip ? '✅' : '❌'}
+                            {row.is_vip ? 'SI' : 'NO'}
                         </div>
                     )
                 },
@@ -165,21 +172,23 @@ const Customers = () => {
 
     return (
         <>
-            <DataTable
-                columns={columns}
-                data={data}
-                skeletonAvatarColumns={[0]}
-                skeletonAvatarProps={{ width: 28, height: 28 }}
-                loading={loading}
-                pagingData={{
-                    total: tableData.total as number,
-                    pageIndex: tableData.pageIndex as number,
-                    pageSize: tableData.pageSize as number,
-                }}
-                onPaginationChange={onPaginationChange}
-                onSelectChange={onSelectChange}
-                onSort={onSort}
-            />
+            {data.length > 0 && (
+                <DataTable
+                    columns={columns}
+                    data={data}
+                    skeletonAvatarColumns={[0]}
+                    skeletonAvatarProps={{ width: 28, height: 28 }}
+                    loading={loading}
+                    pagingData={{
+                        total: tableData.total as number,
+                        pageIndex: tableData.pageIndex as number,
+                        pageSize: tableData.pageSize as number,
+                    }}
+                    onPaginationChange={onPaginationChange}
+                    onSelectChange={onSelectChange}
+                    onSort={onSort}
+                />
+            )}
             <CustomerEditDialog />
         </>
     )

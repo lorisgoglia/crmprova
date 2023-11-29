@@ -13,6 +13,7 @@ import {
 } from 'react-icons/hi'
 import { Field, FieldProps, FormikErrors, FormikTouched } from 'formik'
 import { FormModel } from '@/features/CustomerForm/CustomerForm'
+import { Checkbox } from '@/components/ui'
 
 type PersonalInfoFormProps = {
     touched: FormikTouched<FormModel>
@@ -158,6 +159,18 @@ const PersonalInfoForm = (props: PersonalInfoFormProps) => {
                         />
                     )}
                 </Field>
+            </FormItem>
+            <FormItem
+                label="VIP"
+                invalid={(errors.dob && touched.dob) as boolean}
+                errorMessage={errors.dob as string}
+            >
+                <Field className="mb-0" name="vip" component={Checkbox} />
+                {/* <Field name="vip" placeholder="Utente VIP">
+                    {({ field, form }: FieldProps) => <>
+
+                    </>}
+                </Field>*/}
             </FormItem>
         </>
     )

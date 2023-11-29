@@ -19,16 +19,12 @@ interface User {
     id: number
     password: string
     last_login: string
-    is_superuser: boolean
     username: string
     first_name: string
     last_name: string
     email: string
-    is_staff: boolean
     is_active: boolean
     date_joined: string
-    groups: any[] // You might want to replace this with the actual type if groups have a specific structure
-    user_permissions: any[] // Similarly, replace this with the actual type if user_permissions have a specific structure
 }
 
 interface Card {
@@ -39,7 +35,7 @@ interface Card {
 }
 
 export interface Profile {
-    id: number
+    phone_number: string
     tax_code: string
     sex: string
     dob: string
@@ -48,15 +44,13 @@ export interface Profile {
     city: string
     zip_code: string
     img: string | null
-    user: User
-    card: Card
 }
 
 export interface UserData {
-    id: number
-    movements: Movement[]
     is_vip: boolean
     profile: Profile
+    user: User
+    card: Card
 }
 
 type PersonalInfo = {
@@ -144,11 +138,9 @@ export const getCustomers = createAsyncThunk(
         const response = await apiGetCustomers<UserData[]>()
         if (data.query)
             return response.data.filter((c) =>
-                (
-                    c.profile.user.first_name +
-                    ' ' +
-                    c.profile.user.last_name
-                ).includes(data.query!)
+                (c.user.first_name + ' ' + c.user.last_name).includes(
+                    data.query!
+                )
             )
 
         return response.data
@@ -157,7 +149,7 @@ export const getCustomers = createAsyncThunk(
 
 export const putCustomer = createAsyncThunk(
     'crmCustomers/data/putCustomer',
-    async (data: Partial<UserData & { user_id: number }>) => {
+    async (data: Partial<UserData>) => {
         const update = await apiPutCustomer(data)
         const response = await apiGetCustomers<UserData[]>()
         return response.data

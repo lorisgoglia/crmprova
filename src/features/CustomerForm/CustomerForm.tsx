@@ -9,6 +9,12 @@ import PersonalInfoForm from './PersonalInfoForm'
 import SocialLinkForm from './SocialLinkForm'
 import { UserData } from '@/features/customers/store'
 import { Address, PersonalInformation } from '@/features/customer-form/store'
+import { Table } from '@/components/ui'
+import TBody from '@/components/ui/Table/TBody'
+import Tr from '@/components/ui/Table/Tr'
+import Td from '@/components/ui/Table/Td'
+import THead from '@/components/ui/Table/THead'
+import Th from '@/components/ui/Table/Th'
 
 export type Customer = UserData
 
@@ -32,15 +38,16 @@ const validationSchema = Yup.object().shape({
 const { TabNav, TabList, TabContent } = Tabs
 const getInitialValue = (customer: UserData) => {
     if (customer) {
-        const { profile } = customer
+        const { user, profile } = customer
         return {
-            firstName: profile?.user.first_name,
-            lastName: profile?.user.last_name,
+            firstName: user.first_name,
+            lastName: user.last_name,
             dob: profile?.dob,
             address: profile?.address,
             city: profile?.city,
-            email: profile?.user.email,
-            phoneNumber: '',
+            email: user.email,
+            phoneNumber: profile.phone_number,
+            vip: customer.is_vip,
         }
     }
 
@@ -69,6 +76,7 @@ const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
                                 <TabNav value="personalInfo">
                                     Informazioni Personali
                                 </TabNav>
+                                <TabNav value="card">Carta</TabNav>
                             </TabList>
                             <div className="p-6">
                                 <TabContent value="personalInfo">
@@ -77,12 +85,40 @@ const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
                                         errors={errors}
                                     />
                                 </TabContent>
-                                {/*<TabContent value="social">
-                                    <SocialLinkForm
-                                        touched={touched}
-                                        errors={errors}
-                                    />
-                                </TabContent>*/}
+                                <TabContent value="card">
+                                    <div className="flex flex-col gap-2">
+                                        <h5>Dati carta:</h5>
+                                        <p>
+                                            <b>ID Carta: {customer.card.id}</b>
+                                        </p>
+                                        <p>
+                                            <b>
+                                                Credito: {customer.card.balance}{' '}
+                                                EUR
+                                            </b>
+                                        </p>
+                                    </div>
+                                    <div className="mt-2">
+                                        <h5>Transazioni:</h5>
+                                        <Table className="mt-2">
+                                            <THead>
+                                                <Tr>
+                                                    <Th>Motivazione</Th>
+                                                    <Th>Importo</Th>
+                                                </Tr>
+                                            </THead>
+                                            <TBody>
+                                                <Tr>
+                                                    <Td>Ricarica Iniziale</Td>
+                                                    <Td>
+                                                        {customer.card.balance}
+                                                        EUR
+                                                    </Td>
+                                                </Tr>
+                                            </TBody>
+                                        </Table>
+                                    </div>
+                                </TabContent>
                             </div>
                         </Tabs>
                     </FormContainer>
