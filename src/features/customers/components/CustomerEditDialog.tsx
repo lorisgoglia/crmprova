@@ -36,7 +36,6 @@ const CustomerEditDialog = () => {
 
     const onDrawerClose = () => {
         dispatch(setDrawerClose())
-        dispatch(setSelectedCustomer({}))
     }
 
     const formikRef = useRef<FormikRef>(null)

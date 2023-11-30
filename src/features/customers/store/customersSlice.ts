@@ -15,7 +15,7 @@ interface Movement {
     subject_profile: number
 }
 
-interface User {
+export interface User {
     id: number
     password: string
     last_login: string

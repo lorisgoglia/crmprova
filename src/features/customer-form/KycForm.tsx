@@ -3,14 +3,12 @@ import Container from '@/components/shared/Container'
 import AdaptableCard from '@/components/shared/AdaptableCard'
 import FormStep from './components/FormStep'
 import reducer, {
-    getForm,
     setStepStatus,
     setFormData,
     setCurrentStep,
     useAppDispatch,
     useAppSelector,
     setClearForm,
-    PersonalInformation as PersonalInformationType,
     Address,
     saveForm,
     CardBalance,
@@ -18,6 +16,7 @@ import reducer, {
 import { injectReducer } from '@/store'
 import useQuery from '@/utils/hooks/useQuery'
 import CardBalanceRecharge from '@/features/customer-form/components/CardBalanceRecharge'
+import { PersonalInformationType } from '@/features/customer-form/utils/personalInformationUtils'
 
 injectReducer('accountDetailForm', reducer)
 
@@ -44,10 +43,6 @@ const DetailForm = () => {
 
     useEffect(() => {
         const id = query.get('id')
-        if (id) {
-            console.log('ID', id)
-            dispatch(getForm({ id }))
-        }
         return () => {
             dispatch(setClearForm())
         }
@@ -99,36 +94,38 @@ const DetailForm = () => {
                     <div
                         className={'2xl:col-span-4 lg:col-span-3 xl:col-span-2'}
                     >
-                        {currentStep === 0 && (
-                            <PersonalInformation
-                                data={formData.personalInformation}
-                                currentStepStatus={currentStepStatus}
-                                onNextChange={handleNextChange}
-                            />
-                        )}
-                        {currentStep === 1 && (
-                            <AddressInfomation
-                                data={formData.addressInformation}
-                                currentStepStatus={currentStepStatus}
-                                onNextChange={handleNextChange}
-                                onBackChange={handleBackChange}
-                            />
-                        )}
-                        {currentStep === 2 && (
-                            <CardBalanceRecharge
-                                data={formData.cardBalance}
-                                currentStepStatus={currentStepStatus}
-                                onNextChange={handleNextChange}
-                                onBackChange={handleBackChange}
-                            />
-                        )}
-                        {currentStep === 3 && (
-                            <AccountReview
-                                data={formData}
-                                handleSubmit={handleSubmit}
-                            />
-                        )}
-                        {currentStep === 4 && <RegistrationPrint />}
+                        <Suspense fallback={<></>}>
+                            {currentStep === 0 && (
+                                <PersonalInformation
+                                    data={formData.personalInformation}
+                                    currentStepStatus={currentStepStatus}
+                                    onNextChange={handleNextChange}
+                                />
+                            )}
+                            {currentStep === 1 && (
+                                <AddressInfomation
+                                    data={formData.addressInformation}
+                                    currentStepStatus={currentStepStatus}
+                                    onNextChange={handleNextChange}
+                                    onBackChange={handleBackChange}
+                                />
+                            )}
+                            {currentStep === 2 && (
+                                <CardBalanceRecharge
+                                    data={formData.cardBalance}
+                                    currentStepStatus={currentStepStatus}
+                                    onNextChange={handleNextChange}
+                                    onBackChange={handleBackChange}
+                                />
+                            )}
+                            {currentStep === 3 && (
+                                <AccountReview
+                                    data={formData}
+                                    handleSubmit={handleSubmit}
+                                />
+                            )}
+                            {currentStep === 4 && <RegistrationPrint />}
+                        </Suspense>
                     </div>
                 </div>
             </AdaptableCard>

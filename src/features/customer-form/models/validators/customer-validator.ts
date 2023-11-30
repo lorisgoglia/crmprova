@@ -1,21 +1,21 @@
 import * as Yup from 'yup'
 
 const personalInfoValidator = Yup.object().shape({
-    firstName: Yup.string().required('Nome obbligatorio.'),
-    lastName: Yup.string().required('Cognome obbligatorio.'),
+    first_name: Yup.string().required('Nome obbligatorio.'),
+    last_name: Yup.string().required('Cognome obbligatorio.'),
     email: Yup.string()
         .email('Email invalida. ( Es: nome@email.com )')
         .required('Email obbligatoria.'),
-    nationality: Yup.string().required('Nazionalità obbligatoria.'),
-    phoneNumber: Yup.string()
+    country: Yup.string().required('Nazionalità obbligatoria.'),
+    phone_number: Yup.string()
         .min(8)
         .max(10)
         .required('Numero di telefono obbligatorio.'),
     dob: Yup.string().required('Data di nascità obbligatoria.'),
-    taxCode: Yup.string()
+    tax_code: Yup.string()
         .length(16, 'Il codice fiscale deve contenere 16 caratteri.')
         .required('Codice Fiscale obbligatorio.'),
-    gender: Yup.string().required('Genere obbligatorio.'),
+    sex: Yup.string().required('Genere obbligatorio.'),
 })
 
 const addressInfoValidator = Yup.object().shape({

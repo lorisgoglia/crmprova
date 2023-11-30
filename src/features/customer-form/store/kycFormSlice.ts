@@ -5,6 +5,7 @@ import {
 } from '@/services/AccountServices'
 import dayjs from 'dayjs'
 import { get18yearsOldAgeDate } from '@/features/customer-form/utils/dateUtils'
+import { PersonalInformationType } from '@/features/customer-form/utils/personalInformationUtils'
 
 export type PersonalInformation = {
     firstName: string
@@ -62,7 +63,7 @@ export type FinancialInformation = {
 }
 
 type FormData = {
-    personalInformation: PersonalInformation
+    personalInformation: PersonalInformationType
     addressInformation: Address
     cardBalance: {
         amount: number
@@ -140,15 +141,14 @@ export const saveForm = createAsyncThunk(
 export const initialState: KycFormState = {
     formData: {
         personalInformation: {
-            firstName: '',
-            lastName: '',
+            first_name: '',
+            last_name: '',
             email: '',
-            nationality: '',
-            phoneNumber: '',
-            taxCode: '',
+            country: '',
+            phone_number: '',
+            tax_code: '',
             dob: get18yearsOldAgeDate(),
-            gender: '',
-            vip: false,
+            sex: '',
         },
         addressInformation: {
             country: '',
