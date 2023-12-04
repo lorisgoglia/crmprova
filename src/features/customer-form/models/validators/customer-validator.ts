@@ -22,13 +22,13 @@ const addressInfoValidator = Yup.object().shape({
     country: Yup.string().required('Stato obbligatorio.'),
     address: Yup.string().required('Indirizzo obbligatorio.'),
     city: Yup.string().required('Città obbligatoria.'),
-    zipCode: Yup.string()
+    zip_code: Yup.string()
         .length(5, 'Il CAP deve contenere 5 caratteri.')
         .required('CAP obbligatorio.'),
 })
 
-const cardBalanceValidator = Yup.object().shape({
-    amount: Yup.number(),
+const cardInfoValidator = Yup.object().shape({
+    balance: Yup.number(),
 })
 
-export { personalInfoValidator, addressInfoValidator, cardBalanceValidator }
+export { personalInfoValidator, addressInfoValidator, cardInfoValidator }

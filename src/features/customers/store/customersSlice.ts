@@ -27,10 +27,10 @@ export interface User {
     date_joined: string
 }
 
-interface Card {
+export interface Card {
     id: number
     img: string | null
-    balance: string
+    balance: number
     deleted_user_tax_code: string | null
 }
 

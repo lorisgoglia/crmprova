@@ -11,12 +11,13 @@ import reducer, {
     setClearForm,
     Address,
     saveForm,
-    CardBalance,
+    CardInformationType,
 } from './store'
 import { injectReducer } from '@/store'
 import useQuery from '@/utils/hooks/useQuery'
 import CardBalanceRecharge from '@/features/customer-form/components/CardBalanceRecharge'
 import { PersonalInformationType } from '@/features/customer-form/utils/personalInformationUtils'
+import { AddressInformationType } from '@/features/customer-form/utils/addressInformationUtils'
 
 injectReducer('accountDetailForm', reducer)
 
@@ -50,7 +51,10 @@ const DetailForm = () => {
     }, [])
 
     const handleNextChange = (
-        values: PersonalInformationType | Address | CardBalance,
+        values:
+            | PersonalInformationType
+            | AddressInformationType
+            | CardInformationType,
         name: string
     ) => {
         const nextStep = currentStep + 1
@@ -112,7 +116,7 @@ const DetailForm = () => {
                             )}
                             {currentStep === 2 && (
                                 <CardBalanceRecharge
-                                    data={formData.cardBalance}
+                                    data={formData.cardInformation}
                                     currentStepStatus={currentStepStatus}
                                     onNextChange={handleNextChange}
                                     onBackChange={handleBackChange}

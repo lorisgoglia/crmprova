@@ -6,6 +6,8 @@ import {
 import dayjs from 'dayjs'
 import { get18yearsOldAgeDate } from '@/features/customer-form/utils/dateUtils'
 import { PersonalInformationType } from '@/features/customer-form/utils/personalInformationUtils'
+import { AddressInformationType } from '@/features/customer-form/utils/addressInformationUtils'
+import { Card } from '@/features/customers/store'
 
 export type PersonalInformation = {
     firstName: string
@@ -36,9 +38,7 @@ export type Address = {
     zipCode: string
 }
 
-export type CardBalance = {
-    amount: number
-}
+export type CardInformationType = Partial<Card>
 
 type CompanyInformation = {
     companyName: string
@@ -64,10 +64,8 @@ export type FinancialInformation = {
 
 type FormData = {
     personalInformation: PersonalInformationType
-    addressInformation: Address
-    cardBalance: {
-        amount: number
-    }
+    addressInformation: AddressInformationType
+    cardInformation: CardInformationType
 }
 
 export type StepStatus = Record<number, { status: string }>
@@ -103,35 +101,36 @@ export const saveForm = createAsyncThunk(
     async (_, { getState }) => {
         const state = getState() as any
         const {
-            firstName,
-            lastName,
+            first_name,
+            last_name,
             email,
-            gender,
+            sex,
             dob,
-            taxCode,
-            phoneNumber,
+            tax_code,
+            phone_number,
         } = state.accountDetailForm.data.formData.personalInformation
-        const { address, country, city, zipCode } =
+        const { address, country, city, zip_code } =
             state.accountDetailForm.data.formData.addressInformation
-        const { amount } = state.accountDetailForm.data.formData.cardBalance
+        const { balance } =
+            state.accountDetailForm.data.formData.cardInformation
 
         const dto = {
-            first_name: firstName,
-            last_name: lastName,
+            first_name: first_name,
+            last_name: last_name,
             email: email,
-            sex: gender,
+            sex: sex,
             dob: dayjs(dob).format('DD-MM-YYYY'),
             address: address,
             country: country,
             city: city,
-            zip_code: zipCode,
-            card_balance: amount,
+            zip_code: zip_code,
+            card_balance: balance.toString(),
             payment_method: 'Cash',
             movement_description: 'Prima ricarica on-desk.',
             password1: '12345Aa!',
             password2: '12345Aa!',
-            tax_code: taxCode,
-            phone_number: phoneNumber,
+            tax_code: tax_code,
+            phone_number: phone_number,
         }
 
         const response = await apiSaveCustomer<any, any>(dto)
@@ -154,10 +153,10 @@ export const initialState: KycFormState = {
             country: '',
             address: '',
             city: '',
-            zipCode: '',
+            zip_code: '',
         },
-        cardBalance: {
-            amount: 0,
+        cardInformation: {
+            balance: 0,
         },
     },
     stepStatus: {
