@@ -1,4 +1,3 @@
-import { Address, CardBalance, PersonalInformation } from '../store'
 import { useTranslation } from 'react-i18next'
 import { Table } from '@/components/ui'
 import TBody from '@/components/ui/Table/TBody'
@@ -6,9 +5,12 @@ import Tr from '@/components/ui/Table/Tr'
 import Td from '@/components/ui/Table/Td'
 import dayjs from 'dayjs'
 import appConfig from '@/configs/app.config'
+import { PersonalInformationType } from '@/features/customer-form/utils/personalInformationUtils'
+import { AddressInformationType } from '@/features/customer-form/utils/addressInformationUtils'
+import { CardInformationType } from '@/features/customer-form/store'
 
 type AccountReviewProps = {
-    data: PersonalInformation | Address | CardBalance
+    data: PersonalInformationType | AddressInformationType | CardInformationType
     excluded?: string[]
 }
 
@@ -22,23 +24,19 @@ const AccountReviewTable = ({ data, excluded = [] }: AccountReviewProps) => {
         return v
     }
     return (
-        <div className="flex flex-col">
-            <Table>
-                <TBody>
-                    {Object.entries(data)
-                        .filter(([key]) => !excluded.includes(key))
-                        .map(([key, value]) => {
-                            return (
-                                <Tr key={key}>
-                                    <Td width={200}>
-                                        <b>{t(key)}:</b>
-                                    </Td>
-                                    <Td>{handleValue(key, value)}</Td>
-                                </Tr>
-                            )
-                        })}
-                </TBody>
-            </Table>
+        <div className="grid grid-cols-2 gap-2">
+            {Object.entries(data)
+                .filter(([key]) => !excluded.includes(key))
+                .map(([key, value]) => {
+                    return (
+                        <div key={key}>
+                            <b>{t(key)}:</b>
+                            <span className="ml-2">
+                                {handleValue(key, value)}
+                            </span>
+                        </div>
+                    )
+                })}
         </div>
     )
 }

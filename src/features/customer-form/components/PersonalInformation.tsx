@@ -6,32 +6,16 @@ import { FormItem, FormContainer } from '@/components/ui/Form'
 import { Field, Form, Formik } from 'formik'
 import { NumericFormat, NumericFormatProps } from 'react-number-format'
 import { countryList } from '@/constants/countries-it.constant'
-import * as Yup from 'yup'
 import type { FieldInputProps, FieldProps } from 'formik'
-import type { PersonalInformation as PersonalInformationType } from '../store'
 import type { ComponentType } from 'react'
 import type { InputProps } from '@/components/ui/Input'
 import 'dayjs/locale/it'
-import dayjs from 'dayjs'
-import appConfig from '@/configs/app.config'
-
-type FormModel = PersonalInformationType
-
-type PersonalInformationProps = {
-    data: PersonalInformationType
-    onNextChange?: (
-        values: FormModel,
-        formName: string,
-        setSubmitting: (isSubmitting: boolean) => void
-    ) => void
-    currentStepStatus?: string
-}
-
-const genderOptions = [
-    { label: 'Maschio', value: 'M' },
-    { label: 'Femmina', value: 'F' },
-    { label: 'Altro', value: 'O' },
-]
+import { personalInfoValidator } from '@/features/customer-form/models/validators/customer-validator'
+import {
+    genderOptions,
+    PersonalInformationProps,
+    PersonalInformationType,
+} from '@/features/customer-form/utils/personalInformationUtils'
 
 const NumberInput = (props: InputProps) => {
     return <Input {...props} value={props.field.value} />
@@ -56,40 +40,13 @@ const NumericFormatInput = ({
     )
 }
 
-const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required('Nome obbligatorio.'),
-    lastName: Yup.string().required('Cognome obbligatorio.'),
-    email: Yup.string()
-        .email('Email invalida. ( Es: nome@email.com )')
-        .required('Email obbligatoria.'),
-    nationality: Yup.string().required('Nazionalità obbligatoria.'),
-    phoneNumber: Yup.string()
-        .min(8)
-        .max(10)
-        .required('Numero di telefono obbligatorio.'),
-    dob: Yup.string().required('Data di nascità obbligatoria.'),
-    taxCode: Yup.string()
-        .length(16, 'Il codice fiscale deve contenere 16 caratteri.')
-        .required('Codice Fiscale obbligatorio.'),
-    gender: Yup.string().required('Genere obbligatorio.'),
-})
-
 const PersonalInformation = ({
-    data = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        nationality: '',
-        phoneNumber: '',
-        taxCode: '',
-        dob: '',
-        gender: '',
-    },
+    data,
     onNextChange,
     currentStepStatus,
 }: PersonalInformationProps) => {
     const onNext = (
-        values: FormModel,
+        values: PersonalInformationType,
         setSubmitting: (isSubmitting: boolean) => void
     ) => {
         onNextChange?.(values, 'personalInformation', setSubmitting)
@@ -104,7 +61,7 @@ const PersonalInformation = ({
             <Formik
                 initialValues={data}
                 enableReinitialize={true}
-                validationSchema={validationSchema}
+                validationSchema={personalInfoValidator}
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(true)
                     setTimeout(() => {
@@ -120,15 +77,15 @@ const PersonalInformation = ({
                                     <FormItem
                                         label="Nome"
                                         invalid={
-                                            errors.firstName &&
-                                            touched.firstName
+                                            errors.first_name &&
+                                            touched.first_name
                                         }
-                                        errorMessage={errors.firstName}
+                                        errorMessage={errors.first_name}
                                     >
                                         <Field
                                             type="text"
                                             autoComplete="off"
-                                            name="firstName"
+                                            name="first_name"
                                             placeholder="Nome"
                                             component={Input}
                                         />
@@ -136,14 +93,15 @@ const PersonalInformation = ({
                                     <FormItem
                                         label="Cognome"
                                         invalid={
-                                            errors.lastName && touched.lastName
+                                            errors.last_name &&
+                                            touched.last_name
                                         }
-                                        errorMessage={errors.lastName}
+                                        errorMessage={errors.last_name}
                                     >
                                         <Field
                                             type="text"
                                             autoComplete="off"
-                                            name="lastName"
+                                            name="last_name"
                                             placeholder="Cognome"
                                             component={Input}
                                         />
@@ -152,15 +110,12 @@ const PersonalInformation = ({
                                 <div className="md:grid grid-cols-2 gap-4">
                                     <FormItem
                                         label="Sesso"
-                                        invalid={
-                                            errors.gender && touched.gender
-                                        }
-                                        errorMessage={errors.gender}
+                                        invalid={errors.sex && touched.sex}
+                                        errorMessage={errors.sex}
                                     >
-                                        <Field name="gender">
+                                        <Field name="sex">
                                             {({ field, form }: FieldProps) => (
                                                 <Select
-                                                    id="sex_select"
                                                     placeholder="Sesso"
                                                     field={field}
                                                     form={form}
@@ -168,7 +123,7 @@ const PersonalInformation = ({
                                                     value={genderOptions.filter(
                                                         (gender) =>
                                                             gender.value ===
-                                                            values.gender
+                                                            values.sex
                                                     )}
                                                     onChange={(gender) =>
                                                         form.setFieldValue(
@@ -219,12 +174,11 @@ const PersonalInformation = ({
                                     <FormItem
                                         label="Nazionalità"
                                         invalid={
-                                            errors.nationality &&
-                                            touched.nationality
+                                            errors.country && touched.country
                                         }
-                                        errorMessage={errors.nationality}
+                                        errorMessage={errors.country}
                                     >
-                                        <Field name="nationality">
+                                        <Field name="country">
                                             {({ field, form }: FieldProps) => (
                                                 <Select
                                                     placeholder="Nazionalità"
@@ -234,7 +188,7 @@ const PersonalInformation = ({
                                                     value={countryList.filter(
                                                         (country) =>
                                                             country.value ===
-                                                            values.nationality
+                                                            values.country
                                                     )}
                                                     onChange={(country) =>
                                                         form.setFieldValue(
@@ -249,14 +203,14 @@ const PersonalInformation = ({
                                     <FormItem
                                         label="Codice Fiscale"
                                         invalid={
-                                            errors.taxCode && touched.taxCode
+                                            errors.tax_code && touched.tax_code
                                         }
-                                        errorMessage={errors.taxCode}
+                                        errorMessage={errors.tax_code}
                                     >
                                         <Field
                                             type="text"
                                             autoComplete="off"
-                                            name="taxCode"
+                                            name="tax_code"
                                             placeholder="Codice Fiscale"
                                             component={Input}
                                         />
@@ -280,12 +234,12 @@ const PersonalInformation = ({
                                     <FormItem
                                         label="Numero di telefono"
                                         invalid={
-                                            errors.phoneNumber &&
-                                            touched.phoneNumber
+                                            errors.phone_number &&
+                                            touched.phone_number
                                         }
                                         errorMessage="Numero di telefono obbligatorio"
                                     >
-                                        <Field name="phoneNumber">
+                                        <Field name="phone_number">
                                             {({ field, form }: FieldProps) => {
                                                 return (
                                                     <NumericFormatInput
@@ -312,6 +266,9 @@ const PersonalInformation = ({
                                         loading={isSubmitting}
                                         variant="solid"
                                         type="submit"
+                                        onClick={() =>
+                                            console.log('data', data)
+                                        }
                                     >
                                         {currentStepStatus === 'complete'
                                             ? 'Salva'

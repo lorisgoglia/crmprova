@@ -1,11 +1,8 @@
 import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit'
-import {
-    apPutCrmCustomer,
-    apiGetCrmCustomersStatistic,
-} from '@/services/CrmService'
+import { apiGetCrmCustomersStatistic } from '@/services/CrmService'
 import type { TableQueries } from '@/@types/common'
 import paginate from '@/utils/paginate'
-import { apiGetCustomers } from '@/services/CustomerService'
+import { apiGetCustomers, apiPutCustomer } from '@/services/CustomerService'
 
 interface Movement {
     id: number
@@ -18,31 +15,27 @@ interface Movement {
     subject_profile: number
 }
 
-interface User {
+export interface User {
     id: number
     password: string
     last_login: string
-    is_superuser: boolean
     username: string
     first_name: string
     last_name: string
     email: string
-    is_staff: boolean
     is_active: boolean
     date_joined: string
-    groups: any[] // You might want to replace this with the actual type if groups have a specific structure
-    user_permissions: any[] // Similarly, replace this with the actual type if user_permissions have a specific structure
 }
 
-interface Card {
+export interface Card {
     id: number
     img: string | null
-    balance: string
+    balance: number
     deleted_user_tax_code: string | null
 }
 
 export interface Profile {
-    id: number
+    phone_number: string
     tax_code: string
     sex: string
     dob: string
@@ -51,15 +44,13 @@ export interface Profile {
     city: string
     zip_code: string
     img: string | null
-    user: User
-    card: Card
 }
 
 export interface UserData {
-    id: number
-    movements: Movement[]
     is_vip: boolean
     profile: Profile
+    user: User
+    card: Card
 }
 
 type PersonalInfo = {
@@ -137,7 +128,7 @@ export type CustomersState = {
     tableData: TableQueries
     filterData: Filter
     drawerOpen: boolean
-    selectedCustomer: Partial<Customer>
+    selectedCustomer: UserData | object
 }
 
 export const SLICE_NAME = 'customers'
@@ -147,11 +138,9 @@ export const getCustomers = createAsyncThunk(
         const response = await apiGetCustomers<UserData[]>()
         if (data.query)
             return response.data.filter((c) =>
-                (
-                    c.profile.user.first_name +
-                    ' ' +
-                    c.profile.user.last_name
-                ).includes(data.query!)
+                (c.user.first_name + ' ' + c.user.last_name).includes(
+                    data.query!
+                )
             )
 
         return response.data
@@ -160,8 +149,9 @@ export const getCustomers = createAsyncThunk(
 
 export const putCustomer = createAsyncThunk(
     'crmCustomers/data/putCustomer',
-    async (data: Customer) => {
-        const response = await apPutCrmCustomer(data)
+    async (data: Partial<UserData>) => {
+        const update = await apiPutCustomer(data)
+        const response = await apiGetCustomers<UserData[]>()
         return response.data
     }
 )
@@ -239,6 +229,17 @@ const customersSlice = createSlice({
             })
             .addCase(getCustomers.pending, (state) => {
                 state.loading = true
+            })
+            .addCase(putCustomer.fulfilled, (state, action) => {
+                const paginatedData = paginate(
+                    action.payload,
+                    action.payload.length,
+                    1
+                )
+                state.customerList = paginatedData
+                state.tableData.total = action.payload.length
+                state.tableData.pageSize = action.payload.length
+                state.loading = false
             })
     },
 })

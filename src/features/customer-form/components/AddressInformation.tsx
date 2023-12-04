@@ -1,21 +1,20 @@
 import { useCallback } from 'react'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
-import Checkbox from '@/components/ui/Checkbox'
 import Select from '@/components/ui/Select'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import { Field, Form, Formik } from 'formik'
 import get from 'lodash/get'
 import { countryList } from '@/constants/countries-it.constant'
-import * as Yup from 'yup'
-import type { Address } from '../store'
 import type { FieldProps, FormikTouched, FormikErrors } from 'formik'
 import FormPatternInput from '../../../components/shared/FormPatternInput'
+import { AddressInformationType } from '@/features/customer-form/utils/addressInformationUtils'
+import { addressInfoValidator } from '@/features/customer-form/models/validators/customer-validator'
 
-type FormModel = Address
+type FormModel = AddressInformationType
 
 type AddressInfomationProps = {
-    data: Address
+    data: AddressInformationType
     onNextChange?: (
         values: FormModel,
         formName: string,
@@ -29,32 +28,10 @@ type AddressFormProps = {
     values: FormModel
     touched: FormikTouched<FormModel>
     errors: FormikErrors<FormModel>
-    countryName: string
-    addressName: string
-    cityName: string
-    stateName: string
-    zipCodeName: string
 }
 
-const validationSchema = Yup.object().shape({
-    country: Yup.string().required('Stato obbligatorio.'),
-    address: Yup.string().required('Indirizzo obbligatorio.'),
-    city: Yup.string().required('Città obbligatoria.'),
-    zipCode: Yup.string()
-        .length(5, 'Il CAP deve contenere 5 caratteri.')
-        .required('CAP obbligatorio.'),
-})
-
 const AddressForm = (props: AddressFormProps) => {
-    const {
-        values,
-        touched,
-        errors,
-        countryName,
-        addressName,
-        cityName,
-        zipCodeName,
-    } = props
+    const { values, touched, errors } = props
 
     const getError = useCallback(
         (name: string) => {
@@ -75,10 +52,10 @@ const AddressForm = (props: AddressFormProps) => {
             <div className="md:grid grid-cols-2 gap-4">
                 <FormItem
                     label="Stato"
-                    invalid={getError(countryName) && getTouched(countryName)}
-                    errorMessage={getError(countryName)}
+                    invalid={getError('country') && getTouched('country')}
+                    errorMessage={getError('country')}
                 >
-                    <Field name={countryName}>
+                    <Field name={'country'}>
                         {({ field, form }: FieldProps) => (
                             <Select
                                 placeholder="Stato"
@@ -86,7 +63,7 @@ const AddressForm = (props: AddressFormProps) => {
                                 form={form}
                                 options={countryList}
                                 value={countryList.filter(
-                                    (c) => c.value === get(values, countryName)
+                                    (c) => c.value === get(values, 'country')
                                 )}
                                 onChange={(c) =>
                                     form.setFieldValue(field.name, c?.value)
@@ -97,13 +74,13 @@ const AddressForm = (props: AddressFormProps) => {
                 </FormItem>
                 <FormItem
                     label="Città"
-                    invalid={getError(cityName) && getTouched(cityName)}
-                    errorMessage={getError(cityName)}
+                    invalid={getError('city') && getTouched('city')}
+                    errorMessage={getError('city')}
                 >
                     <Field
                         type="text"
                         autoComplete="off"
-                        name={cityName}
+                        name={'city'}
                         placeholder="Città"
                         component={Input}
                     />
@@ -112,23 +89,23 @@ const AddressForm = (props: AddressFormProps) => {
             <div className="md:grid grid-cols-2 gap-4">
                 <FormItem
                     label="Indirizzo"
-                    invalid={getError(addressName) && getTouched(addressName)}
-                    errorMessage={getError(addressName)}
+                    invalid={getError('address') && getTouched('address')}
+                    errorMessage={getError('address')}
                 >
                     <Field
                         type="text"
                         autoComplete="off"
-                        name={addressName}
+                        name={'address'}
                         placeholder="Indirizzo"
                         component={Input}
                     />
                 </FormItem>
                 <FormItem
                     label="CAP"
-                    invalid={getError(zipCodeName) && getTouched(zipCodeName)}
-                    errorMessage={getError(zipCodeName)}
+                    invalid={getError('zip_code') && getTouched('zip_code')}
+                    errorMessage={getError('zip_code')}
                 >
-                    <Field name={zipCodeName}>
+                    <Field name={'zip_code'}>
                         {({ field, form }: FieldProps) => {
                             return (
                                 <FormPatternInput
@@ -151,12 +128,7 @@ const AddressForm = (props: AddressFormProps) => {
 }
 
 const AddressInformation = ({
-    data = {
-        country: '',
-        address: '',
-        city: '',
-        zipCode: '',
-    },
+    data,
     onNextChange,
     onBackChange,
     currentStepStatus,
@@ -181,7 +153,7 @@ const AddressInformation = ({
             <Formik
                 enableReinitialize
                 initialValues={data}
-                validationSchema={validationSchema}
+                validationSchema={addressInfoValidator}
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(true)
                     setTimeout(() => {
@@ -195,14 +167,7 @@ const AddressInformation = ({
                         <Form>
                             <FormContainer>
                                 <h5 className="mb-4">Indirizzo</h5>
-                                <AddressForm
-                                    countryName="country"
-                                    addressName="address"
-                                    cityName="city"
-                                    stateName="state"
-                                    zipCodeName="zipCode"
-                                    {...formProps}
-                                />
+                                <AddressForm {...formProps} />
                                 <div className="flex justify-end gap-2">
                                     <Button type="button" onClick={onBack}>
                                         Indietro

@@ -6,12 +6,12 @@ export async function apiGetCustomers<T>() {
         method: 'get',
     })
 }
-export async function apPutCustomer<T, U extends Record<string, unknown>>(
+export async function apiPutCustomer<T, U extends Record<string, unknown>>(
     data: U
 ) {
     return ApiService.fetchData<T>({
-        url: '/customers',
-        method: 'put',
+        url: '/update-customer/',
+        method: 'patch',
         data,
     })
 }

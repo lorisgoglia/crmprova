@@ -2,15 +2,15 @@ import Input, { InputProps } from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import { Field, FieldInputProps, FieldProps, Form, Formik } from 'formik'
-import * as Yup from 'yup'
-import { CardBalance } from '../store'
+import { CardInformationType } from '../store'
 import { NumericFormat, NumericFormatProps } from 'react-number-format'
 import { ComponentType } from 'react'
+import { cardInfoValidator } from '@/features/customer-form/models/validators/customer-validator'
 
-type FormModel = CardBalance
+type FormModel = CardInformationType
 
 type CardBalanceProps = {
-    data: CardBalance
+    data: CardInformationType
     onNextChange?: (
         values: FormModel,
         formName: string,
@@ -19,10 +19,6 @@ type CardBalanceProps = {
     onBackChange?: () => void
     currentStepStatus?: string
 }
-
-const validationSchema = Yup.object().shape({
-    cardBalance: Yup.number(),
-})
 
 const AmountInput = (props: InputProps) => {
     return (
@@ -55,9 +51,7 @@ const NumericFormatInput = ({
 }
 
 const CardBalanceRecharge = ({
-    data = {
-        amount: 0,
-    },
+    data,
     onNextChange,
     onBackChange,
     currentStepStatus,
@@ -66,7 +60,7 @@ const CardBalanceRecharge = ({
         values: FormModel,
         setSubmitting: (isSubmitting: boolean) => void
     ) => {
-        onNextChange?.(values, 'cardBalance', setSubmitting)
+        onNextChange?.(values, 'cardInformation', setSubmitting)
     }
 
     const onBack = () => {
@@ -82,7 +76,7 @@ const CardBalanceRecharge = ({
             <Formik
                 enableReinitialize
                 initialValues={data}
-                validationSchema={validationSchema}
+                validationSchema={cardInfoValidator}
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(true)
                     setTimeout(() => {
@@ -99,17 +93,20 @@ const CardBalanceRecharge = ({
                                     <FormItem
                                         label="Importo"
                                         invalid={
-                                            (errors.amount &&
-                                                touched.amount) as boolean
+                                            (errors.balance &&
+                                                touched.balance) as boolean
                                         }
-                                        errorMessage={errors.amount}
+                                        errorMessage={errors.balance}
                                     >
-                                        <Field name="amount">
+                                        <Field name="balance">
                                             {({ field, form }: FieldProps) => {
                                                 return (
                                                     <NumericFormatInput
                                                         form={form}
                                                         field={field}
+                                                        valueIsNumericString={
+                                                            true
+                                                        }
                                                         placeholder="Importo"
                                                         customInput={
                                                             AmountInput as ComponentType

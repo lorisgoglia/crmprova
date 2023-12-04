@@ -17,17 +17,17 @@
             }
         }
     },
-    "firstName": "Nome",
-    "lastName": "Cognome",
+    "first_name": "Nome",
+    "last_name": "Cognome",
     "email": "Email",
     "nationality": "Nazionalità",
-    "phoneNumber": "Numero di telefono",
+    "phone_number": "Numero di telefono",
     "dob": "Data di nascità",
-    "gender":"Sesso",
+    "sex":"Sesso",
     "country":"Stato",
     "address": "Indirizzo",
     "city": "Città",
-    "zipCode": "CAP",
-    "taxCode": "Codice Fiscale",
-    "amount": "Importo"
+    "zip_code": "CAP",
+    "tax_code": "Codice Fiscale",
+    "balance": "Importo"
 }
