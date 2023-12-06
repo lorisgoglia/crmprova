@@ -1,3 +1,4 @@
-import CustomerDetail from './CustomerDetail'
+import CustomerForm from './CustomerForm'
 
-export default CustomerDetail
+export * from './CustomerForm'
+export default CustomerForm

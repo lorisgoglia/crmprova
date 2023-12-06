@@ -12,7 +12,7 @@ import {
     HiOutlineUser,
 } from 'react-icons/hi'
 import { Field, FieldProps, FormikErrors, FormikTouched } from 'formik'
-import { FormModel } from '@/features/CustomerForm/CustomerForm'
+import { FormModel } from '@/features/customer-detail/CustomerForm'
 import { Checkbox } from '@/components/ui'
 
 type PersonalInfoFormProps = {

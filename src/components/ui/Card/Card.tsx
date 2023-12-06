@@ -22,7 +22,6 @@ export interface CardProps
 
 const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
     const { cardBordered } = useConfig()
-    console.log(cardBordered)
 
     const {
         children,

@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import {
     setCustomerList,
-    putCustomer,
+    putCollaborator,
     setDrawerClose,
     useAppDispatch,
     useAppSelector,
@@ -16,10 +16,12 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     const dispatch = useAppDispatch()
 
     const customer = useAppSelector(
-        (state) => state.customers.data.selectedCustomer
+        (state) => state.collaborators.data.selectedCustomer
     )
 
-    const data = useAppSelector((state) => state.customers.data.customerList)
+    const data = useAppSelector(
+        (state) => state.collaborators.data.customerList
+    )
     const { user } = customer
 
     const onFormSubmit = (values: FormModel) => {
@@ -36,7 +38,7 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
         }
 
         if (!isEmpty(editedCustomer)) {
-            dispatch(putCustomer(editedCustomer as Partial<UserData>))
+            dispatch(putCollaborator(editedCustomer as Partial<UserData>))
         }
         dispatch(setDrawerClose())
         /* dispatch(setCustomerList(newData))*/

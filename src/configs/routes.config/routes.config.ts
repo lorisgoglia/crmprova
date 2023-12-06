@@ -12,6 +12,12 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'collaborators',
+        path: '/collaborators',
+        component: lazy(() => import('@/features/collaborators/Collaborators')),
+        authority: [],
+    },
+    {
         key: 'customer',
         path: '/customer/',
         component: lazy(() => import('@/features/customer-form/KycForm')),

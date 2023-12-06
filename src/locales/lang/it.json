@@ -1,6 +1,7 @@
 {
     "nav": {
         "home": "Home",
+        "collaborators": "Collaboratori",
         "singleMenuItem": "Single menu item",
         "collapseMenu": {
             "collapseMenu": "Collapse menu item",

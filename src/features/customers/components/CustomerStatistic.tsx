@@ -70,10 +70,10 @@ const CustomerStatistic = () => {
     const dispatch = useAppDispatch()
 
     const statisticData = useAppSelector(
-        (state) => state.crmCustomers.data.statisticData
+        (state) => state.customers.data.statisticData
     )
     const loading = useAppSelector(
-        (state) => state.crmCustomers.data.statisticLoading
+        (state) => state.customers.data.statisticLoading
     )
 
     useEffect(() => {
