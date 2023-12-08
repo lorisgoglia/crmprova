@@ -2,7 +2,7 @@ version: "3.4"
 services:
   vite_docker:
     image: node:alpine
-    container_name: vite_docker
+    container_name: olympiatekcrm
     entrypoint: /bin/sh
     ports:
       - 5173:5173
