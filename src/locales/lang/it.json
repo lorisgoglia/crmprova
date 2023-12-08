@@ -1,6 +1,7 @@
 {
     "nav": {
         "home": "Home",
+        "collaborators": "Collaboratori",
         "singleMenuItem": "Single menu item",
         "collapseMenu": {
             "collapseMenu": "Collapse menu item",
@@ -14,6 +15,19 @@
                 "collapse": "Group collapse menu",
                 "item1": "Group collapse menu item 1",
                 "item2": "Group collapse menu item 2"
+            }
+        }
+    },
+    "errors": {
+
+        "generic": {
+            "title": "Errore generico",
+            "message":"Si è verificato un problema, si prega di riprovare."
+        },
+        "email": {
+            "duplicate": {
+                "title": "Utente già esistente: ",
+                "message": "Si prega di riprovare cambiando indirizzo email."
             }
         }
     },

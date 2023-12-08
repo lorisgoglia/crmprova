@@ -47,13 +47,13 @@ export default function Footer({
                 `footer flex flex-auto items-center h-16 ${PAGE_CONTAINER_GUTTER_X}`
             )}
         >
-            {pageContainerType === 'contained' ? (
+            {/* {pageContainerType === 'contained' ? (
                 <Container>
                     <FooterContent />
                 </Container>
             ) : (
                 <FooterContent />
-            )}
+            )}*/}
         </footer>
     )
 }

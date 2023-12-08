@@ -1,23 +1,22 @@
 import { forwardRef } from 'react'
 import {
-    putCustomer,
+    putCollaborator,
     setDrawerClose,
     useAppDispatch,
     useAppSelector,
 } from '../store'
 import isEmpty from 'lodash/isEmpty'
 import dayjs from 'dayjs'
-import CustomerForm, { FormikRef, FormModel } from './detail'
 import { UserData } from '@/services/models/users'
+import CollaboratorForm, { FormikRef, FormModel } from './detail'
 
-const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
+const CollaboratorEditContent = forwardRef<FormikRef>((_, ref) => {
     const dispatch = useAppDispatch()
 
     const customer = useAppSelector(
-        (state) => state.customers.data.selectedCustomer
+        (state) => state.collaborators.data.selectedCustomer
     )
 
-    const data = useAppSelector((state) => state.customers.data.customerList)
     const { user } = customer
 
     const onFormSubmit = (values: FormModel) => {
@@ -34,14 +33,14 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
         }
 
         if (!isEmpty(editedCustomer)) {
-            dispatch(putCustomer(editedCustomer as Partial<UserData>))
+            dispatch(putCollaborator(editedCustomer as Partial<UserData>))
         }
         dispatch(setDrawerClose())
         /* dispatch(setCustomerList(newData))*/
     }
 
     return (
-        <CustomerForm
+        <CollaboratorForm
             ref={ref}
             customer={customer}
             onFormSubmit={onFormSubmit}
@@ -49,8 +48,8 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     )
 })
 
-CustomerEditContent.displayName = 'CustomerEditContent'
+CollaboratorEditContent.displayName = 'CustomerEditContent'
 
 export type { FormikRef }
 
-export default CustomerEditContent
+export default CollaboratorEditContent

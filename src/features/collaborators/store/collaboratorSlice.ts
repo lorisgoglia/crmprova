@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { apiGetCrmCustomersStatistic } from '@/services/CrmService'
 import type { TableQueries } from '@/@types/common'
 import paginate from '@/utils/paginate'
-import { apiGetCustomers, apiPutCustomer } from '@/services/CustomerService'
+import {
+    apiGetCollaborators,
+    apiPutCollaborator,
+} from '@/services/CollaboratorService'
 import { UserData } from '@/services/models/users'
 
 type Statistic = {
@@ -20,9 +22,7 @@ type Filter = {
     status: string
 }
 
-type GetCrmCustomersStatisticResponse = CustomerStatistic
-
-export type CustomersState = {
+export type CollaboratorsState = {
     loading: boolean
     statisticLoading: boolean
     customerList: UserData[]
@@ -33,11 +33,11 @@ export type CustomersState = {
     selectedCustomer: UserData | object
 }
 
-export const SLICE_NAME = 'customers'
-export const getCustomers = createAsyncThunk(
-    'get-customers/',
+export const SLICE_NAME = 'collaborators'
+export const getCollaborators = createAsyncThunk(
+    'get-collaborators/',
     async (data: TableQueries & { filterData?: Filter }) => {
-        const response = await apiGetCustomers<UserData[]>()
+        const response = await apiGetCollaborators<UserData[]>()
         if (data.query)
             return response.data.filter((c) =>
                 (c.user.first_name + ' ' + c.user.last_name).includes(
@@ -49,20 +49,11 @@ export const getCustomers = createAsyncThunk(
     }
 )
 
-export const putCustomer = createAsyncThunk(
-    'crmCustomers/data/putCustomer',
+export const putCollaborator = createAsyncThunk(
+    'putCustomer/',
     async (data: Partial<UserData>) => {
-        const update = await apiPutCustomer(data)
-        const response = await apiGetCustomers<UserData[]>()
-        return response.data
-    }
-)
-
-export const getCustomerStatistic = createAsyncThunk(
-    'crmCustomers/data/getCustomerStatistic',
-    async () => {
-        const response =
-            await apiGetCrmCustomersStatistic<GetCrmCustomersStatisticResponse>()
+        const update = await apiPutCollaborator(data)
+        const response = await apiGetCollaborators<UserData[]>()
         return response.data
     }
 )
@@ -82,7 +73,7 @@ export const initialFilterData = {
     status: '',
 }
 
-const initialState: CustomersState = {
+const initialState: CollaboratorsState = {
     loading: false,
     statisticLoading: false,
     customerList: [],
@@ -93,7 +84,7 @@ const initialState: CustomersState = {
     selectedCustomer: {},
 }
 
-const customersSlice = createSlice({
+const collaboratorSlice = createSlice({
     name: `${SLICE_NAME}/state`,
     initialState,
     reducers: {
@@ -118,7 +109,7 @@ const customersSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getCustomers.fulfilled, (state, action) => {
+            .addCase(getCollaborators.fulfilled, (state, action) => {
                 const paginatedData = paginate(
                     action.payload,
                     action.payload.length,
@@ -129,10 +120,10 @@ const customersSlice = createSlice({
                 state.tableData.pageSize = action.payload.length
                 state.loading = false
             })
-            .addCase(getCustomers.pending, (state) => {
+            .addCase(getCollaborators.pending, (state) => {
                 state.loading = true
             })
-            .addCase(putCustomer.fulfilled, (state, action) => {
+            .addCase(putCollaborator.fulfilled, (state, action) => {
                 const paginatedData = paginate(
                     action.payload,
                     action.payload.length,
@@ -153,6 +144,6 @@ export const {
     setSelectedCustomer,
     setDrawerOpen,
     setDrawerClose,
-} = customersSlice.actions
+} = collaboratorSlice.actions
 
-export default customersSlice.reducer
+export default collaboratorSlice.reducer

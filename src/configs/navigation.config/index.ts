@@ -16,6 +16,16 @@ const navigationConfig: NavigationTree[] = [
         authority: [],
         subMenu: [],
     },
+    {
+        key: 'collaborators',
+        path: '/collaborators',
+        title: 'Collaboratori',
+        translateKey: 'nav.collaborators',
+        icon: 'collaborators',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [],
+        subMenu: [],
+    },
     /** Example purpose only, please remove */
     /*{
         key: 'singleMenuItem',

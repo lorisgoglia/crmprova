@@ -4,19 +4,14 @@ import Avatar from '@/components/ui/Avatar'
 import GrowShrinkTag from '@/components/shared/GrowShrinkTag'
 import MediaSkeleton from '@/components/shared/loaders/MediaSkeleton'
 import Loading from '@/components/shared/Loading'
+import { useAppDispatch, useAppSelector } from '../store'
 import {
-    getCustomerStatistic,
-    setDrawerOpen,
-    setSelectedCustomer,
-    useAppDispatch,
-    useAppSelector,
-} from '../store'
-import { HiOutlineUserGroup, HiOutlineUsers } from 'react-icons/hi'
+    HiOutlineUserGroup,
+    HiOutlineUserAdd,
+    HiOutlineUsers,
+} from 'react-icons/hi'
 import { NumericFormat } from 'react-number-format'
 import type { ReactNode } from 'react'
-import { HiUserAdd } from 'react-icons/all'
-import { Button } from '@/components/ui'
-import { Link } from 'react-router-dom'
 
 type StatisticCardProps = {
     icon: ReactNode
@@ -75,47 +70,43 @@ const CustomerStatistic = () => {
     const dispatch = useAppDispatch()
 
     const statisticData = useAppSelector(
-        (state) => state.customers.data.customerList
+        (state) => state.collaborators.data.statisticData
     )
-    const loading = /* useAppSelector(
-        (state) => state.crmCustomers.data.statisticLoading
-    )*/ false
+    const loading = useAppSelector(
+        (state) => state.collaborators.data.statisticLoading
+    )
+
     useEffect(() => {
-        /* dispatch(getCustomerStatistic())*/
+        /*dispatch(getCustomerStatistic())*/
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    const onEdit = () => {
-        dispatch(setDrawerOpen())
-        dispatch(setSelectedCustomer({}))
-    }
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-6">
             <StatisticCard
                 icon={<HiOutlineUserGroup />}
                 avatarClass="!bg-indigo-600"
-                label="Utenti totali"
-                value={statisticData.length}
+                label="Total Customers"
+                value={statisticData?.totalCustomers?.value}
+                growthRate={statisticData?.totalCustomers?.growShrink}
                 loading={loading}
             />
             <StatisticCard
                 icon={<HiOutlineUsers />}
                 avatarClass="!bg-blue-500"
-                label="Utenti attivi"
-                value={statisticData?.activeCustomers?.value || 0}
-                growthRate={statisticData?.activeCustomers?.growShrink || 0}
+                label="Active Customers"
+                value={statisticData?.activeCustomers?.value}
+                growthRate={statisticData?.activeCustomers?.growShrink}
                 loading={loading}
             />
-            <Link to="/customer/" className="cursor-pointer">
-                <Button
-                    variant={'solid'}
-                    className={'h-full w-full'}
-                    icon={<HiUserAdd />}
-                >
-                    Crea nuovo utente
-                </Button>
-            </Link>
+            <StatisticCard
+                icon={<HiOutlineUserAdd />}
+                avatarClass="!bg-emerald-500"
+                label="New Customers"
+                value={statisticData?.newCustomers?.value}
+                growthRate={statisticData?.newCustomers?.growShrink}
+                loading={loading}
+            />
         </div>
     )
 }
