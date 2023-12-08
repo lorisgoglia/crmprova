@@ -3,7 +3,7 @@ import CollaboratorsTableTools from './components/CollaboratorsTableTools'
 import { injectReducer } from '@/store'
 import reducer from './store'
 import { Button } from '@/components/ui'
-import { HiUserAdd } from 'react-icons/all'
+import { HiUserAdd } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 import CollaboratorsTable from '@/features/collaborators/components/CollaboratorsTable'
 
