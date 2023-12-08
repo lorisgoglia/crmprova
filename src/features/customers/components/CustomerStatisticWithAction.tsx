@@ -14,7 +14,7 @@ import {
 import { HiOutlineUserGroup, HiOutlineUsers } from 'react-icons/hi'
 import { NumericFormat } from 'react-number-format'
 import type { ReactNode } from 'react'
-import { HiUserAdd } from 'react-icons/all'
+import { HiUserAdd } from 'react-icons/hi'
 import { Button } from '@/components/ui'
 import { Link } from 'react-router-dom'
 
