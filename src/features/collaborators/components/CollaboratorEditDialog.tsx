@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import Button from '@/components/ui/Button'
 import Drawer from '@/components/ui/Drawer'
-import CustomerEditContent, { FormikRef } from './CustomerEditContent'
+import CollaboratorEditContent, { FormikRef } from './CollaboratorEditContent'
 import { setDrawerClose, useAppDispatch, useAppSelector } from '../store'
 import type { MouseEvent } from 'react'
 
@@ -23,7 +23,7 @@ const DrawerFooter = ({ onSaveClick, onCancel }: DrawerFooterProps) => {
     )
 }
 
-const CustomerEditDialog = () => {
+const CollaboratorEditDialog = () => {
     const dispatch = useAppDispatch()
     const drawerOpen = useAppSelector(
         (state) => state.collaborators.data.drawerOpen
@@ -54,9 +54,9 @@ const CustomerEditDialog = () => {
             onClose={onDrawerClose}
             onRequestClose={onDrawerClose}
         >
-            <CustomerEditContent ref={formikRef} />
+            <CollaboratorEditContent ref={formikRef} />
         </Drawer>
     )
 }
 
-export default CustomerEditDialog
+export default CollaboratorEditDialog

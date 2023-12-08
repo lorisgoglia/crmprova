@@ -4,9 +4,9 @@ import {
     apiSaveCustomer,
 } from '@/services/AccountServices'
 import dayjs from 'dayjs'
-import { get18yearsOldAgeDate } from '@/features/customer-form/utils/dateUtils'
-import { PersonalInformationType } from '@/features/customer-form/utils/personalInformationUtils'
-import { AddressInformationType } from '@/features/customer-form/utils/addressInformationUtils'
+import { get18yearsOldAgeDate } from '@/features/new-customer-form/utils/dateUtils'
+import { PersonalInformationType } from '@/features/new-customer-form/utils/personalInformationUtils'
+import { AddressInformationType } from '@/features/new-customer-form/utils/addressInformationUtils'
 import { Card } from '@/features/customers/store'
 
 export type PersonalInformation = {

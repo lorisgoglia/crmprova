@@ -1,107 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { TableQueries } from '@/@types/common'
 import paginate from '@/utils/paginate'
-import { apiGetCustomers, apiPutCustomer } from '@/services/CustomerService'
-import { apiGetCollaborators } from '@/services/CollaboratorService'
-
-interface Movement {
-    id: number
-    quantity: string
-    description: string
-    date: string
-    movement_type: string
-    payment_method: string
-    card: number
-    subject_profile: number
-}
-
-export interface User {
-    id: number
-    password: string
-    last_login: string
-    username: string
-    first_name: string
-    last_name: string
-    email: string
-    is_active: boolean
-    date_joined: string
-}
-
-export interface Card {
-    id: number
-    img: string | null
-    balance: number
-    deleted_user_tax_code: string | null
-}
-
-export interface Profile {
-    phone_number: string
-    tax_code: string
-    sex: string
-    dob: string
-    address: string
-    country: string
-    city: string
-    zip_code: string
-    img: string | null
-}
-
-export interface UserData {
-    is_vip: boolean
-    profile: Profile
-    user: User
-    card: Card
-}
-
-type PersonalInfo = {
-    location: string
-    title: string
-    birthday: string
-    phoneNumber: string
-    facebook: string
-    twitter: string
-    pinterest: string
-    linkedIn: string
-}
-
-type OrderHistory = {
-    id: string
-    item: string
-    status: string
-    amount: number
-    date: number
-}
-
-type PaymentMethod = {
-    cardHolderName: string
-    cardType: string
-    expMonth: string
-    expYear: string
-    last4Number: string
-    primary: boolean
-}
-
-type Subscription = {
-    plan: string
-    status: string
-    billing: string
-    nextPaymentDate: number
-    amount: number
-}
-
-export type Customer = {
-    id: string
-    name: string
-    email: string
-    img: string
-    role: string
-    lastOnline: number
-    status: string
-    personalInfo: PersonalInfo
-    orderHistory: OrderHistory[]
-    paymentMethod: PaymentMethod[]
-    subscription: Subscription[]
-}
+import {
+    apiGetCollaborators,
+    apiPutCollaborator,
+} from '@/services/CollaboratorService'
+import { UserData } from '@/services/models/users'
 
 type Statistic = {
     value: number
@@ -117,8 +21,6 @@ type CustomerStatistic = {
 type Filter = {
     status: string
 }
-
-type GetCrmCustomersStatisticResponse = CustomerStatistic
 
 export type CollaboratorsState = {
     loading: boolean
@@ -148,10 +50,10 @@ export const getCollaborators = createAsyncThunk(
 )
 
 export const putCollaborator = createAsyncThunk(
-    'crmCollaborator/data/putCustomer',
+    'putCustomer/',
     async (data: Partial<UserData>) => {
-        const update = await apiPutCustomer(data)
-        const response = await apiGetCustomers<UserData[]>()
+        const update = await apiPutCollaborator(data)
+        const response = await apiGetCollaborators<UserData[]>()
         return response.data
     }
 )

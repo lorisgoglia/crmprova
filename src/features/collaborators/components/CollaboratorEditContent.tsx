@@ -1,27 +1,22 @@
 import { forwardRef } from 'react'
 import {
-    setCustomerList,
     putCollaborator,
     setDrawerClose,
     useAppDispatch,
     useAppSelector,
-    Customer,
-    UserData,
 } from '../store'
 import isEmpty from 'lodash/isEmpty'
-import CustomerForm, { FormikRef, FormModel } from '../../customer-detail'
 import dayjs from 'dayjs'
+import { UserData } from '@/services/models/users'
+import CollaboratorForm, { FormikRef, FormModel } from './detail'
 
-const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
+const CollaboratorEditContent = forwardRef<FormikRef>((_, ref) => {
     const dispatch = useAppDispatch()
 
     const customer = useAppSelector(
         (state) => state.collaborators.data.selectedCustomer
     )
 
-    const data = useAppSelector(
-        (state) => state.collaborators.data.customerList
-    )
     const { user } = customer
 
     const onFormSubmit = (values: FormModel) => {
@@ -45,7 +40,7 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     }
 
     return (
-        <CustomerForm
+        <CollaboratorForm
             ref={ref}
             customer={customer}
             onFormSubmit={onFormSubmit}
@@ -53,8 +48,8 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     )
 })
 
-CustomerEditContent.displayName = 'CustomerEditContent'
+CollaboratorEditContent.displayName = 'CustomerEditContent'
 
 export type { FormikRef }
 
-export default CustomerEditContent
+export default CollaboratorEditContent

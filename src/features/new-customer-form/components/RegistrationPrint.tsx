@@ -1,9 +1,9 @@
 import DoubleSidedImage from '@/components/shared/DoubleSidedImage'
-import { RegistrationPrintTable } from '@/features/customer-form/components/RegistrationPrintTable'
+import { RegistrationPrintTable } from '@/features/new-customer-form/components/RegistrationPrintTable'
 import { Button } from '@/components/ui'
 import { useEffect } from 'react'
 import { injectReducer } from '@/store'
-import reducer, { useAppSelector } from '@/features/customer-form/store'
+import reducer, { useAppSelector } from '@/features/new-customer-form/store'
 
 const css = `@page
                 {

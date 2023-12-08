@@ -6,6 +6,17 @@ export async function apiGetCollaborators<T>() {
         method: 'get',
     })
 }
+
+export async function apiSaveCollaborator<T, U extends Record<string, unknown>>(
+    data: U
+) {
+    return ApiService.fetchData<T>({
+        url: '/collaborator-sign-up/',
+        method: 'post',
+        data,
+    })
+}
+
 export async function apiPutCollaborator<T, U extends Record<string, unknown>>(
     data: U
 ) {

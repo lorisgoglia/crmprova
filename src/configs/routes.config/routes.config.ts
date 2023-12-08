@@ -18,9 +18,17 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'collaborator',
+        path: '/collaborator',
+        component: lazy(
+            () => import('@/features/new-collaborator-form/CollaboratorForm')
+        ),
+        authority: [],
+    },
+    {
         key: 'customer',
         path: '/customer/',
-        component: lazy(() => import('@/features/customer-form/KycForm')),
+        component: lazy(() => import('@/features/new-customer-form/KycForm')),
         authority: [],
     },
     {
@@ -28,7 +36,9 @@ export const protectedRoutes = [
         path: '/print',
         component: lazy(
             () =>
-                import('@/features/customer-form/components/RegistrationPrint')
+                import(
+                    '@/features/new-customer-form/components/RegistrationPrint'
+                )
         ),
         authority: [],
         meta: {

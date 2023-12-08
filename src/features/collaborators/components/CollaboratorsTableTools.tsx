@@ -11,7 +11,7 @@ import CustomerTableSearch from './CustomerTableSearch'
 import cloneDeep from 'lodash/cloneDeep'
 import type { TableQueries } from '@/@types/common'
 
-const CustomersTableTools = () => {
+const CollaboratorsTableTools = () => {
     const dispatch = useAppDispatch()
 
     const inputRef = useRef<HTMLInputElement>(null)
@@ -66,4 +66,4 @@ const CustomersTableTools = () => {
     )
 }
 
-export default CustomersTableTools
+export default CollaboratorsTableTools

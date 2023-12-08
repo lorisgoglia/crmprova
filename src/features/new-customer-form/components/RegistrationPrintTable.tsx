@@ -1,4 +1,4 @@
-import { KycFormState } from '@/features/customer-form/store'
+import { KycFormState } from '@/features/new-customer-form/store'
 
 type RegistrationPrintTableProps = {
     data: KycFormState['formData']

@@ -18,6 +18,19 @@
             }
         }
     },
+    "errors": {
+
+        "generic": {
+            "title": "Errore generico",
+            "message":"Si è verificato un problema, si prega di riprovare."
+        },
+        "email": {
+            "duplicate": {
+                "title": "Utente già esistente: ",
+                "message": "Si prega di riprovare cambiando indirizzo email."
+            }
+        }
+    },
     "first_name": "Nome",
     "last_name": "Cognome",
     "email": "Email",

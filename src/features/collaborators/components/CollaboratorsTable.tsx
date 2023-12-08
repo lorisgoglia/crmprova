@@ -8,20 +8,13 @@ import {
     setDrawerOpen,
     useAppDispatch,
     useAppSelector,
-    UserData,
-    Profile,
 } from '../store'
 import useThemeClass from '@/utils/hooks/useThemeClass'
-import CustomerEditDialog from './CustomerEditDialog'
-import { Link } from 'react-router-dom'
+import CollaboratorEditDialog from './CollaboratorEditDialog'
 import cloneDeep from 'lodash/cloneDeep'
 import type { OnSortParam, ColumnDef } from '@/components/shared/DataTable'
 import dayjs from 'dayjs'
-
-const statusColor: Record<string, string> = {
-    active: 'bg-emerald-500',
-    blocked: 'bg-red-500',
-}
+import { UserData } from '@/services/models/users'
 
 const ActionColumn = ({ row }: { row: UserData }) => {
     const { textTheme } = useThemeClass()
@@ -65,7 +58,7 @@ const NameColumn = ({ row }: { row: UserData }) => {
     )
 }
 
-const Customers = () => {
+const Collaborators = () => {
     const dispatch = useAppDispatch()
     const data: UserData[] = useAppSelector(
         (state) => state.collaborators.data.customerList
@@ -110,36 +103,17 @@ const Customers = () => {
                 accessorKey: 'user.email',
             },
             {
-                header: 'Data di nascità',
-                accessorKey: 'profile.dob',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            {dayjs(row.profile.dob).format('DD-MM-YYYY')}
-                        </div>
-                    )
-                },
+                header: 'Numero di telefono',
+                accessorKey: 'profile.phone_number',
             },
             {
-                header: 'Credito',
+                header: 'Ultima accesso',
+                accessorKey: 'user.last_login',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
-                            {row.card.balance + ' EUR'}
-                        </div>
-                    )
-                },
-            },
-            {
-                header: 'VIP',
-                accessorKey: 'plan',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            {row.is_vip ? 'SI' : 'NO'}
+                            {dayjs(row.profile.dob).format('DD/MM/YYYY hh:mm')}
                         </div>
                     )
                 },
@@ -191,9 +165,9 @@ const Customers = () => {
                     onSort={onSort}
                 />
             )}
-            <CustomerEditDialog />
+            <CollaboratorEditDialog />
         </>
     )
 }
 
-export default Customers
+export default Collaborators

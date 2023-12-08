@@ -1,16 +1,14 @@
 import { forwardRef } from 'react'
 import {
-    setCustomerList,
     putCustomer,
     setDrawerClose,
     useAppDispatch,
     useAppSelector,
-    Customer,
-    UserData,
 } from '../store'
 import isEmpty from 'lodash/isEmpty'
-import CustomerForm, { FormikRef, FormModel } from '../../customer-detail'
 import dayjs from 'dayjs'
+import CustomerForm, { FormikRef, FormModel } from './detail'
+import { UserData } from '@/services/models/users'
 
 const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     const dispatch = useAppDispatch()

@@ -1,3 +1,3 @@
-import { Profile, User } from '@/features/customers/store'
+import { Profile, User } from '@/services/models/users'
 
 export type AddressInformationType = Partial<User & Profile>

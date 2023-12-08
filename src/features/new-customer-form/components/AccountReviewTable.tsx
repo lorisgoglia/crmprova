@@ -1,13 +1,9 @@
 import { useTranslation } from 'react-i18next'
-import { Table } from '@/components/ui'
-import TBody from '@/components/ui/Table/TBody'
-import Tr from '@/components/ui/Table/Tr'
-import Td from '@/components/ui/Table/Td'
 import dayjs from 'dayjs'
 import appConfig from '@/configs/app.config'
-import { PersonalInformationType } from '@/features/customer-form/utils/personalInformationUtils'
-import { AddressInformationType } from '@/features/customer-form/utils/addressInformationUtils'
-import { CardInformationType } from '@/features/customer-form/store'
+import { PersonalInformationType } from '@/features/new-customer-form/utils/personalInformationUtils'
+import { AddressInformationType } from '@/features/new-customer-form/utils/addressInformationUtils'
+import { CardInformationType } from '@/features/new-customer-form/store'
 
 type AccountReviewProps = {
     data: PersonalInformationType | AddressInformationType | CardInformationType

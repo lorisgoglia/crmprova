@@ -1,6 +1,6 @@
 import { KycFormState } from '../store'
 import Button from '@/components/ui/Button'
-import AccountReviewTable from '@/features/customer-form/components/AccountReviewTable'
+import AccountReviewTable from '@/features/new-customer-form/components/AccountReviewTable'
 import { Card } from '@/components/ui'
 
 type AccountReviewProps = {

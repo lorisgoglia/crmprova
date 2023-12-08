@@ -15,9 +15,9 @@ import reducer, {
 } from './store'
 import { injectReducer } from '@/store'
 import useQuery from '@/utils/hooks/useQuery'
-import CardBalanceRecharge from '@/features/customer-form/components/CardBalanceRecharge'
-import { PersonalInformationType } from '@/features/customer-form/utils/personalInformationUtils'
-import { AddressInformationType } from '@/features/customer-form/utils/addressInformationUtils'
+import CardBalanceRecharge from '@/features/new-customer-form/components/CardBalanceRecharge'
+import { PersonalInformationType } from '@/features/new-customer-form/utils/personalInformationUtils'
+import { AddressInformationType } from '@/features/new-customer-form/utils/addressInformationUtils'
 
 injectReducer('accountDetailForm', reducer)
 

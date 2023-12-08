@@ -6,15 +6,17 @@ import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import * as Yup from 'yup'
 import PersonalInfoForm from './PersonalInfoForm'
-import SocialLinkForm from './SocialLinkForm'
-import { UserData } from '@/features/customers/store'
-import { Address, PersonalInformation } from '@/features/customer-form/store'
+import {
+    Address,
+    PersonalInformation,
+} from '@/features/new-customer-form/store'
 import { Table } from '@/components/ui'
 import TBody from '@/components/ui/Table/TBody'
 import Tr from '@/components/ui/Table/Tr'
 import Td from '@/components/ui/Table/Td'
 import THead from '@/components/ui/Table/THead'
 import Th from '@/components/ui/Table/Th'
+import { UserData } from '@/services/models/users'
 
 export type Customer = UserData
 
