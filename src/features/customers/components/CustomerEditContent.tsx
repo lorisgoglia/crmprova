@@ -17,7 +17,6 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
         (state) => state.customers.data.selectedCustomer
     )
 
-    const data = useAppSelector((state) => state.customers.data.customerList)
     const { user } = customer
 
     const onFormSubmit = (values: FormModel) => {
