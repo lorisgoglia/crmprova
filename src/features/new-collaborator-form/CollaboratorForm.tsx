@@ -42,7 +42,7 @@ const CollaboratorForm = () => {
         await saveForm(values)
             .then(({ status }) => {
                 setIsLoading(false)
-                if (status > 200) {
+                if (status >= 200) {
                     toast.push(
                         <Notification title={'Salvato'} type={'success'}>
                             Collaboratore creato con successo!

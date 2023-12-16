@@ -8,20 +8,12 @@ import {
     setDrawerOpen,
     useAppDispatch,
     useAppSelector,
-    UserData,
-    Profile,
 } from '../store'
 import useThemeClass from '@/utils/hooks/useThemeClass'
 import CustomerEditDialog from './CustomerEditDialog'
-import { Link } from 'react-router-dom'
 import cloneDeep from 'lodash/cloneDeep'
 import type { OnSortParam, ColumnDef } from '@/components/shared/DataTable'
-import dayjs from 'dayjs'
-
-const statusColor: Record<string, string> = {
-    active: 'bg-emerald-500',
-    blocked: 'bg-red-500',
-}
+import { UserData } from '@/services/models/users'
 
 const ActionColumn = ({ row }: { row: UserData }) => {
     const { textTheme } = useThemeClass()
@@ -110,14 +102,6 @@ const Customers = () => {
             {
                 header: 'Data di nascità',
                 accessorKey: 'profile.dob',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            {dayjs(row.profile.dob).format('DD-MM-YYYY')}
-                        </div>
-                    )
-                },
             },
             {
                 header: 'Credito',

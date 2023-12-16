@@ -10,11 +10,14 @@ injectReducer('customers', reducer)
 const Customers = () => {
     return (
         <>
-            <CustomerStatisticWithAction />
-            <AdaptableCard className="h-full" bodyClass="h-full">
-                <CustomersTableTools />
-                <CustomersTable />
-            </AdaptableCard>
+            <h2>Clienti</h2>
+            <div className="mt-4">
+                <CustomerStatisticWithAction />
+                <AdaptableCard className="h-full" bodyClass="h-full">
+                    <CustomersTableTools />
+                    <CustomersTable />
+                </AdaptableCard>
+            </div>
         </>
     )
 }

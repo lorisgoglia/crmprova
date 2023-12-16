@@ -12,11 +12,12 @@ injectReducer('collaborators', reducer)
 const Collaborators = () => {
     return (
         <>
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 mb-6">
+            <h2>Collaboratori</h2>
+            <div className="grid  gap-4 mt-4 mb-6">
                 <Link to="/collaborator/" className="cursor-pointer">
                     <Button
                         variant={'solid'}
-                        className={'h-full w-full h-[100px]'}
+                        className={'w-full h-[100px]'}
                         icon={<HiUserAdd />}
                     >
                         Crea nuovo collaboratore
