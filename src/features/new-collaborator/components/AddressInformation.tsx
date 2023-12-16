@@ -1,36 +1,21 @@
 import { useCallback } from 'react'
 import Input from '@/components/ui/Input'
-import Button from '@/components/ui/Button'
 import Select from '@/components/ui/Select'
-import { FormItem, FormContainer } from '@/components/ui/Form'
-import { Field, Form, Formik } from 'formik'
+import { FormItem } from '@/components/ui/Form'
+import { Field } from 'formik'
 import get from 'lodash/get'
 import { countryList } from '@/constants/countries-it.constant'
 import type { FieldProps, FormikTouched, FormikErrors } from 'formik'
 import FormPatternInput from '../../../components/shared/FormPatternInput'
-import { AddressInformationType } from '@/features/new-customer-form/utils/addressInformationUtils'
-import { addressInfoValidator } from '@/features/new-customer-form/models/validators/customer-validator'
-
-type FormModel = AddressInformationType
-
-type AddressInfomationProps = {
-    data: AddressInformationType
-    onNextChange?: (
-        values: FormModel,
-        formName: string,
-        setSubmitting: (isSubmitting: boolean) => void
-    ) => void
-    onBackChange?: () => void
-    currentStepStatus?: string
-}
+import { FormData } from '@/features/new-collaborator/store'
 
 type AddressFormProps = {
-    values: FormModel
-    touched: FormikTouched<FormModel>
-    errors: FormikErrors<FormModel>
+    values: FormData
+    touched: FormikTouched<FormData>
+    errors: FormikErrors<FormData>
 }
 
-const AddressForm = (props: AddressFormProps) => {
+const AddressInformation = (props: AddressFormProps) => {
     const { values, touched, errors } = props
 
     const getError = useCallback(
@@ -49,6 +34,10 @@ const AddressForm = (props: AddressFormProps) => {
 
     return (
         <>
+            <div className="mb-8">
+                <h3 className="mb-2">Indirizzo</h3>
+                <p>Inserisci l&apos;indirizzo dell&apos;utente.</p>
+            </div>
             <div className="md:grid grid-cols-2 gap-4">
                 <FormItem
                     label="Stato"
@@ -123,70 +112,6 @@ const AddressForm = (props: AddressFormProps) => {
                     </Field>
                 </FormItem>
             </div>
-        </>
-    )
-}
-
-const AddressInformation = ({
-    data,
-    onNextChange,
-    onBackChange,
-    currentStepStatus,
-}: AddressInfomationProps) => {
-    const onNext = (
-        values: FormModel,
-        setSubmitting: (isSubmitting: boolean) => void
-    ) => {
-        onNextChange?.(values, 'addressInformation', setSubmitting)
-    }
-
-    const onBack = () => {
-        onBackChange?.()
-    }
-
-    return (
-        <>
-            <div className="mb-8">
-                <h3 className="mb-2">Indirizzo</h3>
-                <p>Inserisci l&apos;indirizzo dell&apos;utente.</p>
-            </div>
-            <Formik
-                enableReinitialize
-                initialValues={data}
-                validationSchema={addressInfoValidator}
-                onSubmit={(values, { setSubmitting }) => {
-                    setSubmitting(true)
-                    setTimeout(() => {
-                        onNext(values, setSubmitting)
-                    }, 1000)
-                }}
-            >
-                {({ values, touched, errors, isSubmitting }) => {
-                    const formProps = { values, touched, errors }
-                    return (
-                        <Form>
-                            <FormContainer>
-                                <h5 className="mb-4">Indirizzo</h5>
-                                <AddressForm {...formProps} />
-                                <div className="flex justify-end gap-2">
-                                    <Button type="button" onClick={onBack}>
-                                        Indietro
-                                    </Button>
-                                    <Button
-                                        loading={isSubmitting}
-                                        variant="solid"
-                                        type="submit"
-                                    >
-                                        {currentStepStatus === 'complete'
-                                            ? 'Salva'
-                                            : 'Prossimo'}
-                                    </Button>
-                                </div>
-                            </FormContainer>
-                        </Form>
-                    )
-                }}
-            </Formik>
         </>
     )
 }

@@ -6,10 +6,7 @@ import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import * as Yup from 'yup'
 import PersonalInfoForm from './PersonalInfoForm'
-import {
-    Address,
-    PersonalInformation,
-} from '@/features/new-customer-form/store'
+import { Address, PersonalInformation } from '@/features/new-customer/store'
 import {
     Avatar,
     Button,
@@ -28,7 +25,7 @@ import { HiCreditCard, HiPlus } from 'react-icons/hi'
 import { Dialog } from '@/components/ui/Dialog'
 import { FormNumericInput } from '@/components/shared'
 import { AxiosError } from 'axios'
-import { handleError } from '@/features/new-customer-form/utils/errorHandling'
+import { handleError } from '@/features/new-customer/utils/errorHandling'
 import { apiChargeCard, apiGetMovements } from '@/services/CustomerService'
 
 export type Customer = UserData

@@ -6,12 +6,12 @@ import { injectReducer } from '@/store'
 import useQuery from '@/utils/hooks/useQuery'
 import { Form, Formik } from 'formik'
 import Button from '@/components/ui/Button'
-import { collaboratorValidator } from '@/features/new-collaborator-form/models/validators/collaborator-validator'
+import { collaboratorValidator } from '@/features/new-collaborator/models/validators/collaborator-validator'
 import { FormContainer, toast, Notification } from '@/components/ui'
 import { Profile, User } from '@/services/models/users'
 import { useNavigate } from 'react-router-dom'
 import { AxiosError } from 'axios'
-import { handleError } from '@/features/new-customer-form/utils/errorHandling'
+import { handleError } from '@/features/new-customer/utils/errorHandling'
 
 injectReducer('collaboratorForm', reducer)
 

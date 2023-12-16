@@ -5,7 +5,7 @@ import { Field, FieldInputProps, FieldProps, Form, Formik } from 'formik'
 import { CardInformationType } from '../store'
 import { NumericFormat, NumericFormatProps } from 'react-number-format'
 import { ComponentType } from 'react'
-import { cardInfoValidator } from '@/features/new-customer-form/models/validators/customer-validator'
+import { cardInfoValidator } from '@/features/new-customer/models/validators/customer-validator'
 
 type FormModel = CardInformationType
 

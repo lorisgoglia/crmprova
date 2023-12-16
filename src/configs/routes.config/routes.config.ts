@@ -21,24 +21,21 @@ export const protectedRoutes = [
         key: 'collaborator',
         path: '/collaborator',
         component: lazy(
-            () => import('@/features/new-collaborator-form/CollaboratorForm')
+            () => import('@/features/new-collaborator/CollaboratorForm')
         ),
         authority: [],
     },
     {
         key: 'customer',
         path: '/customer/',
-        component: lazy(() => import('@/features/new-customer-form/KycForm')),
+        component: lazy(() => import('@/features/new-customer/KycForm')),
         authority: [],
     },
     {
         key: 'print',
         path: '/print',
         component: lazy(
-            () =>
-                import(
-                    '@/features/new-customer-form/components/RegistrationPrint'
-                )
+            () => import('@/features/new-customer/components/RegistrationPrint')
         ),
         authority: [],
         meta: {

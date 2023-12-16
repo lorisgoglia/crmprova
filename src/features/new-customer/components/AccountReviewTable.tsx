@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 import appConfig from '@/configs/app.config'
-import { PersonalInformationType } from '@/features/new-customer-form/utils/personalInformationUtils'
-import { AddressInformationType } from '@/features/new-customer-form/utils/addressInformationUtils'
-import { CardInformationType } from '@/features/new-customer-form/store'
+import { PersonalInformationType } from '@/features/new-customer/utils/personalInformationUtils'
+import { AddressInformationType } from '@/features/new-customer/utils/addressInformationUtils'
+import { CardInformationType } from '@/features/new-customer/store'
 
 type AccountReviewProps = {
     data: PersonalInformationType | AddressInformationType | CardInformationType

@@ -10,12 +10,12 @@ import type { FieldInputProps, FieldProps } from 'formik'
 import type { ComponentType } from 'react'
 import type { InputProps } from '@/components/ui/Input'
 import 'dayjs/locale/it'
-import { personalInfoValidator } from '@/features/new-customer-form/models/validators/customer-validator'
+import { personalInfoValidator } from '@/features/new-customer/models/validators/customer-validator'
 import {
     genderOptions,
     PersonalInformationProps,
     PersonalInformationType,
-} from '@/features/new-customer-form/utils/personalInformationUtils'
+} from '@/features/new-customer/utils/personalInformationUtils'
 
 const NumberInput = (props: InputProps) => {
     return <Input {...props} value={props.field.value} />

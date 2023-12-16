@@ -1,5 +1,5 @@
 import { Provider } from 'react-redux'
-import KycForm from '../../src/features/new-customer-form/KycForm'
+import KycForm from '../../src/features/new-customer/KycForm'
 import store from '../../src/store'
 import { BrowserRouter } from 'react-router-dom'
 import Theme from '../../src/components/template/Theme'

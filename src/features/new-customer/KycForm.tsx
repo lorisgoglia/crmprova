@@ -9,15 +9,16 @@ import reducer, {
     useAppDispatch,
     useAppSelector,
     setClearForm,
-    Address,
     saveForm,
     CardInformationType,
 } from './store'
 import { injectReducer } from '@/store'
 import useQuery from '@/utils/hooks/useQuery'
-import CardBalanceRecharge from '@/features/new-customer-form/components/CardBalanceRecharge'
-import { PersonalInformationType } from '@/features/new-customer-form/utils/personalInformationUtils'
-import { AddressInformationType } from '@/features/new-customer-form/utils/addressInformationUtils'
+import CardBalanceRecharge from '@/features/new-customer/components/CardBalanceRecharge'
+import { PersonalInformationType } from '@/features/new-customer/utils/personalInformationUtils'
+import { AddressInformationType } from '@/features/new-customer/utils/addressInformationUtils'
+import ClinicalInformation from '@/features/new-customer/components/ClinicalInformation'
+import { ClinicalInformationType } from '@/features/new-customer/utils/clinicalInformationUtils'
 
 injectReducer('accountDetailForm', reducer)
 
@@ -54,7 +55,8 @@ const DetailForm = () => {
         values:
             | PersonalInformationType
             | AddressInformationType
-            | CardInformationType,
+            | CardInformationType
+            | ClinicalInformationType,
         name: string
     ) => {
         const nextStep = currentStep + 1
@@ -86,7 +88,7 @@ const DetailForm = () => {
         <Container className="h-full">
             <AdaptableCard className="h-full" bodyClass="h-full">
                 <div className="grid lg:grid-cols-5 xl:grid-cols-3 2xl:grid-cols-5 gap-4 h-full">
-                    {currentStep !== 4 && (
+                    {currentStep !== 5 && (
                         <div className="2xl:col-span-1 xl:col-span-1 lg:col-span-2">
                             <FormStep
                                 currentStep={currentStep}
@@ -115,6 +117,14 @@ const DetailForm = () => {
                                 />
                             )}
                             {currentStep === 2 && (
+                                <ClinicalInformation
+                                    data={formData.clinicalInformation}
+                                    currentStepStatus={currentStepStatus}
+                                    onNextChange={handleNextChange}
+                                    onBackChange={handleBackChange}
+                                />
+                            )}
+                            {currentStep === 3 && (
                                 <CardBalanceRecharge
                                     data={formData.cardInformation}
                                     currentStepStatus={currentStepStatus}
@@ -122,13 +132,13 @@ const DetailForm = () => {
                                     onBackChange={handleBackChange}
                                 />
                             )}
-                            {currentStep === 3 && (
+                            {currentStep === 4 && (
                                 <AccountReview
                                     data={formData}
                                     handleSubmit={handleSubmit}
                                 />
                             )}
-                            {currentStep === 4 && <RegistrationPrint />}
+                            {currentStep === 5 && <RegistrationPrint />}
                         </Suspense>
                     </div>
                 </div>
