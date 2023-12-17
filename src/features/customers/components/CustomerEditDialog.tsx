@@ -3,6 +3,8 @@ import Button from '@/components/ui/Button'
 import Drawer from '@/components/ui/Drawer'
 import CustomerEditContent, { FormikRef } from './CustomerEditContent'
 import {
+    getCustomers,
+    refreshCustomers,
     setDrawerClose,
     setSelectedCustomer,
     useAppDispatch,
@@ -35,6 +37,7 @@ const CustomerEditDialog = () => {
     )
 
     const onDrawerClose = () => {
+        dispatch(refreshCustomers())
         dispatch(setDrawerClose())
     }
 

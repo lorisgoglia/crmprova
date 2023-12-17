@@ -5,7 +5,7 @@ const handleError = (error: AxiosError): { title: string; message: string } => {
     const { response } = error
     const data = response?.data as any
 
-    if (data)
+    if (data && typeof data === 'object')
         if ('email' in data) {
             return {
                 title: i18n.t('errors.email.duplicate.title'),

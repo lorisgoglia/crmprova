@@ -161,15 +161,15 @@ const ClinicalInformation = ({
                                     <FormItem
                                         label="Infortuni"
                                         invalid={
-                                            (errors.diseases &&
-                                                touched.diseases) as boolean
+                                            (errors.injuries &&
+                                                touched.injuries) as boolean
                                         }
-                                        errorMessage={errors.diseases}
+                                        errorMessage={errors.injuries}
                                     >
                                         <Field
                                             type="text"
                                             autoComplete="off"
-                                            name={'diseases'}
+                                            name={'injuries'}
                                             placeholder="Infortuni"
                                             component={Input}
                                         />
