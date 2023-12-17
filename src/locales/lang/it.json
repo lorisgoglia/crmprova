@@ -19,7 +19,6 @@
         }
     },
     "errors": {
-
         "generic": {
             "title": "Errore generico",
             "message":"Si è verificato un problema, si prega di riprovare."
@@ -43,5 +42,13 @@
     "city": "Città",
     "zip_code": "CAP",
     "tax_code": "Codice Fiscale",
-    "balance": "Importo"
+    "balance": "Importo",
+    "height": "Altezza",
+    "age": "Età",
+    "profession": "Professione",
+    "extra_work_activities": "Attività extra lavorative",
+    "practiced_sports": "Attività sportive",
+    "injuries": "Infortuni",
+    "diseases": "Malattie",
+    "cardiac_pressure": "Pressione cardiaca"
 }

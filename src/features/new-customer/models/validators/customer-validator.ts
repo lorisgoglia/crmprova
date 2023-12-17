@@ -27,8 +27,24 @@ const addressInfoValidator = Yup.object().shape({
         .required('CAP obbligatorio.'),
 })
 
+const clinicalInfoValidator = Yup.object().shape({
+    height: Yup.number().notRequired(),
+    age: Yup.number().notRequired(),
+    profession: Yup.string().notRequired(),
+    extra_work_activities: Yup.string().notRequired(),
+    practiced_sports: Yup.string().notRequired(),
+    injuries: Yup.string().notRequired(),
+    diseases: Yup.string().notRequired(),
+    cardiac_pressure: Yup.string().notRequired(),
+})
+
 const cardInfoValidator = Yup.object().shape({
     balance: Yup.number(),
 })
 
-export { personalInfoValidator, addressInfoValidator, cardInfoValidator }
+export {
+    personalInfoValidator,
+    addressInfoValidator,
+    cardInfoValidator,
+    clinicalInfoValidator,
+}

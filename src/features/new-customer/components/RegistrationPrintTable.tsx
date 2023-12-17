@@ -1,4 +1,4 @@
-import { KycFormState } from '@/features/new-customer-form/store'
+import { KycFormState } from '@/features/new-customer/store'
 
 type RegistrationPrintTableProps = {
     data: KycFormState['formData']
@@ -7,24 +7,24 @@ type RegistrationPrintTableProps = {
 export const RegistrationPrintTable = ({
     data,
 }: RegistrationPrintTableProps) => {
-    const { personalInformation, addressInformation, cardBalance } = data
-    const { firstName, lastName, phoneNumber, email } = personalInformation
-    const { address, country, city, zipCode } = addressInformation
+    const { personalInformation, addressInformation } = data
+    const { first_name, last_name, phone_number, email } = personalInformation
+    const { address, country, city, zip_code } = addressInformation
     return (
         <div className="flex flex-col mt-4 gap-4">
             <address className="not-italic">
                 <div>
                     <h5>
-                        {firstName} {lastName}
+                        {first_name} {last_name}
                     </h5>
                     <span>{address}</span>
                     <br />
                     <span>
-                        {country}, {city} {zipCode}
+                        {country}, {city} {zip_code}
                     </span>
                     <br />
                     <abbr title="Phone">Telefono:</abbr>
-                    <span>(+39) {phoneNumber}</span>
+                    <span>(+39) {phone_number}</span>
                 </div>
             </address>
             <div>
@@ -35,7 +35,7 @@ export const RegistrationPrintTable = ({
                 </div>
                 <div className="mt-2">
                     <b>Password:</b>
-                    <p>XXXXXXXXXX12345678</p>
+                    <p>xq12djkl99H</p>
                 </div>
             </div>
         </div>

@@ -6,10 +6,7 @@ import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import * as Yup from 'yup'
 import PersonalInfoForm from './PersonalInfoForm'
-import {
-    Address,
-    PersonalInformation,
-} from '@/features/new-customer-form/store'
+import { Address, PersonalInformation } from '@/features/new-customer/store'
 import { UserData } from '@/services/models/users'
 
 export type Customer = UserData

@@ -5,7 +5,8 @@ import { Field, FieldInputProps, FieldProps, Form, Formik } from 'formik'
 import { CardInformationType } from '../store'
 import { NumericFormat, NumericFormatProps } from 'react-number-format'
 import { ComponentType } from 'react'
-import { cardInfoValidator } from '@/features/new-customer-form/models/validators/customer-validator'
+import { cardInfoValidator } from '@/features/new-customer/models/validators/customer-validator'
+import { FormNumericInput } from '@/components/shared'
 
 type FormModel = CardInformationType
 
@@ -18,17 +19,6 @@ type CardBalanceProps = {
     ) => void
     onBackChange?: () => void
     currentStepStatus?: string
-}
-
-const AmountInput = (props: InputProps) => {
-    return (
-        <Input
-            {...props}
-            type={'number'}
-            value={props.field.value}
-            prefix="€"
-        />
-    )
 }
 
 const NumericFormatInput = ({
@@ -101,16 +91,15 @@ const CardBalanceRecharge = ({
                                         <Field name="balance">
                                             {({ field, form }: FieldProps) => {
                                                 return (
-                                                    <NumericFormatInput
-                                                        form={form}
-                                                        field={field}
+                                                    <FormNumericInput
+                                                        placeholder="Importo"
+                                                        className="text-center text-lg w-[200px]"
+                                                        suffix=" €"
                                                         valueIsNumericString={
                                                             true
                                                         }
-                                                        placeholder="Importo"
-                                                        customInput={
-                                                            AmountInput as ComponentType
-                                                        }
+                                                        decimalScale={2}
+                                                        value={field.value}
                                                         onValueChange={(e) => {
                                                             form.setFieldValue(
                                                                 field.name,

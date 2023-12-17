@@ -1,3 +1,14 @@
+interface ClinicalInformation {
+    height?: number | null
+    age?: number | null
+    profession?: string | null
+    extra_work_activities?: string | null
+    practiced_sports?: string | null
+    injuries?: string | null
+    diseases?: string | null
+    cardiac_pressure?: string | null
+}
+
 interface Movement {
     id: number
     quantity: string
@@ -47,4 +58,4 @@ interface UserData {
     card: Card
 }
 
-export { UserData, Profile, Card, User, Movement }
+export { UserData, Profile, Card, User, Movement, ClinicalInformation }

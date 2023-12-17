@@ -108,12 +108,13 @@ const Collaborators = () => {
             },
             {
                 header: 'Ultima accesso',
-                accessorKey: 'user.last_login',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
-                            {dayjs(row.profile.dob).format('DD/MM/YYYY hh:mm')}
+                            {dayjs(row.user.last_login).format(
+                                'DD/MM/YYYY hh:mm'
+                            )}
                         </div>
                     )
                 },

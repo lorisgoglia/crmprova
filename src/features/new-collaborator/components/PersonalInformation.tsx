@@ -9,8 +9,8 @@ import type { FieldInputProps, FieldProps } from 'formik'
 import type { ComponentType } from 'react'
 import type { InputProps } from '@/components/ui/Input'
 import 'dayjs/locale/it'
-import { genderOptions } from '@/features/new-customer-form/utils/personalInformationUtils'
-import { FormData } from '@/features/new-collaborator-form/store'
+import { genderOptions } from '@/features/new-customer/utils/personalInformationUtils'
+import { FormData } from '@/features/new-collaborator/store'
 
 type PersonalInformationFormProps = {
     values: FormData

@@ -49,6 +49,14 @@ export const getCustomers = createAsyncThunk(
     }
 )
 
+export const refreshCustomers = createAsyncThunk(
+    'crmCustomers/data/refreshCustomers',
+    async () => {
+        const response = await apiGetCustomers<UserData[]>()
+        return response.data
+    }
+)
+
 export const putCustomer = createAsyncThunk(
     'crmCustomers/data/putCustomer',
     async (data: Partial<UserData>) => {
@@ -133,6 +141,17 @@ const customersSlice = createSlice({
                 state.loading = true
             })
             .addCase(putCustomer.fulfilled, (state, action) => {
+                const paginatedData = paginate(
+                    action.payload,
+                    action.payload.length,
+                    1
+                )
+                state.customerList = paginatedData
+                state.tableData.total = action.payload.length
+                state.tableData.pageSize = action.payload.length
+                state.loading = false
+            })
+            .addCase(refreshCustomers.fulfilled, (state, action) => {
                 const paginatedData = paginate(
                     action.payload,
                     action.payload.length,

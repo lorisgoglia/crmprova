@@ -4,10 +4,11 @@ import {
     apiSaveCustomer,
 } from '@/services/AccountServices'
 import dayjs from 'dayjs'
-import { get18yearsOldAgeDate } from '@/features/new-customer-form/utils/dateUtils'
-import { PersonalInformationType } from '@/features/new-customer-form/utils/personalInformationUtils'
-import { AddressInformationType } from '@/features/new-customer-form/utils/addressInformationUtils'
-import { Card } from '@/features/customers/store'
+import { get18yearsOldAgeDate } from '@/features/new-customer/utils/dateUtils'
+import { PersonalInformationType } from '@/features/new-customer/utils/personalInformationUtils'
+import { AddressInformationType } from '@/features/new-customer/utils/addressInformationUtils'
+import { Card } from '@/services/models/users'
+import { ClinicalInformationType } from '@/features/new-customer/utils/clinicalInformationUtils'
 
 export type PersonalInformation = {
     firstName: string
@@ -21,16 +22,6 @@ export type PersonalInformation = {
     vip: boolean
 }
 
-export type Identification = {
-    documentType: string
-    passportCover: string
-    passportDataPage: string
-    nationalIdFront: string
-    nationalIdBack: string
-    driversLicenseFront: string
-    driversLicenseBack: string
-}
-
 export type Address = {
     country: string
     address: string
@@ -40,31 +31,10 @@ export type Address = {
 
 export type CardInformationType = Partial<Card>
 
-type CompanyInformation = {
-    companyName: string
-    contactNumber: string
-    country: string
-    addressLine1: string
-    addressLine2: string
-    city: string
-    state: string
-    zipCode: string
-}
-
-export type FinancialInformation = {
-    taxResident: string
-    tin: string
-    noTin: boolean
-    noTinReason: string | number
-    occupation: string
-    annualIncome: string
-    sourceOfWealth: string
-    companyInformation: CompanyInformation
-}
-
 type FormData = {
     personalInformation: PersonalInformationType
     addressInformation: AddressInformationType
+    clinicalInformation: ClinicalInformationType
     cardInformation: CardInformationType
 }
 
@@ -158,6 +128,16 @@ export const initialState: KycFormState = {
         cardInformation: {
             balance: 0,
         },
+        clinicalInformation: {
+            height: null,
+            age: null,
+            profession: null,
+            extra_work_activities: null,
+            practiced_sports: null,
+            injuries: null,
+            diseases: null,
+            cardiac_pressure: null,
+        },
     },
     stepStatus: {
         0: { status: 'pending' },
@@ -165,6 +145,7 @@ export const initialState: KycFormState = {
         2: { status: 'pending' },
         3: { status: 'pending' },
         4: { status: 'pending' },
+        5: { status: 'pending' },
     },
     currentStep: 0,
 }

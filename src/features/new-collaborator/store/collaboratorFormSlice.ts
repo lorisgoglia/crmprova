@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { apiGetAccountFormData } from '@/services/AccountServices'
 import dayjs from 'dayjs'
-import { get18yearsOldAgeDate } from '@/features/new-customer-form/utils/dateUtils'
+import { get18yearsOldAgeDate } from '@/features/new-customer/utils/dateUtils'
 import { Profile, User } from '@/services/models/users'
 import { apiSaveCollaborator } from '@/services/CollaboratorService'
 
