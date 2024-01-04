@@ -35,7 +35,6 @@ const clinicalInfoValidator = Yup.object().shape({
     practiced_sports: Yup.string().notRequired(),
     injuries: Yup.string().notRequired(),
     diseases: Yup.string().notRequired(),
-    cardiac_pressure: Yup.string().notRequired(),
 })
 
 const cardInfoValidator = Yup.object().shape({

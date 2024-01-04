@@ -9,12 +9,7 @@ type AccountReviewProps = {
 }
 
 const AccountReview = ({ data, handleSubmit }: AccountReviewProps) => {
-    const {
-        personalInformation,
-        addressInformation,
-        clinicalInformation,
-        cardInformation,
-    } = data
+    const { personalInformation, addressInformation, cardInformation } = data
     return (
         <>
             <div className="mb-8">
@@ -31,10 +26,9 @@ const AccountReview = ({ data, handleSubmit }: AccountReviewProps) => {
                         excluded={['dialCode']}
                     />
                 </Card>
-                <Card bordered={false} header={<h5>Informazioni cliniche</h5>}>
+                {/* <Card bordered={false} header={<h5>Informazioni cliniche</h5>}>
                     <AccountReviewTable data={clinicalInformation} />
-                </Card>
-
+                </Card>*/}
                 <div className="grid grid-cols-2 gap-4">
                     <Card bordered={false} header={<h5>Indirizzo</h5>}>
                         <AccountReviewTable data={addressInformation} />

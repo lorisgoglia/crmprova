@@ -136,7 +136,6 @@ export const initialState: KycFormState = {
             practiced_sports: null,
             injuries: null,
             diseases: null,
-            cardiac_pressure: null,
         },
     },
     stepStatus: {
@@ -145,7 +144,6 @@ export const initialState: KycFormState = {
         2: { status: 'pending' },
         3: { status: 'pending' },
         4: { status: 'pending' },
-        5: { status: 'pending' },
     },
     currentStep: 0,
 }

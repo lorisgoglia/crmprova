@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 import {
+    putClinicalInformation,
     putCustomer,
     setDrawerClose,
     useAppDispatch,
@@ -8,7 +9,7 @@ import {
 import isEmpty from 'lodash/isEmpty'
 import dayjs from 'dayjs'
 import CustomerForm, { FormikRef, FormModel } from './detail'
-import { UserData } from '@/services/models/users'
+import { ClinicalInformation, UserData } from '@/services/models/users'
 
 const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     const dispatch = useAppDispatch()
@@ -20,7 +21,32 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
     const { user } = customer
 
     const onFormSubmit = (values: FormModel) => {
-        const { firstName, lastName, dob, address, phoneNumber, vip } = values
+        const {
+            firstName,
+            lastName,
+            dob,
+            address,
+            phoneNumber,
+            vip,
+            height,
+            age,
+            extra_work_activities,
+            profession,
+            practiced_sports,
+            injuries,
+            diseases,
+        } = values
+
+        const clinical_information = {
+            id: user.id,
+            height,
+            age,
+            extra_work_activities,
+            profession,
+            practiced_sports,
+            injuries,
+            diseases,
+        }
 
         const editedCustomer = {
             id: user.id,
@@ -35,8 +61,12 @@ const CustomerEditContent = forwardRef<FormikRef>((_, ref) => {
         if (!isEmpty(editedCustomer)) {
             dispatch(putCustomer(editedCustomer as Partial<UserData>))
         }
+
+        if (!isEmpty(clinical_information)) {
+            dispatch(putClinicalInformation(clinical_information))
+        }
+
         dispatch(setDrawerClose())
-        /* dispatch(setCustomerList(newData))*/
     }
 
     return (

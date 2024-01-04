@@ -1,10 +1,12 @@
 import ApiService from './ApiService'
-import { Card, Movement } from '@/services/models/users'
+import { Card, ClinicalInformation, Movement } from '@/services/models/users'
 
 type GetMovementResponse = {
     card: Card
     movements: Movement[]
 }
+
+type GetClinicalInfoResponse = ClinicalInformation
 
 export async function apiGetCustomers<T>() {
     return ApiService.fetchData<T>({
@@ -37,6 +39,25 @@ export async function apiGetMovements<U extends Record<string, unknown>>(
     return ApiService.fetchData<GetMovementResponse>({
         url: `/movements/${data.user_id}/${data.start_date}/${data.end_date}`,
         method: 'get',
+    })
+}
+
+export async function apiGetClinicalinfo<U extends Record<string, unknown>>(
+    data: U
+) {
+    return ApiService.fetchData<GetClinicalInfoResponse>({
+        url: `/get-clinical-information/${data.user_id}/`,
+        method: 'get',
+    })
+}
+
+export async function apiManageClinicalInfo<T, U extends Record<string, unknown>>(
+    data: U
+) {
+    return ApiService.fetchData<T>({
+        url: '/manage-clinical-information/',
+        method: 'post',
+        data,
     })
 }
 
