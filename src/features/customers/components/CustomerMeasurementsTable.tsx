@@ -1,22 +1,11 @@
-import { Measurements, Movement, UserData } from '@/services/models/users'
-import {
-    Spinner,
-    Table,
-    Dialog,
-    Button,
-    toast,
-    Notification,
-} from '@/components/ui'
-import { apiManageClinicalInfo } from '@/services/CustomerService'
+import { Measurements } from '@/services/models/users'
+import { Spinner, Table, Button } from '@/components/ui'
 import THead from '@/components/ui/Table/THead'
 import Tr from '@/components/ui/Table/Tr'
 import Th from '@/components/ui/Table/Th'
 import TBody from '@/components/ui/Table/TBody'
 import Td from '@/components/ui/Table/Td'
-
-import { FormNumericInput } from '@/components/shared'
-import { Dispatch, SetStateAction, useState } from 'react'
-import { handleError } from '@/features/new-customer/utils/errorHandling'
+import { HiViewGridAdd } from 'react-icons/hi'
 
 export const CustomerMeasurementsTable = ({
     measurements = [],
@@ -29,15 +18,17 @@ export const CustomerMeasurementsTable = ({
 }) => {
     return (
         <div className="mt-2 w-full">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mb-2">
                 <h4>Misurazioni:</h4>
-                <div
-                    className="cursor-pointer"
+                <Button
+                    variant={'solid'}
                     onClick={handleOpen}
-                    style={{ fontSize: '2.5em', cursor: 'pointer' }}
+                    type="button"
+                    className="text-md pointer"
+                    icon={<HiViewGridAdd />}
                 >
-                    <span>+</span>
-                </div>
+                    Crea nuova misurazione
+                </Button>
             </div>
             {!isLoading && (
                 <Table className="mt-2">

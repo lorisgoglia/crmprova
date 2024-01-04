@@ -14,6 +14,7 @@ import CustomerEditDialog from './CustomerEditDialog'
 import cloneDeep from 'lodash/cloneDeep'
 import type { OnSortParam, ColumnDef } from '@/components/shared/DataTable'
 import { UserData } from '@/services/models/users'
+import acronym from '@/utils/acronym'
 
 const ActionColumn = ({ row }: { row: UserData }) => {
     const { textTheme } = useThemeClass()
@@ -46,7 +47,9 @@ const NameColumn = ({ row }: { row: UserData }) => {
 
     return (
         <div className="flex items-center">
-            <Avatar size={28} shape="circle" src={profile.img ?? undefined} />
+            <Avatar size={30} shape="circle">
+                {acronym(`${user.first_name} ${user.last_name}`)}
+            </Avatar>
             <div
                 className={`hover:${textTheme} ml-2 rtl:mr-2 font-semibold cursor-pointer`}
                 onClick={onEdit}

@@ -86,7 +86,6 @@ const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
                                     />
                                 </TabContent>
                                 <TabContent value="clinicalInfo">
-                                    <p>{JSON.stringify(values, null, 2)}</p>
                                     <CustomerClinicalInfo
                                         customer={customer}
                                         touched={touched}

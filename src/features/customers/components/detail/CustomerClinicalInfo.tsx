@@ -216,34 +216,36 @@ export const CustomerClinicalInfo = ({
             />
             <Dialog
                 isOpen={open}
-                width={400}
+                width={600}
                 onRequestClose={handleClose}
                 onClose={handleClose}
             >
-                <h5 style={{ fontSize: '1.2em' }}>Aggiorna misurazioni</h5>
-                {measurementFields.map((field, index) => (
-                    <div
-                        key={index}
-                        className="flex items-center justify-center mt-2 mb-2"
-                    >
-                        <div className="text-center my-1">
-                            <h4 className="mb-1">{field.label}</h4>
-                            <FormNumericInput
-                                placeholder={`0${field.suffix}`}
-                                className="text-center text-lg"
-                                suffix={field.suffix}
-                                decimalScale={2}
-                                value={field.state}
-                                onValueChange={(e) => {
-                                    setMeasurementState(
-                                        field.type,
-                                        e.floatValue!
-                                    )
-                                }}
-                            />
+                <h4>Aggiorna misurazioni</h4>
+                <div className="grid grid-cols-2 gap-4">
+                    {measurementFields.map((field, index) => (
+                        <div
+                            key={index}
+                            className="flex items-center justify-center m-6"
+                        >
+                            <div className="text-left ">
+                                <h6 className="mb-1">{field.label}</h6>
+                                <FormNumericInput
+                                    placeholder={`0${field.suffix}`}
+                                    className="text-center text-lg"
+                                    suffix={field.suffix}
+                                    decimalScale={2}
+                                    value={field.state}
+                                    onValueChange={(e) => {
+                                        setMeasurementState(
+                                            field.type,
+                                            e.floatValue!
+                                        )
+                                    }}
+                                />
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
                 <Button
                     block
                     loading={isLoading}
