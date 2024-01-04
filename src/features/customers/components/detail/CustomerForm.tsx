@@ -8,8 +8,8 @@ import * as Yup from 'yup'
 import PersonalInfoForm from './PersonalInfoForm'
 import { Address, PersonalInformation } from '@/features/new-customer/store'
 import { ClinicalInformation, UserData } from '@/services/models/users'
-import { CustomerCardInfo } from '@/features/customers/components/CustomerCardInfo'
-import ClinicalInfoForm from '@/features/customers/components/detail/ClinicalInfoForm'
+import { CustomerCardInfo } from '@/features/customers/components/detail/CustomerCardInfo'
+import { CustomerClinicalInfo } from '@/features/customers/components/detail/CustomerClinicalInfo'
 
 export type Customer = UserData
 
@@ -65,7 +65,7 @@ const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
                 setSubmitting(false)
             }}
         >
-            {({ touched, errors }) => (
+            {({ touched, errors, setValues, values }) => (
                 <Form>
                     <FormContainer>
                         <Tabs defaultValue="personalInfo">
@@ -86,9 +86,13 @@ const CustomerForm = forwardRef<FormikRef, CustomerFormProps>((props, ref) => {
                                     />
                                 </TabContent>
                                 <TabContent value="clinicalInfo">
-                                    <ClinicalInfoForm
+                                    <p>{JSON.stringify(values, null, 2)}</p>
+                                    <CustomerClinicalInfo
+                                        customer={customer}
                                         touched={touched}
                                         errors={errors}
+                                        setValues={setValues}
+                                        values={values}
                                     />
                                 </TabContent>
                                 <TabContent value="card">

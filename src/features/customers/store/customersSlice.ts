@@ -2,8 +2,12 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { apiGetCrmCustomersStatistic } from '@/services/CrmService'
 import type { TableQueries } from '@/@types/common'
 import paginate from '@/utils/paginate'
-import { apiGetCustomers, apiPutCustomer } from '@/services/CustomerService'
-import { UserData } from '@/services/models/users'
+import {
+    apiGetCustomers,
+    apiManageClinicalInfo,
+    apiPutCustomer,
+} from '@/services/CustomerService'
+import { ClinicalInformation, UserData } from '@/services/models/users'
 
 type Statistic = {
     value: number
@@ -61,6 +65,15 @@ export const putCustomer = createAsyncThunk(
     'crmCustomers/data/putCustomer',
     async (data: Partial<UserData>) => {
         const update = await apiPutCustomer(data)
+        const response = await apiGetCustomers<UserData[]>()
+        return response.data
+    }
+)
+
+export const putClinicalInformation = createAsyncThunk(
+    'crmCustomers/data/putClinicalInformation',
+    async (data: Partial<{ id: number & ClinicalInformation }>) => {
+        const update = await apiManageClinicalInfo(data)
         const response = await apiGetCustomers<UserData[]>()
         return response.data
     }

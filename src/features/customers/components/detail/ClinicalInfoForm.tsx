@@ -1,4 +1,3 @@
-import DatePicker from '@/components/ui/DatePicker'
 import Input from '@/components/ui/Input'
 import { FormItem } from '@/components/ui/Form'
 import { Field, FieldProps, FormikErrors, FormikTouched } from 'formik'
@@ -138,7 +137,7 @@ const ClinicalInfoForm = (props: ClinicalInfoFormProps) => {
                         component={Input}
                     />
                 </FormItem>
-                <FormItem
+                {/*<FormItem
                     label="Pressione Cardiaca (mmHg / mmHg)"
                     invalid={
                         (errors.cardiac_pressure &&
@@ -153,7 +152,7 @@ const ClinicalInfoForm = (props: ClinicalInfoFormProps) => {
                         placeholder="Pressione Cardiaca (mmHg / mmHg)"
                         component={Input}
                     />
-                </FormItem>
+                </FormItem>*/}
             </div>
         </>
     )

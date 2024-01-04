@@ -6,7 +6,26 @@ interface ClinicalInformation {
     practiced_sports?: string | null
     injuries?: string | null
     diseases?: string | null
-    cardiac_pressure?: string | null
+    /*cardiac_pressure?: string | null*/
+    lean_mass_measurements?: Measurement[] | []
+    weights_measurements?: Measurement[] | []
+    body_fat_measurements?: Measurement[] | []
+    body_fluids_measurements?: Measurement[] | []
+    body_mass_index_measurements?: Measurement[] | []
+    basal_metabolism?: Measurement[] | []
+}
+
+interface Measurements {
+    lean_mass: Measurement
+    weight: Measurement
+    body_fat: Measurement
+    body_fluids: Measurement
+    body_mass_index: Measurement
+    basal_metabolism: Measurement
+}
+interface Measurement {
+    date: string
+    value: number
 }
 
 interface Movement {
@@ -58,4 +77,12 @@ interface UserData {
     card: Card
 }
 
-export { UserData, Profile, Card, User, Movement, ClinicalInformation }
+export {
+    UserData,
+    Profile,
+    Card,
+    User,
+    Movement,
+    ClinicalInformation,
+    Measurements,
+}
