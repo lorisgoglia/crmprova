@@ -26,6 +26,12 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'activities',
+        path: '/activities',
+        component: lazy(() => import('@/features/activities/Activities')),
+        authority: [],
+    },
+    {
         key: 'customer',
         path: '/customer/',
         component: lazy(() => import('@/features/new-customer/KycForm')),
