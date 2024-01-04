@@ -52,6 +52,7 @@ function useAuth() {
                     userName: serverUser.username,
                     authority: ['USER'],
                     email: serverUser.email,
+                    id: serverUser.id,
                 }
                 dispatch(signInSuccess(token))
                 if (resp.data.user) {

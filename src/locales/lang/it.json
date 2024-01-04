@@ -2,6 +2,7 @@
     "nav": {
         "home": "Home",
         "collaborators": "Collaboratori",
+        "activities": "Attività",
         "singleMenuItem": "Single menu item",
         "collapseMenu": {
             "collapseMenu": "Collapse menu item",
@@ -50,5 +51,7 @@
     "practiced_sports": "Attività sportive",
     "injuries": "Infortuni",
     "diseases": "Malattie",
-    "cardiac_pressure": "Pressione cardiaca"
+    "cardiac_pressure": "Pressione cardiaca",
+    "cryotherapy": "Crioterapia",
+    "gym": "Sessione Gym"
 }
