@@ -5,7 +5,7 @@ import {
     Measurements,
     UserData,
 } from '@/services/models/users'
-import { FormNumericInput } from '@/components/shared'
+import { Chart, FormNumericInput } from '@/components/shared'
 import {
     apiGetClinicalinfo,
     apiManageClinicalInfo,
@@ -16,6 +16,18 @@ import { FormikErrors, FormikTouched } from 'formik'
 import { FormModel } from '@/features/customers/components/detail/CustomerForm'
 import { handleError } from '@/features/new-customer/utils/errorHandling'
 import { AxiosError } from 'axios'
+import {
+    mapDataChart,
+    mapMeasurements,
+} from '@/features/customers/utils/clinicalInformationUtils'
+
+type CartType = {
+    series?: {
+        name: string
+        data: number[]
+    }[]
+    categories?: string[]
+}
 
 type CustomerClinicalInfoProps = {
     customer: UserData
@@ -68,6 +80,9 @@ export const CustomerClinicalInfo = ({
     const [isLoading, setIsLoading] = useState(false)
     const [clinicalInfo, setClinicalInfo] = useState<ClinicalInformation>()
     const [measurements, setMeasurements] = useState<Measurements[]>([])
+    const [weightChart, setWeightChart] = useState<CartType>()
+    const [leanMassChart, setLeanChart] = useState<CartType>()
+    const [bodyFatChart, setBodyFatChart] = useState<CartType>()
 
     const [measurementState, dispatch] = useReducer(reducer, initialState)
 
@@ -123,34 +138,36 @@ export const CustomerClinicalInfo = ({
                 setIsLoading(false)
                 if (status >= 200) {
                     const measurementsMap = mapMeasurements(data)
+                    const weightChartData = mapDataChart(
+                        data,
+                        'weights_measurements'
+                    )
+                    const leanMassChartData = mapDataChart(
+                        data,
+                        'lean_mass_measurements'
+                    )
+                    const bodyFatChartData = mapDataChart(
+                        data,
+                        'body_fat_measurements'
+                    )
                     setClinicalInfo(data)
                     setValues({ ...values, ...data })
                     setMeasurements(measurementsMap)
+                    setWeightChart(weightChartData)
+                    setLeanChart(leanMassChartData)
+                    setBodyFatChart(bodyFatChartData)
                 }
             })
-            .catch(() => setIsLoading(false))
-    }, [customer.user.id])
-
-    const mapMeasurements = (clinicalInfo: ClinicalInformation) => {
-        const weight = clinicalInfo.weights_measurements ?? []
-        const lean_mass = clinicalInfo.lean_mass_measurements ?? []
-        const body_fat = clinicalInfo.body_fat_measurements ?? []
-        const body_mass_index = clinicalInfo.body_mass_index_measurements ?? []
-        const body_fluids = clinicalInfo.body_fluids_measurements ?? []
-        const basal_metabolism = clinicalInfo.basal_metabolism ?? []
-
-        // TODO: sort by date
-        return lean_mass!.map(
-            (v, i): Measurements => ({
-                lean_mass: v,
-                weight: weight[i],
-                body_fat: body_fat[i],
-                body_mass_index: body_mass_index[i],
-                body_fluids: body_fluids[i],
-                basal_metabolism: basal_metabolism[i],
+            .catch((error: AxiosError) => {
+                setIsLoading(false)
+                const { title, message } = handleError(error)
+                toast.push(
+                    <Notification title={title} type={'danger'}>
+                        {message}
+                    </Notification>
+                )
             })
-        )
-    }
+    }, [customer.user.id])
 
     useEffect(() => {
         getClinicalInfo()
@@ -209,6 +226,46 @@ export const CustomerClinicalInfo = ({
     return (
         <>
             <ClinicalInfoForm touched={touched} errors={errors} />
+            {clinicalInfo && (
+                <div className="grid grid-cols-3">
+                    <div>
+                        <h5>Peso:</h5>
+                        <Chart
+                            series={weightChart?.series}
+                            xAxis={weightChart?.categories}
+                            height="280px"
+                            customOptions={{
+                                legend: { show: false },
+                                colors: ['#5CB85C'],
+                            }}
+                        />
+                    </div>
+                    <div>
+                        <h5>Massa magra:</h5>
+                        <Chart
+                            series={leanMassChart?.series}
+                            xAxis={leanMassChart?.categories}
+                            height="280px"
+                            customOptions={{
+                                legend: { show: false },
+                                colors: ['#428BCA'],
+                            }}
+                        />
+                    </div>
+                    <div>
+                        <h5>Massa grassa:</h5>
+                        <Chart
+                            series={bodyFatChart?.series}
+                            xAxis={bodyFatChart?.categories}
+                            height="280px"
+                            customOptions={{
+                                legend: { show: false },
+                                colors: ['#FF5C5C'],
+                            }}
+                        />
+                    </div>
+                </div>
+            )}
             <CustomerMeasurementsTable
                 measurements={measurements}
                 isLoading={isLoading}

@@ -156,7 +156,6 @@ const convertToEvents = (activity: Activity): Event[] => {
                         title: i18n.t(key),
                         start: startDate,
                         end: endDate,
-
                         eventColor: key === 'gym' ? 'emerald' : 'sky',
                         extendedProps: {
                             available_spots: slot.available_spots,
