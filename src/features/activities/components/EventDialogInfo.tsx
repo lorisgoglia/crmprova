@@ -1,18 +1,20 @@
 import Dialog from '@/components/ui/Dialog'
 import { closeDialog, useAppDispatch, useAppSelector } from '../store'
 import dayjs from 'dayjs'
-import { Event } from '../store/calendarSlice'
 import { EventParticipantsTable } from '@/features/activities/components/EventParticipantsTable'
 import { Avatar } from '@/components/ui'
 import acronym from '@/utils/acronym'
-import { defaultColorList } from '@/features/activities/utils/activityUtils'
+import {
+    defaultColorList,
+    Event,
+} from '@/features/activities/utils/activityUtils'
 
 const EventDialog = () => {
     const dispatch = useAppDispatch()
 
     const open = useAppSelector((state) => state.crmCalendar.data.dialogOpen)
     const selected = useAppSelector((state) => state.crmCalendar.data.selected)
-    const participants = selected.extendedProps?.participants || []
+    const reservations = selected.extendedProps?.reservations || []
     const handleDialogClose = () => {
         dispatch(closeDialog())
     }
@@ -61,9 +63,9 @@ const EventDialog = () => {
             <h6 className="text-right">
                 Posti disponibili: {selected.extendedProps?.available_spots}
             </h6>
-            <h5>Riservati: {participants.length > 0 && participants.length}</h5>
+            <h5>Riservati: {reservations.length > 0 && reservations.length}</h5>
             <div className="max-h-96 overflow-y-auto mt-2">
-                <EventParticipantsTable participants={participants} />
+                <EventParticipantsTable reservations={reservations} />
             </div>
         </Dialog>
     )

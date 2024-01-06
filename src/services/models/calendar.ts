@@ -14,12 +14,13 @@ interface Slot {
     end_hour: number
     available_spots: number
     enabled_for_reservation: boolean
+    reservations: Reservation[]
 }
 
-interface Participants {
+interface Reservation {
     first_name: string
     last_name: string
     id: number
 }
 
-export { GetCalendarResponse, Slot, Activity, Day, Participants }
+export { GetCalendarResponse, Slot, Activity, Day, Reservation }

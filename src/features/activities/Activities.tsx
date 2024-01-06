@@ -10,7 +10,7 @@ import reducer, {
 } from './store'
 import { injectReducer } from '@/store'
 import dayjs from 'dayjs'
-import type { EventClickArg, DateSelectArg } from '@fullcalendar/core'
+import type { EventClickArg } from '@fullcalendar/core'
 import { EventContent } from '@/features/activities/components/EventContent'
 import { Loading } from '@/components/shared'
 import EventDialogInfo from '@/features/activities/components/EventDialogInfo'

@@ -1,4 +1,4 @@
-import { Activity, Participants } from '@/services/models/calendar'
+import { Activity, Reservation } from '@/services/models/calendar'
 import uniqueId from 'lodash/uniqueId'
 import i18n from 'i18next'
 
@@ -9,42 +9,11 @@ type Event = {
     extendedProps: {
         available_spots: number
         enabled_for_reservation: boolean
-        participants: Participants[]
+        reservations: Reservation[]
     }
     eventColor: string
     id: string
 }
-
-const participants: Participants[] = [
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-    { first_name: 'Lorenzo', last_name: 'Cutrupi', id: 0 },
-    { first_name: 'Matteo', last_name: 'Citterio', id: 1 },
-]
 
 const defaultColorList: Record<
     string,
@@ -140,7 +109,7 @@ const convertToEvents = (activity: Activity): Event[] => {
     return Object.entries(activity)
         .map(([key, value]) => {
             return value.flatMap((day) => {
-                return day.slots.map((slot) => {
+                return day.slots.map((slot): Event => {
                     // Parse date in the format "MM-DD-YYYY"
                     const [dayOfMonth, month, year] = day.date.split('-')
 
@@ -161,7 +130,7 @@ const convertToEvents = (activity: Activity): Event[] => {
                             available_spots: slot.available_spots,
                             enabled_for_reservation:
                                 slot.enabled_for_reservation,
-                            participants: participants,
+                            reservations: slot.reservations,
                         },
                     }
                 })

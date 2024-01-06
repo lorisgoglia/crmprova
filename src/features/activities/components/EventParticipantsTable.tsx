@@ -1,23 +1,22 @@
 import { Avatar, Table } from '@/components/ui'
-import THead from '@/components/ui/Table/THead'
 import Tr from '@/components/ui/Table/Tr'
-import Th from '@/components/ui/Table/Th'
 import TBody from '@/components/ui/Table/TBody'
 import Td from '@/components/ui/Table/Td'
-import { Participants } from '@/services/models/calendar'
+import { Reservation } from '@/services/models/calendar'
 import acronym from '@/utils/acronym'
 
 export const EventParticipantsTable = ({
-    participants,
+    reservations,
 }: {
-    participants: Participants[]
+    reservations: Reservation[]
 }) => {
     return (
         <div className="w-full">
-            {participants.length > 0 && (
+            {reservations.length == 0 && <h5>Nessun partecipante.</h5>}
+            {reservations.length > 0 && (
                 <Table className="mt-2" align="left">
                     <TBody>
-                        {participants.map((participant, index) => (
+                        {reservations.map((participant, index) => (
                             <Tr key={`${participant.id}_${index}`}>
                                 <Td>
                                     <div className="flex items-center gap-2">
