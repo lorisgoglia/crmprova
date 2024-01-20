@@ -129,6 +129,11 @@ export const CustomerClinicalInfo = ({
         dispatch({ type: 'SET_STATE', field, value })
     }
 
+    const reverseChartData = (chartData: any) => {
+        chartData.categories.reverse();
+        chartData.series[0].data.reverse();
+    };
+
     const getClinicalInfo = useCallback(() => {
         setIsLoading(true)
         apiGetClinicalinfo({
@@ -150,9 +155,12 @@ export const CustomerClinicalInfo = ({
                         data,
                         'body_fat_measurements'
                     )
+                    reverseChartData(bodyFatChartData);
+                    reverseChartData(weightChartData);
+                    reverseChartData(leanMassChartData);
                     setClinicalInfo(data)
                     setValues({ ...values, ...data })
-                    setMeasurements(measurementsMap)
+                    setMeasurements(measurementsMap.reverse())
                     setWeightChart(weightChartData)
                     setLeanChart(leanMassChartData)
                     setBodyFatChart(bodyFatChartData)
@@ -291,12 +299,9 @@ export const CustomerClinicalInfo = ({
                                     className="text-center text-lg"
                                     suffix={field.suffix}
                                     decimalScale={2}
-                                    value={field.state}
+                                    value={field.state || null}  // Set the initial value to null or an empty string
                                     onValueChange={(e) => {
-                                        setMeasurementState(
-                                            field.type,
-                                            e.floatValue!
-                                        )
+                                        setMeasurementState(field.type, e.floatValue!);
                                     }}
                                 />
                             </div>
