@@ -50,7 +50,7 @@ function useAuth() {
                 const user: UserState = {
                     avatar: '',
                     userName: serverUser.username,
-                    authority: ['USER'],
+                    authority: ['UTENTE'],
                     email: serverUser.email,
                     id: serverUser.id,
                 }
