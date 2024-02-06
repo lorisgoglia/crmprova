@@ -17,7 +17,7 @@ export const EventContent = (arg: any) => {
     return (
         <div
             className={classNames(
-                'custom-calendar-event !items-start',
+                'custom-calendar-event',
                 view.type === 'dayGridMonth' ? '!h-[80px]' : null,
                 extendedProps.eventColor
                     ? defaultColorList[extendedProps.eventColor]?.bg
@@ -27,29 +27,18 @@ export const EventContent = (arg: any) => {
                     : '',
                 isEnd &&
                     !isStart &&
-                    '!rounded-tl-none !rounded-bl-none !rtl:rounded-tr-none !rtl:rounded-br-none',
+                    '!rounded-tl-none !rounded-bl-none !rtl:rounded-tr-none !rtl:rounded-br-none !ml-0',
                 !isEnd &&
                     isStart &&
                     '!rounded-tr-none !rounded-br-none !rtl:rounded-tl-none !rtl:rounded-bl-none',
                 ''
             )}
         >
-            {!(isEnd && !isStart) && (
-                <Badge
-                    className={classNames(
-                        availabilityIndicator(extendedProps?.available_spots),
-                        'absolute -top-0.5 -left-0.5 z-50'
-                    )}
-                />
-            )}
+            
             <div className="flex flex-col ">
-                {!(isEnd && !isStart) && (
-                    <span className="font-bold text-[10px]">
-                        {arg.timeText}
-                    </span>
-                )}
+                
                 <span className="font-semibold">{arg.event.title}</span>
-                <span className="text-[9px] absolute bottom-1">
+                <span className="text-[9px]">
                     Disponibili: {extendedProps?.available_spots}
                 </span>
             </div>

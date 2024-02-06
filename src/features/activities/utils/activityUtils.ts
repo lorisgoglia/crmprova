@@ -2,6 +2,7 @@ import { Activity, Reservation } from '@/services/models/calendar'
 import uniqueId from 'lodash/uniqueId'
 import i18n from 'i18next'
 
+
 type Event = {
     title: string
     start: string
@@ -105,6 +106,18 @@ const defaultColorList: Record<
     },
 }
 
+type EventColorMap = {
+    [key: string]: string;
+};
+
+// Create the key-color mapping object
+const eventColorMap: EventColorMap = {
+    'Sala Attrezzi': 'emerald',
+    'Sala Corsi': 'sky',
+    'Zona Benessere' : 'amber'
+    // Add more mappings as needed
+};
+
 const convertToEvents = (activity: Activity): Event[] => {
     return Object.entries(activity)
         .map(([key, value]) => {
@@ -120,18 +133,21 @@ const convertToEvents = (activity: Activity): Event[] => {
                         slot.end_hour
                     ).padStart(2, '0')}:00:00`
 
+                    const eventColor = eventColorMap[key] || 'red'; // Replace 'defaultColor' with your default color
+
+
                     return {
                         id: uniqueId('event-'),
                         title: i18n.t(key),
                         start: startDate,
                         end: endDate,
-                        eventColor: key === 'gym' ? 'emerald' : 'sky',
+                        eventColor: eventColor,
                         extendedProps: {
                             available_spots: slot.available_spots,
                             enabled_for_reservation:
                                 slot.enabled_for_reservation,
                             reservations: slot.reservations,
-                        },
+                        }
                     }
                 })
             })

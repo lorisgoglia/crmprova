@@ -127,7 +127,7 @@
   }
 
   .fc .custom-calendar-event {
-    @apply flex items-center min-h-[28px] p-1.5 rounded-md w-full overflow-hidden text-ellipsis h-full;
+    @apply flex items-center min-h-[28px] p-1.5 rounded-md w-full overflow-hidden text-ellipsis;
   }
 
   .fc-v-event {
@@ -149,4 +149,49 @@
   .fc-toolbar-chunk {
     @apply flex flex-col sm:flex-row gap-2 w-full sm:w-auto;
   }
+
+
+.fc .fc-timegrid-slot, .fc .fc-timegrid-slot-label {
+  height: 100px !important/* Adjust the height as needed */;
+  
+}
+
+.fc-timegrid-slot-lane {
+  height: 100px !important
+}
+
+.fc-datagrid-cell-frame {height: 100px !important}
+.fc-timeline-lane-frame {height: 100px !important}
+
+.fc-event {
+  position: relative;
+  margin-bottom: 10px; /* Adjust as needed */
+}
+
+.fc-event-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #e0e0e0; /* Customize the background color */
+  padding: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+
+}
+
+.current-day-header {
+  background-color: rgba(255, 238, 0, 0.567);
+  border-radius: 5px;
+  padding: 0px 50px;
+  color: black; 
+}
+
+.fc .fc-timegrid-cols .fc-timegrid-col.fc-day-today {
+  background-color: white; 
+}
+
 }

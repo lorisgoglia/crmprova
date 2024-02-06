@@ -77,20 +77,45 @@ const Activities = () => {
         setCurrentWeek(week)
     }
 
+    const renderHeaderContent = (args: any) => {
+        const today = new Date();
+        const headerDate = new Date(args.date);
+    
+        // Format and compare dates to see if the header corresponds to today
+        if (today.toDateString() === headerDate.toDateString()) {
+            return (
+                <div className="current-day-header">
+                    {args.text} {/* Use the default text but wrap it in a custom div */}
+                </div>
+            );
+        }
+    
+        return args.text; // Return default text for other days
+    };
+    
+
     return (
-        <Container className="h-full relative">
+        <Container className="h-full w-full relative">
             <CalendarView
                 initialView="timeGridWeek"
                 locale="it"
                 headerToolbar={{
-                    left: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay prev,next',
+                    left: 'prev,next title',
+                    center: '',
+                    right: 'timeGridWeek,timeGridDay',
                 }}
-                slotDuration="00:15:00"
+                slotDuration="01:00:00"
                 slotMinTime="08:00:00"
-                slotMaxTime="24:00:00"
-                allDayText="Tutto il giorno"
-                allDayClassNames="h-[100px] font-bold"
+                slotMaxTime="23:00:00"
+                slotLabelInterval="01:00"
+                slotLabelFormat={{
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    omitZeroMinute: true,
+                    meridiem: 'lowercase'
+                  }
+                }
+                allDaySlot={false}
                 buttonText={{
                     dayGridMonth: 'Mese',
                     timeGridWeek: 'Settimana',
@@ -102,7 +127,11 @@ const Activities = () => {
                 events={events}
                 eventClick={onEventClick}
                 eventContent={EventContent}
+                eventDisplay='block'
+                slotEventOverlap={false}
                 datesSet={onWeekChange}
+                dayHeaderContent={renderHeaderContent}
+
             />
             <EventDialogInfo />
             {loading && (
