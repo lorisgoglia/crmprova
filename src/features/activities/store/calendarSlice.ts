@@ -23,7 +23,7 @@ export type CalendarState = {
 export const SLICE_NAME = 'crmCalendar'
 
 export const getEvents = createAsyncThunk(
-    SLICE_NAME + '/get-admin-calendar',
+    SLICE_NAME + '/getCalendar',
     async (data: GetCrmCalendarPayload) => {
         const response = await apiGetCalendar(data)
         return response.data

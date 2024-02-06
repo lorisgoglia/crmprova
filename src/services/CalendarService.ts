@@ -5,7 +5,7 @@ export async function apiGetCalendar<U extends Record<string, unknown>>(
     data: U
 ) {
     return ApiService.fetchData<GetCalendarResponse>({
-        url: `/get-admin-calendar/${data.user_id}/${data.start_date}/${data.end_date}`,
+        url: `/get-calendar/${data.user_id}/${data.start_date}/${data.end_date}`,
         method: 'get',
     })
 }

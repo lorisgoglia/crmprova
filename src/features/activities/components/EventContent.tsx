@@ -37,8 +37,8 @@ export const EventContent = (arg: any) => {
             
             <div className="flex flex-col ">
                 
-                <span className="font-semibold">{arg.event.title}</span>
-                <span className="text-[9px]">
+                <span className="font-semibold" style={{ fontSize: '0.8em' }} >{arg.event.title}</span>
+                <span className="text-[8px]">
                     Disponibili: {extendedProps?.available_spots}
                 </span>
             </div>
